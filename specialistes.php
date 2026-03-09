@@ -490,7 +490,7 @@ function getInitials(string $nom): string
             width: 100%;
             padding: 10px;
             background: var(--navy);
-            color: var(--white);
+            color: #FFFFFF !important;
             border-radius: 8px;
             text-decoration: none;
             font-size: 13px;
@@ -500,6 +500,14 @@ function getInitials(string $nom): string
 
         .btn-contact:hover {
             background: var(--rose);
+            color: #FFFFFF;
+        }
+
+        .btn-contact:active,
+        .btn-contact:focus {
+            background: #8B1A3A;
+            color: #FFFFFF;
+            outline: none;
         }
 
         /* état vide */
@@ -595,7 +603,7 @@ function getInitials(string $nom): string
             align-items: center;
             gap: 8px;
             background: var(--navy);
-            color: var(--white);
+            color: #FFFFFF !important;
             padding: 12px 26px;
             border-radius: 99px;
             text-decoration: none;
@@ -609,7 +617,16 @@ function getInitials(string $nom): string
 
         .btn-rejoindre:hover {
             background: var(--rose);
+            color: #FFFFFF;
             transform: translateY(-2px);
+        }
+
+        .btn-rejoindre:active,
+        .btn-rejoindre:focus {
+            background: #8B1A3A;
+            color: #FFFFFF;
+            outline: none;
+            transform: translateY(0);
         }
 
         /* ══ RESPONSIVE ════════════════════════════════════ */

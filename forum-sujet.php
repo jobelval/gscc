@@ -110,10 +110,54 @@ if (isset($_GET['repondu'])) $success = 'Votre réponse a été publiée !';
 
 $page_title = $sujet['titre'];
 
-// Fonction gravatar simple
-function avatarUrl($email, $size = 44) {
-    $hash = md5(strtolower(trim($email ?? 'anonymous@gscc.ht')));
-    return "https://www.gravatar.com/avatar/{$hash}?s={$size}&d=identicon";
+// Génère un identicon SVG style GitHub (grille 5x5 symétrique)
+function generateIdenticon($nom, $size = 42) {
+    $nom   = trim($nom ?? 'Membre');
+    $hash  = md5(strtolower($nom));
+
+    // Couleur principale depuis les 3 premiers octets du hash
+    $r = hexdec(substr($hash, 0, 2));
+    $g = hexdec(substr($hash, 2, 2));
+    $b = hexdec(substr($hash, 4, 2));
+    // Saturation forcée pour éviter les couleurs trop ternes
+    $max = max($r, $g, $b);
+    if ($max > 0) {
+        $r = intval(($r / $max) * 180 + 30);
+        $g = intval(($g / $max) * 180 + 30);
+        $b = intval(($b / $max) * 180 + 30);
+    }
+    $color = sprintf('#%02x%02x%02x', min($r,255), min($g,255), min($b,255));
+    $bg    = '#F0F0F0';
+
+    // Grille 5x5 symétrique (on utilise seulement les 3 colonnes gauches, miroir sur la droite)
+    $cells = [];
+    for ($row = 0; $row < 5; $row++) {
+        for ($col = 0; $col < 3; $col++) {
+            $idx         = $row * 3 + $col;
+            $byte        = hexdec(substr($hash, 6 + $idx, 2));
+            $cells[$row][$col] = ($byte % 2 === 0);
+        }
+    }
+
+    $cell  = $size / 5;
+    $rects = '';
+    for ($row = 0; $row < 5; $row++) {
+        for ($col = 0; $col < 5; $col++) {
+            $srcCol = $col < 3 ? $col : (4 - $col); // symétrie
+            if ($cells[$row][$srcCol]) {
+                $x = $col * $cell;
+                $y = $row * $cell;
+                $rects .= "<rect x='{$x}' y='{$y}' width='{$cell}' height='{$cell}' fill='{$color}'/>";
+            }
+        }
+    }
+
+    $svg = "<svg xmlns='http://www.w3.org/2000/svg' width='{$size}' height='{$size}' viewBox='0 0 {$size} {$size}'>"
+         . "<rect width='{$size}' height='{$size}' fill='{$bg}'/>"
+         . $rects
+         . "</svg>";
+
+    return 'data:image/svg+xml;base64,' . base64_encode($svg);
 }
 ?>
 <!DOCTYPE html>
@@ -247,8 +291,9 @@ function avatarUrl($email, $size = 44) {
         }
         .post-avatar {
             width:42px; height:42px; border-radius:50%;
-            object-fit:cover; border:2px solid var(--border);
-            flex-shrink:0;
+            flex-shrink:0; object-fit:cover;
+            border:2px solid var(--border);
+            background:#F0F0F0;
         }
         .post-author-name {
             font-size:14px; font-weight:700; color:var(--dark);
@@ -497,9 +542,11 @@ function avatarUrl($email, $size = 44) {
                     <div class="post post-op" data-aos="fade-up">
                         <div class="post-header">
                             <div class="post-author">
-                                <img class="post-avatar"
-                                     src="<?= avatarUrl($sujet['auteur_email'] ?? '') ?>"
-                                     alt="<?= e($sujet['auteur_nom'] ?? 'Membre') ?>">
+                                <?php
+                                    $nom_op  = $sujet['auteur_nom'] ?? 'Membre';
+                                    $icon_op = generateIdenticon($nom_op, 42);
+                                ?>
+                                <img class="post-avatar" src="<?= $icon_op ?>" alt="<?= e($nom_op) ?>" title="<?= e($nom_op) ?>">
                                 <div>
                                     <div class="post-author-name"><?= e($sujet['auteur_nom'] ?? 'Membre supprimé') ?></div>
                                     <div class="post-author-role">Auteur du sujet</div>
@@ -536,9 +583,11 @@ function avatarUrl($email, $size = 44) {
                         <div class="post post-reponse" data-aos="fade-up" data-aos-delay="<?= ($idx % 5) * 60 ?>">
                             <div class="post-header">
                                 <div class="post-author">
-                                    <img class="post-avatar"
-                                         src="<?= avatarUrl($rep['auteur_email'] ?? '') ?>"
-                                         alt="<?= e($rep['auteur_nom'] ?? 'Membre') ?>">
+                                    <?php
+                                        $nom_rep  = $rep['auteur_nom'] ?? 'Membre';
+                                        $icon_rep = generateIdenticon($nom_rep, 42);
+                                    ?>
+                                    <img class="post-avatar" src="<?= $icon_rep ?>" alt="<?= e($nom_rep) ?>" title="<?= e($nom_rep) ?>">
                                     <div>
                                         <div class="post-author-name"><?= e($rep['auteur_nom'] ?? 'Membre supprimé') ?></div>
                                         <div class="post-author-role">Membre</div>

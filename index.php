@@ -414,7 +414,7 @@ require_once 'templates/header.php';
         ['name' => 'Croix-Rouge Haïti',      'type' => 'Humanitaire',         'icon' => 'first-aid'],
         ['name' => 'HUEH',                   'type' => 'Hôpital',             'icon' => 'hospital'],
         ['name' => 'Fondation FOKAL',        'type' => 'Éducation',           'icon' => 'book-open'],
-        ['name' => 'Sogebank',               'type' => 'Secteur bancaire',    'icon' => 'university'],
+        ['name' => 'Unibank',               'type' => 'Secteur bancaire',    'icon' => 'university'],
         ['name' => 'Panos Caraïbes',         'type' => 'Médias & Santé',      'icon' => 'broadcast-tower'],
         ['name' => 'Partners in Health',     'type' => 'Santé communautaire', 'icon' => 'hand-holding-heart'],
         ['name' => 'BID / IDB',              'type' => 'Développement',       'icon' => 'chart-line'],
@@ -498,91 +498,91 @@ require_once 'templates/header.php';
 </section>
 
 <script>
-document.getElementById('nlForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    document.getElementById('nlForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    const btn     = document.getElementById('nlBtn');
-    const msgEl   = document.getElementById('nlMessage');
-    const email   = document.getElementById('nlEmail').value.trim();
-    const nom     = document.getElementById('nlNom').value.trim();
+        const btn = document.getElementById('nlBtn');
+        const msgEl = document.getElementById('nlMessage');
+        const email = document.getElementById('nlEmail').value.trim();
+        const nom = document.getElementById('nlNom').value.trim();
 
-    if (!email) {
-        msgEl.style.color = '#c0392b';
-        msgEl.textContent = 'Veuillez saisir votre adresse email.';
-        return;
-    }
-
-    // Afficher chargement
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
-    msgEl.textContent = '';
-
-    const body = new URLSearchParams();
-    body.append('email', email);
-    body.append('nom',   nom);
-
-    fetch('newsletter-subscribe.php', {
-        method:  'POST',
-        headers: {
-            'Content-Type':     'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: body.toString()
-    })
-    .then(function(res) {
-        // Lire la réponse comme texte d'abord pour éviter les erreurs JSON
-        return res.text();
-    })
-    .then(function(text) {
-        let data;
-        try {
-            // Chercher le JSON même si PHP a ajouté des warnings avant
-            const jsonMatch = text.match(/\{[\s\S]*\}/);
-            data = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
-        } catch(e) {
-            data = null;
+        if (!email) {
+            msgEl.style.color = '#c0392b';
+            msgEl.textContent = 'Veuillez saisir votre adresse email.';
+            return;
         }
 
-        if (data && data.success) {
-            // Succès — afficher message puis remettre le bouton après 3 secondes
-            msgEl.style.color = '#27ae60';
-            msgEl.textContent = data.message;
-            document.getElementById('nlEmail').value = '';
-            document.getElementById('nlNom').value   = '';
-            btn.innerHTML = '<i class="fas fa-check"></i> Abonné !';
-            setTimeout(function() {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> S\'abonner';
-                msgEl.textContent = '';
-            }, 3000);
-        } else {
-            // Réponse inattendue du serveur
-            msgEl.style.color = '#27ae60';
-            msgEl.textContent = 'Inscription enregistrée avec succès !';
-            document.getElementById('nlEmail').value = '';
-            document.getElementById('nlNom').value   = '';
-            btn.innerHTML = '<i class="fas fa-check"></i> Abonné !';
-            setTimeout(function() {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> S\'abonner';
-                msgEl.textContent = '';
-            }, 3000);
-        }
-    })
-    .catch(function() {
-        // Erreur réseau réelle — vérifier si l'inscription a quand même fonctionné
-        msgEl.style.color = '#27ae60';
-        msgEl.textContent = 'Inscription enregistrée !';
-        document.getElementById('nlEmail').value = '';
-        document.getElementById('nlNom').value   = '';
-        btn.innerHTML = '<i class="fas fa-check"></i> Abonné !';
-        setTimeout(function() {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-paper-plane"></i> S\'abonner';
-            msgEl.textContent = '';
-        }, 3000);
+        // Afficher chargement
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
+        msgEl.textContent = '';
+
+        const body = new URLSearchParams();
+        body.append('email', email);
+        body.append('nom', nom);
+
+        fetch('newsletter-subscribe.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: body.toString()
+            })
+            .then(function(res) {
+                // Lire la réponse comme texte d'abord pour éviter les erreurs JSON
+                return res.text();
+            })
+            .then(function(text) {
+                let data;
+                try {
+                    // Chercher le JSON même si PHP a ajouté des warnings avant
+                    const jsonMatch = text.match(/\{[\s\S]*\}/);
+                    data = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
+                } catch (e) {
+                    data = null;
+                }
+
+                if (data && data.success) {
+                    // Succès — afficher message puis remettre le bouton après 3 secondes
+                    msgEl.style.color = '#27ae60';
+                    msgEl.textContent = data.message;
+                    document.getElementById('nlEmail').value = '';
+                    document.getElementById('nlNom').value = '';
+                    btn.innerHTML = '<i class="fas fa-check"></i> Abonné !';
+                    setTimeout(function() {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-paper-plane"></i> S\'abonner';
+                        msgEl.textContent = '';
+                    }, 3000);
+                } else {
+                    // Réponse inattendue du serveur
+                    msgEl.style.color = '#27ae60';
+                    msgEl.textContent = 'Inscription enregistrée avec succès !';
+                    document.getElementById('nlEmail').value = '';
+                    document.getElementById('nlNom').value = '';
+                    btn.innerHTML = '<i class="fas fa-check"></i> Abonné !';
+                    setTimeout(function() {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-paper-plane"></i> S\'abonner';
+                        msgEl.textContent = '';
+                    }, 3000);
+                }
+            })
+            .catch(function() {
+                // Erreur réseau réelle — vérifier si l'inscription a quand même fonctionné
+                msgEl.style.color = '#27ae60';
+                msgEl.textContent = 'Inscription enregistrée !';
+                document.getElementById('nlEmail').value = '';
+                document.getElementById('nlNom').value = '';
+                btn.innerHTML = '<i class="fas fa-check"></i> Abonné !';
+                setTimeout(function() {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> S\'abonner';
+                    msgEl.textContent = '';
+                }, 3000);
+            });
     });
-});
 </script>
 
 <?php require_once 'templates/footer.php'; ?>

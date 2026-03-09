@@ -806,7 +806,7 @@ try {
                                         <span>
                                             <i class="fas fa-user"></i>
                                             <?php if ($sujet['auteur_nom']): ?>
-                                                <a href="profil.php?id=<?= $sujet['auteur_id'] ?>">
+                                                <!-- <a href="profil.php?id=<?= $sujet['auteur_id'] ?>"> -->
                                                     <?= e($sujet['auteur_nom']) ?>
                                                 </a>
                                             <?php else: ?>
