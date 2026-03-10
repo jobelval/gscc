@@ -68,7 +68,7 @@
 
         .top-bar .container {
             max-width: 100%;
-            padding: 0 0;
+            padding: 0 16px;
             margin: 0;
             display: flex;
             justify-content: flex-end;
@@ -285,7 +285,7 @@
             display: grid;
             grid-template-columns: auto 1fr auto;
             align-items: center;
-            column-gap: 60px;
+            column-gap: 24px;
             padding: 16px 0;
         }
 
@@ -360,8 +360,8 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 11px 16px;
-            font-size: 17px;
+            padding: 10px 14px;
+            font-size: 15.5px;
             font-weight: 500;
             color: var(--charcoal);
             text-decoration: none;
@@ -422,8 +422,8 @@
         .dropdown-menu li a {
             display: block;
             padding: 12px 18px;
-            font-size: 16px;
-            font-weight: 400;
+            font-size: 15px;
+            font-weight: 500;
             color: var(--charcoal);
             text-decoration: none;
             border-radius: 8px;
@@ -496,6 +496,35 @@
             background: var(--charcoal);
             border-radius: 2px;
             transition: all 0.3s;
+        }
+
+        /* Bouton fermer menu mobile */
+        .mob-close-btn {
+            display: none;
+            position: fixed;
+            top: 130px;
+            right: 20px;
+            z-index: 9999999;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--rose);
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            transition: background 0.2s;
+        }
+        .mob-close-btn:hover { background: #C0306A; }
+        .mob-close-btn.visible { display: flex; }
+        @media (max-width: 768px) {
+            .mob-close-btn { top: 120px; }
+        }
+        @media (max-width: 480px) {
+            .mob-close-btn { top: 110px; }
         }
 
         /* Flash */
@@ -934,9 +963,10 @@
                 <nav class="main-nav" role="navigation" aria-label="Navigation principale">
                     <ul class="nav-menu">
 
-                        <li class="menu-item has-dropdown <?= strpos($_SERVER['PHP_SELF'], 'presentation') !== false ? 'active' : '' ?>">
-                            <a href="presentation.php">À propos <i class="fas fa-chevron-down"></i></a>
+                        <li class="menu-item has-dropdown">
+                            <a href="#"> Présentation<i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
+                                <li><a href="presentation.php#propos">À propos du GSCC</a></li>
                                 <li><a href="presentation.php#mission">Mission</a></li>
                                 <li><a href="presentation.php#vision">Vision</a></li>
                                 <li><a href="presentation.php#historique">Historique</a></li>
@@ -1003,6 +1033,7 @@
         </div>
     </header>
     <div class="header-accent"></div>
+    <button class="mob-close-btn" id="mobCloseBtn" aria-label="Fermer le menu">&#x2715;</button>
 
     <!-- Flash Messages -->
     <?php $flash = getFlashMessage(); ?>
@@ -1070,50 +1101,69 @@
             var nav = document.querySelector('.main-nav');
             if (burger && nav) {
 
+                var closeBtn = document.getElementById('mobCloseBtn');
+
                 function openMob() {
+                    /* Panneau principal */
                     nav.style.cssText = [
                         'display:block',
                         'position:fixed',
-                        'top:0',
-                        'left:0',
-                        'width:100%',
-                        'height:100%',
+                        'top:0','left:0',
+                        'width:100%','height:100%',
                         'background:#FDFAF8',
                         'z-index:999999',
                         'overflow-y:auto',
-                        'padding:120px 20px 40px',
+                        'padding:130px 20px 60px',
                         'box-sizing:border-box'
                     ].join(';');
-                    nav.querySelector('.nav-menu').style.cssText = [
-                        'display:flex',
-                        'flex-direction:column',
-                        'align-items:stretch',
-                        'width:100%',
-                        'padding:0',
-                        'margin:0',
-                        'list-style:none',
-                        'gap:6px'
+
+                    /* Liste des items */
+                    var menu = nav.querySelector('.nav-menu');
+                    menu.style.cssText = [
+                        'display:flex','flex-direction:column',
+                        'align-items:stretch','width:100%',
+                        'padding:0','margin:0',
+                        'list-style:none','gap:4px'
                     ].join(';');
+
+                    /* Style de chaque item principal (mobile uniquement) */
+                    nav.querySelectorAll('.menu-item > a').forEach(function(a) {
+                        a.style.cssText = [
+                            'display:flex','justify-content:space-between',
+                            'align-items:center',
+                            'padding:14px 18px',
+                            'font-size:16px','font-weight:600',
+                            'color:#1E2A35','text-decoration:none',
+                            'border-radius:10px','background:transparent',
+                            'border-bottom:1px solid #E8ECF0'
+                        ].join(';');
+                    });
+
                     document.body.style.overflow = 'hidden';
-                    var s = burger.querySelectorAll('span');
-                    s[0].style.transform = 'rotate(45deg) translate(5px,5px)';
-                    s[1].style.opacity = '0';
-                    s[2].style.transform = 'rotate(-45deg) translate(7px,-6px)';
+                    burger.style.display = 'none';
+                    if (closeBtn) closeBtn.classList.add('visible');
                 }
 
                 function closeMob() {
-                    nav.style.cssText = 'display:none';
-                    document.body.style.overflow = '';
-                    var s = burger.querySelectorAll('span');
-                    s[0].style.transform = '';
-                    s[1].style.opacity = '';
-                    s[2].style.transform = '';
+                    /* Effacer TOUS les styles inline ajoutés par openMob */
+                    nav.removeAttribute('style');
+                    var menu = nav.querySelector('.nav-menu');
+                    if (menu) menu.removeAttribute('style');
                     nav.querySelectorAll('.menu-item').forEach(function(i) {
-                        i.style.cssText = '';
+                        i.removeAttribute('style');
+                    });
+                    nav.querySelectorAll('.menu-item > a').forEach(function(a) {
+                        a.removeAttribute('style');
                     });
                     nav.querySelectorAll('.dropdown-menu').forEach(function(d) {
-                        d.style.display = '';
+                        d.removeAttribute('style');
                     });
+                    nav.querySelectorAll('.dropdown-menu a').forEach(function(a) {
+                        a.removeAttribute('style');
+                    });
+                    document.body.style.overflow = '';
+                    burger.style.display = '';
+                    if (closeBtn) closeBtn.classList.remove('visible');
                 }
 
                 burger.addEventListener('click', function(e) {
@@ -1121,27 +1171,33 @@
                     nav.style.display === 'block' ? closeMob() : openMob();
                 });
 
-                /* Style des items au moment de l'ouverture */
+                /* Clic sur item avec dropdown → accordéon */
                 nav.querySelectorAll('.menu-item > a').forEach(function(link) {
                     link.addEventListener('click', function(e) {
                         if (nav.style.display !== 'block') return;
                         var item = this.closest('.menu-item');
+
+                        /* Lien sans dropdown → naviguer et fermer */
                         if (!item.classList.contains('has-dropdown')) {
                             closeMob();
                             return;
                         }
                         e.preventDefault();
-                        var dd = item.querySelector('.dropdown-menu');
+
+                        var dd     = item.querySelector('.dropdown-menu');
                         var isOpen = dd.style.display === 'block';
-                        /* Fermer tous */
+
+                        /* Fermer tous les autres sous-menus */
                         nav.querySelectorAll('.dropdown-menu').forEach(function(d) {
-                            d.style.display = '';
+                            d.style.cssText = 'display:none;position:static;';
                         });
                         nav.querySelectorAll('.menu-item > a').forEach(function(a) {
-                            a.style.background = '';
-                            a.style.color = '';
+                            a.style.background = 'transparent';
+                            a.style.color      = '#1E2A35';
                         });
+
                         if (!isOpen) {
+                            /* Ouvrir ce sous-menu */
                             dd.style.cssText = [
                                 'display:block',
                                 'position:static',
@@ -1149,13 +1205,45 @@
                                 'border:none',
                                 'box-shadow:none',
                                 'border-radius:10px',
-                                'padding:6px 0',
+                                'padding:8px 0',
                                 'margin:4px 0 8px',
                                 'min-width:unset',
-                                'width:100%'
+                                'width:100%',
+                                'list-style:none'
                             ].join(';');
+
+                            /* Styler les liens du sous-menu */
+                            dd.querySelectorAll('a').forEach(function(a) {
+                                a.style.cssText = [
+                                    'display:block',
+                                    'padding:12px 24px',
+                                    'font-size:15px',
+                                    'font-weight:500',
+                                    'color:#1E2A35',
+                                    'text-decoration:none',
+                                    'border-radius:8px',
+                                    'background:transparent'
+                                ].join(';');
+                            });
+
                             this.style.background = '#FDE8EF';
+                            this.style.color      = '#D94F7A';
+                        }
+                    });
+                });
+
+                /* Hover sur liens du sous-menu */
+                nav.querySelectorAll('.dropdown-menu a').forEach(function(a) {
+                    a.addEventListener('mouseenter', function() {
+                        if (nav.style.display === 'block') {
+                            this.style.background = 'rgba(217,79,122,0.15)';
                             this.style.color = '#D94F7A';
+                        }
+                    });
+                    a.addEventListener('mouseleave', function() {
+                        if (nav.style.display === 'block') {
+                            this.style.background = 'transparent';
+                            this.style.color = '#1E2A35';
                         }
                     });
                 });
@@ -1165,18 +1253,43 @@
                     a.addEventListener('click', closeMob);
                 });
 
+                /* Bouton X */
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeMob();
+                    });
+                }
+
                 /* Escape */
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') closeMob();
                 });
             }
 
-            /* ── Scroll shadow (optionnel, gardé pour l'effet) ── */
+            /* ── Scroll shadow ── */
             window.addEventListener('scroll', function() {
                 var h = document.querySelector('.main-header');
                 if (h) h.style.boxShadow = window.scrollY > 10 ?
                     '0 4px 24px rgba(0,0,0,0.12)' :
                     '0 2px 20px rgba(0,0,0,0.06)';
             });
+
+            /* ── Ancre avec offset header fixe ── */
+            /* Quand la page se charge avec un #hash, le scroll natif
+               ne tient pas compte du header fixe (121px).
+               On repositionne après chargement complet. */
+            if (window.location.hash) {
+                window.addEventListener('load', function() {
+                    var id  = window.location.hash.substring(1);
+                    var el  = document.getElementById(id);
+                    if (!el) return;
+                    setTimeout(function() {
+                        var offset = 160; /* hauteur header + marge */
+                        var top    = el.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top: top, behavior: 'smooth' });
+                    }, 100);
+                });
+            }
         });
     </script>

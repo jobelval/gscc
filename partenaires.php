@@ -18,14 +18,84 @@ try {
 
 if (empty($partenaires)) {
     $partenaires = [
-        ['id'=>1,'nom'=>'Ministère de la Santé Publique',  'description'=>'Partenariat institutionnel pour la mise en place des campagnes de dépistage national.',            'logo'=>'','site_web'=>'#','type'=>'institutionnel','ordre'=>1],
-        ['id'=>2,'nom'=>'Croix Rouge Haïtienne',           'description'=>'Soutien logistique pour nos actions sur le terrain et formations aux premiers secours.',            'logo'=>'','site_web'=>'#','type'=>'principal',     'ordre'=>2],
-        ['id'=>3,'nom'=>'Digicel Haïti',                   'description'=>'Soutien financier et mise à disposition de moyens de communication pour nos campagnes.',            'logo'=>'','site_web'=>'#','type'=>'principal',     'ordre'=>3],
-        ['id'=>4,'nom'=>'Médecins Sans Frontières',        'description'=>"Collaboration médicale et formation de nos équipes aux soins d'urgence.",                          'logo'=>'','site_web'=>'#','type'=>'technique',    'ordre'=>4],
-        ['id'=>5,'nom'=>'Radio Télévision Caraïbes',       'description'=>'Diffusion de nos messages de sensibilisation et couverture médiatique.',                           'logo'=>'','site_web'=>'#','type'=>'media',        'ordre'=>5],
-        ['id'=>6,'nom'=>'Banque Nationale de Crédit',      'description'=>'Soutien financier et mise à disposition de comptes pour la collecte de dons.',                    'logo'=>'','site_web'=>'#','type'=>'principal',     'ordre'=>6],
-        ['id'=>7,'nom'=>'Fondation Sogebank',               'description'=>'Financement de projets spécifiques et programme de micro-crédits pour les patients.',             'logo'=>'','site_web'=>'#','type'=>'principal',     'ordre'=>7],
-        ['id'=>8,'nom'=>'Le Nouvelliste',                   'description'=>"Couverture médiatique de nos événements et publication d'articles de sensibilisation.",            'logo'=>'','site_web'=>'#','type'=>'media',        'ordre'=>8],
+        /* ── 6 Partenaires Principaux ── */
+        ['id'=>1, 'nom'=>'Digicel Haïti',
+         'description'=>'Soutien financier majeur et mise à disposition de moyens de communication pour toutes nos campagnes de sensibilisation à travers le pays.',
+         'logo'=>'images/partenaires/Digicel-logo.png',
+         'site_web'=>'https://www.digicelhaiti.com', 'type'=>'principal', 'ordre'=>1],
+
+        ['id'=>2, 'nom'=>'Banque Nationale de Crédit',
+         'description'=>'Soutien financier institutionnel et mise à disposition de comptes dédiés pour la collecte de dons en faveur des patients.',
+         'logo'=>'images/partenaires/bnc1.png',
+         'site_web'=>'https://www.bnc.ht', 'type'=>'principal', 'ordre'=>2],
+
+        ['id'=>3, 'nom'=>'Fondation Sogebank',
+         'description'=>'Financement de projets spécifiques, programme de micro-crédits pour les patients et soutien aux campagnes annuelles de dépistage.',
+         'logo'=>'images/partenaires/sogebank1.png',
+         'site_web'=>'https://www.sogebank.com', 'type'=>'principal', 'ordre'=>3],
+
+        ['id'=>4, 'nom'=>'Unibank Haïti',
+         'description'=>'Partenaire financier stratégique accompagnant le GSCC dans la mobilisation de fonds et l\'organisation de ses événements caritatifs.',
+         'logo'=>'https://logo.clearbit.com/unibankhaiti.com',
+         'site_web'=>'https://www.unibankhaiti.com', 'type'=>'principal', 'ordre'=>4],
+
+        ['id'=>5, 'nom'=>'Natcom Haïti',
+         'description'=>'Partenaire télécom fournissant la connectivité et les outils numériques pour nos campagnes de sensibilisation en ligne et nos plateformes.',
+         'logo'=>'https://logo.clearbit.com/natcom.ht',
+         'site_web'=>'https://www.natcom.ht', 'type'=>'principal', 'ordre'=>5],
+
+        ['id'=>6, 'nom'=>'Heineken Haïti (Brasserie)',
+         'description'=>'Soutien aux événements de collecte de fonds et aux marches solidaires organisées par le GSCC à travers le pays.',
+         'logo'=>'https://logo.clearbit.com/heineken.com',
+         'site_web'=>'#', 'type'=>'principal', 'ordre'=>6],
+
+        /* ── 3 Partenaires Institutionnels ── */
+        ['id'=>7, 'nom'=>'Ministère de la Santé Publique',
+         'description'=>'Partenariat institutionnel pour la mise en place des campagnes nationales de dépistage et la coordination des soins oncologiques.',
+         'logo'=>'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_of_Haiti.svg/200px-Coat_of_arms_of_Haiti.svg.png',
+         'site_web'=>'https://mspp.gouv.ht', 'type'=>'institutionnel', 'ordre'=>7],
+
+        ['id'=>8, 'nom'=>'Croix Rouge Haïtienne',
+         'description'=>'Soutien logistique essentiel pour nos actions sur le terrain, formations aux premiers secours et mobilisation des bénévoles.',
+         'logo'=>'https://logo.clearbit.com/redcross.org',
+         'site_web'=>'#', 'type'=>'institutionnel', 'ordre'=>8],
+
+        ['id'=>9, 'nom'=>'OPS/OMS Haïti',
+         'description'=>'Appui technique et scientifique pour le développement de nos protocoles de prévention et nos programmes de formation médicale.',
+         'logo'=>'https://logo.clearbit.com/paho.org',
+         'site_web'=>'https://www.paho.org/fr/haiti', 'type'=>'institutionnel', 'ordre'=>9],
+
+        /* ── 3 Partenaires Techniques ── */
+        ['id'=>10, 'nom'=>'Médecins Sans Frontières',
+         'description'=>'Collaboration médicale, formation de nos équipes aux soins d\'urgence oncologiques et partage d\'expertise sur le terrain.',
+         'logo'=>'https://logo.clearbit.com/msf.org',
+         'site_web'=>'https://www.msf.org', 'type'=>'technique', 'ordre'=>10],
+
+        ['id'=>11, 'nom'=>'UNFPA Haïti',
+         'description'=>'Soutien technique pour les programmes de santé reproductive liés aux cancers gynécologiques et formations des agents de santé.',
+         'logo'=>'https://logo.clearbit.com/unfpa.org',
+         'site_web'=>'https://haiti.unfpa.org', 'type'=>'technique', 'ordre'=>11],
+
+        ['id'=>12, 'nom'=>'Institut Français d\'Haïti',
+         'description'=>'Appui culturel et logistique pour l\'organisation d\'événements de sensibilisation, conférences et expositions sur la lutte contre le cancer.',
+         'logo'=>'https://logo.clearbit.com/institutfrancais.com',
+         'site_web'=>'#', 'type'=>'technique', 'ordre'=>12],
+
+        /* ── 3 Partenaires Médias ── */
+        ['id'=>13, 'nom'=>'Radio Télévision Caraïbes',
+         'description'=>'Diffusion régulière de nos messages de sensibilisation, couverture médiatique de nos événements et émissions dédiées à la santé.',
+         'logo'=>'images/partenaires/rtvc.png',
+         'site_web'=>'#', 'type'=>'media', 'ordre'=>13],
+
+        ['id'=>14, 'nom'=>'Le Nouvelliste',
+         'description'=>'Couverture médiatique de nos événements, publication d\'articles de sensibilisation et campagnes d\'affichage dans le journal.',
+         'logo'=>'images/partenaires/nouvelliste.png',
+         'site_web'=>'https://www.lenouvelliste.com', 'type'=>'media', 'ordre'=>14],
+
+        ['id'=>15, 'nom'=>'Signal FM Haïti',
+         'description'=>'Diffusion de spots radios, couverture en direct de nos marches et soutien médiatique à toutes nos campagnes nationales.',
+         'logo'=>'images/partenaires/signalfm.png',
+         'site_web'=>'#', 'type'=>'media', 'ordre'=>15],
     ];
 }
 
@@ -89,7 +159,7 @@ img { display: block; }
 
 /* ══ PAGE HEADER ═══════════════════════════════════ */
 .page-header {
-    background: linear-gradient(135deg, #003399 0%, #4CAF50 100%);
+    background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
     padding: 80px 0 64px;
     text-align: center;
     /* Pas de ::before avec grille */
@@ -182,7 +252,7 @@ img { display: block; }
     display: block;
     width: 48px; height: 3px;
     border-radius: 99px;
-    background: linear-gradient(90deg, #003399, #FF69B4);
+    background: linear-gradient(90deg, #003399, #1a7abf);
     margin-bottom: 28px;
 }
 
@@ -209,7 +279,7 @@ img { display: block; }
 .p-card::before {
     content: '';
     position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, #003399, #FF69B4);
+    background: linear-gradient(90deg, #003399, #1a7abf);
     opacity: 0;
     transition: opacity .3s var(--ease);
 }
@@ -219,23 +289,24 @@ img { display: block; }
 /* zone logo */
 .p-logo {
     height: 130px;
-    background: var(--bg);
+    background: #ffffff;
     display: flex; align-items: center; justify-content: center;
-    padding: 24px;
+    padding: 28px 32px;
     border-bottom: 1px solid var(--border);
     transition: background .3s var(--ease);
 }
 .p-card:hover .p-logo { background: var(--blue-lite); }
 .p-logo img {
-    max-width: 100%; max-height: 72px; object-fit: contain;
-    transition: transform .35s var(--ease);
+    max-width: 100%; max-height: 80px; object-fit: contain;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.08));
+    transition: transform .35s var(--ease), filter .35s var(--ease);
 }
-.p-card:hover .p-logo img { transform: scale(1.05); }
+.p-card:hover .p-logo img { transform: scale(1.06); filter: drop-shadow(0 3px 8px rgba(0,51,153,.15)); }
 
 /* avatar initiales */
 .p-initials {
     width: 68px; height: 68px; border-radius: 50%;
-    background: linear-gradient(135deg, #003399 0%, #4CAF50 100%);
+    background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
     display: flex; align-items: center; justify-content: center;
     color: #fff; font-size: 1.3rem; font-weight: 700; letter-spacing: .5px;
     transition: transform .35s var(--ease);
@@ -286,7 +357,7 @@ img { display: block; }
 
 /* ══ BLOC CTA ══════════════════════════════════════ */
 .cta-block {
-    background: linear-gradient(135deg, #003399 0%, #4CAF50 100%);
+    background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
     border-radius: 16px;
     padding: 64px 40px;
     text-align: center;
@@ -364,7 +435,7 @@ img { display: block; }
     <div class="inner">
         <div class="stat-cell" data-aos="fade-up">
             <div class="stat-ico"><i class="fas fa-handshake"></i></div>
-            <div class="stat-n">15+</div>
+            <div class="stat-n">15</div>
             <div class="stat-l">Partenaires actifs</div>
         </div>
         <div class="stat-cell" data-aos="fade-up" data-aos-delay="80">
@@ -417,7 +488,9 @@ img { display: block; }
                         <?php if (!empty($p['logo'])): ?>
                             <img src="<?= htmlspecialchars($p['logo']) ?>"
                                  alt="Logo <?= htmlspecialchars($p['nom']) ?>"
-                                 loading="lazy">
+                                 loading="lazy"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                            <div class="p-initials" style="display:none"><?= htmlspecialchars(initials($p['nom'])) ?></div>
                         <?php else: ?>
                             <div class="p-initials"><?= htmlspecialchars(initials($p['nom'])) ?></div>
                         <?php endif; ?>

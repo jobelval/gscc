@@ -53,9 +53,9 @@ $rest = array_slice($temoignages, 1);
    Fond blanc/ivoire, pas de dégradés criards
 ===================================================== */
         :root {
-            --navy: #0D1B35;
-            --navy-2: #1E3461;
-            --rose: #AC2F58;
+            --navy: #003399;
+            --navy-2: #1a56cc;
+            --rose: #1a56cc;
             --cream: #FAF8F5;
             --white: #FFFFFF;
             --text: #141425;
@@ -96,22 +96,11 @@ $rest = array_slice($temoignages, 1);
 
         /* ── EN-TÊTE PAGE ─────────────────────────────────── */
         .page-hero {
-            background: var(--navy);
+            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
             padding: 90px 0 72px;
             text-align: center;
             position: relative;
             overflow: hidden;
-        }
-
-        /* grille discrète */
-        .page-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
-            background-size: 56px 56px;
         }
 
         /* ligne rose en bas */

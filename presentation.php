@@ -16,10 +16,10 @@ try {
 
     if (empty($valeurs)) {
         $valeurs = [
-            ['titre' => 'Confiance',      'description' => 'Nous construisons des relations basées sur la transparence et l\'intégrité avec nos bénéficiaires, partenaires et donateurs.', 'icone' => 'fa-heart',              'couleur' => '#003399'],
-            ['titre' => 'Espoir',         'description' => 'Nous apportons de l\'espoir à travers des programmes de soutien et d\'accompagnement personnalisés.',                          'icone' => 'fa-dove',               'couleur' => '#D94F7A'],
-            ['titre' => 'Solidarité',     'description' => 'Ensemble, nous sommes plus forts. La solidarité est au cœur de notre action.',                                                'icone' => 'fa-hand-holding-heart', 'couleur' => '#4CAF50'],
-            ['titre' => 'Vie & Guérison', 'description' => 'Nous œuvrons pour offrir une meilleure qualité de vie et favoriser la guérison.',                                             'icone' => 'fa-leaf',               'couleur' => '#C9933A'],
+            ['titre' => 'Confiance',       'description' => 'Nous construisons des relations basées sur la transparence et l\'intégrité avec nos bénéficiaires, partenaires et donateurs.', 'icone' => 'fa-heart',              'couleur' => '#003399'],
+            ['titre' => 'Espoir',          'description' => 'Nous apportons de l\'espoir à travers des programmes de soutien et d\'accompagnement personnalisés.',                          'icone' => 'fa-dove',               'couleur' => '#D94F7A'],
+            ['titre' => 'Solidarité',      'description' => 'Ensemble, nous sommes plus forts. La solidarité est au cœur de notre action et de notre engagement.',                          'icone' => 'fa-hand-holding-heart', 'couleur' => '#4CAF50'],
+            ['titre' => 'Vie et guérison', 'description' => 'Nous œuvrons sans relâche pour offrir une meilleure qualité de vie et favoriser la guérison.',                                 'icone' => 'fa-leaf',               'couleur' => '#C9933A'],
         ];
     }
 } catch (PDOException $e) {
@@ -28,21 +28,21 @@ try {
     $valeurs = [];
 }
 
-// Le header génère tout le <html><head><body> — pas de doublon
 require_once 'templates/header.php';
 ?>
 
 <style>
-    /* ── Offset ancres : compense header sticky + top-bar ────────── */
+    /* ── Offset ancres : compense header fixe + top-bar ─────────── */
+    #propos,
     #mission,
     #vision,
     #historique,
     #valeurs,
     #equipe {
-        scroll-margin-top: 120px;
+        scroll-margin-top: 180px;
     }
 
-    /* ── En-tête de page ─────────────────────────────────────────── */
+    /* ── Hero ────────────────────────────────────────────────────── */
     .page-hero {
         background: linear-gradient(135deg, #003399 0%, #001a66 60%, #1a1a2e 100%);
         color: white;
@@ -59,7 +59,7 @@ require_once 'templates/header.php';
         right: -10%;
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(217, 79, 122, 0.18), transparent 70%);
+        background: radial-gradient(circle, rgba(217,79,122,0.18), transparent 70%);
         pointer-events: none;
     }
 
@@ -70,9 +70,9 @@ require_once 'templates/header.php';
 
     .page-hero-tag {
         display: inline-block;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: white;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.25);
+        color: #ffffff;
         font-size: 0.78rem;
         font-weight: 700;
         letter-spacing: 2px;
@@ -81,23 +81,25 @@ require_once 'templates/header.php';
         border-radius: 30px;
         margin-bottom: 18px;
         font-family: 'DM Sans', 'Inter', sans-serif;
+        text-decoration: none;
     }
 
     .page-hero h1 {
         font-family: 'Playfair Display', serif;
         font-size: clamp(2rem, 5vw, 3.2rem);
-        color: white;
+        color: #ffffff;
         margin-bottom: 16px;
     }
 
     .page-hero-desc {
-        font-size: 1.1rem;
-        color: rgba(255, 255, 255, 0.82);
+        font-size: 1.05rem;
+        color: rgba(255,255,255,0.88);
         max-width: 640px;
         margin: 0 auto 32px;
-        line-height: 1.75;
+        line-height: 1.8;
     }
 
+    /* ── Navigation ancres dans le hero ─────────────────────────── */
     .anchor-nav {
         display: flex;
         justify-content: center;
@@ -106,14 +108,14 @@ require_once 'templates/header.php';
     }
 
     .anchor-nav a {
-        background: rgba(255, 255, 255, 0.12);
-        color: white;
+        background: rgba(255,255,255,0.12);
+        color: #ffffff;
         padding: 7px 20px;
         border-radius: 30px;
         font-size: 0.9rem;
         font-weight: 500;
         text-decoration: none;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255,255,255,0.2);
         transition: all 0.2s;
         font-family: 'DM Sans', 'Inter', sans-serif;
     }
@@ -121,11 +123,11 @@ require_once 'templates/header.php';
     .anchor-nav a:hover {
         background: #D94F7A;
         border-color: #D94F7A;
-        color: white;
+        color: #ffffff;
         transform: translateY(-2px);
     }
 
-    /* ── Entêtes de section ──────────────────────────────────────── */
+    /* ── En-têtes de section ─────────────────────────────────────── */
     .pres-section-header {
         text-align: center;
         margin-bottom: 60px;
@@ -161,7 +163,7 @@ require_once 'templates/header.php';
     }
 
     .pres-section-sub {
-        color: #6B7A8D;
+        color: #4B5563;
         font-size: 1.05rem;
         max-width: 500px;
         margin: 0 auto;
@@ -189,16 +191,11 @@ require_once 'templates/header.php';
 
     .mv-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     }
 
-    .mv-card.mission {
-        border-bottom-color: #003399;
-    }
-
-    .mv-card.vision {
-        border-bottom-color: #4CAF50;
-    }
+    .mv-card.mission { border-bottom-color: #003399; }
+    .mv-card.vision  { border-bottom-color: #4CAF50; }
 
     .mv-icon {
         width: 80px;
@@ -210,19 +207,10 @@ require_once 'templates/header.php';
         margin-bottom: 25px;
     }
 
-    .mv-card.mission .mv-icon {
-        background: rgba(0, 51, 153, 0.08);
-        color: #003399;
-    }
+    .mv-card.mission .mv-icon { background: rgba(0,51,153,0.08);  color: #003399; }
+    .mv-card.vision  .mv-icon { background: rgba(76,175,80,0.08); color: #4CAF50; }
 
-    .mv-card.vision .mv-icon {
-        background: rgba(76, 175, 80, 0.08);
-        color: #4CAF50;
-    }
-
-    .mv-icon i {
-        font-size: 38px;
-    }
+    .mv-icon i { font-size: 38px; }
 
     .mv-card h3 {
         font-family: 'Playfair Display', serif;
@@ -232,7 +220,7 @@ require_once 'templates/header.php';
     }
 
     .mv-card p {
-        color: #6B7A8D;
+        color: #374151;
         line-height: 1.8;
         font-size: 1rem;
         margin-bottom: 16px;
@@ -247,7 +235,7 @@ require_once 'templates/header.php';
         margin: 16px 0 0;
     }
 
-    /* ── Stats ───────────────────────────────────────────────────── */
+    /* ── Statistiques ────────────────────────────────────────────── */
     .stats-section {
         background: linear-gradient(135deg, #003399 0%, #001a66 100%);
         padding: 60px 0;
@@ -263,12 +251,10 @@ require_once 'templates/header.php';
 
     .stat-item {
         padding: 20px;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        border-right: 1px solid rgba(255,255,255,0.1);
     }
 
-    .stat-item:last-child {
-        border-right: none;
-    }
+    .stat-item:last-child { border-right: none; }
 
     .stat-number {
         font-family: 'Playfair Display', serif;
@@ -280,7 +266,7 @@ require_once 'templates/header.php';
 
     .stat-label {
         font-size: 0.95rem;
-        opacity: 0.8;
+        color: rgba(255,255,255,0.88);
     }
 
     /* ── Timeline ────────────────────────────────────────────────── */
@@ -296,6 +282,7 @@ require_once 'templates/header.php';
         padding: 20px 0;
     }
 
+    /* Barre verticale centrale */
     .timeline::before {
         content: '';
         position: absolute;
@@ -319,26 +306,29 @@ require_once 'templates/header.php';
         justify-content: flex-start;
     }
 
+    /* Boites : width 38% + marges pour laisser espace autour de la barre */
     .timeline-content {
-        width: 45%;
+        width: 38%;
         padding: 30px;
         background: white;
         border-radius: 16px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         position: relative;
         transition: box-shadow 0.3s;
     }
 
     .timeline-content:hover {
-        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.13);
+        box-shadow: 0 10px 32px rgba(0,0,0,0.13);
     }
 
+    /* odd = droite : margin-right crée l'espace entre la boite et la barre */
     .timeline-item:nth-child(odd) .timeline-content {
-        margin-right: 5%;
+        margin-right: 7%;
     }
 
+    /* even = gauche : margin-left crée l'espace entre la barre et la boite */
     .timeline-item:nth-child(even) .timeline-content {
-        margin-left: 5%;
+        margin-left: 7%;
     }
 
     .timeline-dot {
@@ -370,14 +360,15 @@ require_once 'templates/header.php';
     .timeline-content h3 {
         font-family: 'Playfair Display', serif;
         margin-top: 18px;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         color: #1E2A35;
         font-size: 1.15rem;
     }
 
     .timeline-content p {
-        color: #6B7A8D;
+        color: #374151;
         line-height: 1.7;
+        font-size: 0.95rem;
         margin: 0;
     }
 
@@ -404,7 +395,7 @@ require_once 'templates/header.php';
 
     .valeur-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.1);
         background: white;
         border-color: #E8ECF0;
     }
@@ -428,7 +419,7 @@ require_once 'templates/header.php';
     }
 
     .valeur-card p {
-        color: #6B7A8D;
+        color: #374151;
         line-height: 1.7;
         margin: 0;
         font-size: 0.95rem;
@@ -450,13 +441,13 @@ require_once 'templates/header.php';
         background: white;
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         transition: all 0.3s ease;
     }
 
     .team-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.13);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.13);
     }
 
     .team-image {
@@ -497,7 +488,7 @@ require_once 'templates/header.php';
     }
 
     .team-info .bio {
-        color: #6B7A8D;
+        color: #374151;
         font-size: 0.92rem;
         line-height: 1.6;
         margin-bottom: 18px;
@@ -543,7 +534,7 @@ require_once 'templates/header.php';
 
         .stat-item {
             border-right: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .timeline::before {
@@ -582,13 +573,13 @@ require_once 'templates/header.php';
     }
 </style>
 
-<!-- En-tête avec navigation rapide -->
-<div class="page-hero">
+<!-- ══ HERO — id="propos" ══════════════════════════════════════ -->
+<div class="page-hero" id="propos">
     <div class="container">
         <div class="page-hero-content" data-aos="fade-up">
-            <span class="page-hero-tag">À propos du GSCC</span>
-            <h1>Qui sommes-nous ?</h1>
-            <p class="page-hero-desc">Le Groupe de Support Contre le Cancer (GSCC) est une organisation à but non lucratif fondée en 1999 par un groupe de dames, qui, ayant vécu le cancer personnellement ou à travers un proche, ont décidé de donner gracieusement de leur temps et de partager leurs expériences avec les personnes atteintes du cancer.  Reconnu par le Ministère des Affaires Sociales et du Travail, le GSCC travaille depuis sa fondation à l’amélioration du sort des personnes atteintes de cancer, et à la sensibilisation de la population sur la maladie du cancer, sa prévention et son dépistage.</p>
+            <a href="#propos" class="page-hero-tag">À propos du GSCC</a>
+            <h1>Qui sommes-nous&nbsp;?</h1>
+            <p class="page-hero-desc">Le Groupe de Support Contre le Cancer (GSCC) est une organisation à but non lucratif fondée en 1999 par un groupe de dames, qui, ayant vécu le cancer personnellement ou à travers un proche, ont décidé de donner gracieusement de leur temps et de partager leurs expériences avec les personnes atteintes du cancer. Reconnu par le Ministère des Affaires Sociales et du Travail, le GSCC travaille depuis sa fondation à l'amélioration du sort des personnes atteintes de cancer, et à la sensibilisation de la population sur la maladie du cancer, sa prévention et son dépistage.</p>
             <nav class="anchor-nav" aria-label="Navigation rapide">
                 <a href="#mission">Mission</a>
                 <a href="#vision">Vision</a>
@@ -612,7 +603,6 @@ require_once 'templates/header.php';
                 <blockquote class="mv-quote">"Vivre pour Aimer, Vivre pour Aider, Vivre pour Partager, Vivre Intensément"</blockquote>
             </div>
 
-            <!-- id="vision" sur la carte Vision elle-même -->
             <div id="vision" class="mv-card vision" data-aos="fade-left">
                 <div class="mv-icon"><i class="fas fa-eye"></i></div>
                 <h3>Notre Vision</h3>
@@ -659,28 +649,36 @@ require_once 'templates/header.php';
             <div class="timeline-item" data-aos="fade-right">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <span class="timeline-year">2014</span>
+                    <span class="timeline-year">1999</span>
                     <h3>Fondation du GSCC</h3>
-                    <p>Création du Groupe de Support Contre le Cancer par un groupe de bénévoles passionnés, animés par la volonté d'apporter du soutien aux personnes atteintes de cancer en Haïti.</p>
+                    <p>Création du Groupe de Support Contre le Cancer par un groupe de dames bénévoles, animées par la volonté d'apporter du soutien aux personnes atteintes de cancer en Haïti.</p>
                 </div>
             </div>
             <div class="timeline-item" data-aos="fade-left">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <span class="timeline-year">2016</span>
-                    <h3>Premier programme d'aide financière</h3>
-                    <p>Lancement du premier programme d'aide financière pour permettre aux patients à faibles revenus d'accéder aux traitements nécessaires.</p>
+                    <span class="timeline-year">2003</span>
+                    <h3>Reconnaissance officielle</h3>
+                    <p>Reconnaissance par le Ministère des Affaires Sociales et du Travail, marquant une étape clé dans la légitimité de l'organisation.</p>
                 </div>
             </div>
             <div class="timeline-item" data-aos="fade-right">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <span class="timeline-year">2018</span>
+                    <span class="timeline-year">2010</span>
+                    <h3>Premier programme d'aide financière</h3>
+                    <p>Lancement du premier programme d'aide financière pour permettre aux patients à faibles revenus d'accéder aux traitements nécessaires.</p>
+                </div>
+            </div>
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-year">2015</span>
                     <h3>Ouverture du centre d'écoute</h3>
                     <p>Inauguration du premier centre d'écoute et de soutien psychologique pour les patients et leurs familles à travers Haïti.</p>
                 </div>
             </div>
-            <div class="timeline-item" data-aos="fade-left">
+            <div class="timeline-item" data-aos="fade-right">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <span class="timeline-year">2020</span>
@@ -688,7 +686,7 @@ require_once 'templates/header.php';
                     <p>Lancement de grandes campagnes de sensibilisation à travers tout le pays sur la prévention et le dépistage précoce du cancer.</p>
                 </div>
             </div>
-            <div class="timeline-item" data-aos="fade-right">
+            <div class="timeline-item" data-aos="fade-left">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <span class="timeline-year">2024</span>
@@ -705,14 +703,13 @@ require_once 'templates/header.php';
     <div class="container">
         <div class="pres-section-header" data-aos="fade-up">
             <span class="pres-section-tag">Ce qui nous guide</span>
-            <h2>Nos Valeurs & Engagements</h2>
+            <h2>Nos Valeurs &amp; Engagements</h2>
             <div class="pres-divider"></div>
         </div>
         <div class="valeurs-grid">
             <?php
             $couleurs_defaut = ['#003399', '#D94F7A', '#4CAF50', '#C9933A'];
             foreach ($valeurs as $index => $valeur):
-                // CORRECTION : couleur en inline style sur chaque carte (pas dans le bloc <style>)
                 $couleur = htmlspecialchars($valeur['couleur'] ?? $couleurs_defaut[$index % 4]);
                 $icone   = htmlspecialchars($valeur['icone']   ?? 'fa-heart');
             ?>
@@ -741,16 +738,17 @@ require_once 'templates/header.php';
             <?php if (empty($equipe)): ?>
                 <?php
                 $membres_defaut = [
-                    ['nom' => 'Dr. Marie Jean-Baptiste',  'fonction' => 'Présidente Fondatrice',      'bio' => 'Oncologue avec plus de 20 ans d\'expérience, dédiée à la lutte contre le cancer en Haïti.', 'rand' => 10],
-                    ['nom' => 'Pierre Richard Alexandre', 'fonction' => 'Coordinateur des Programmes', 'bio' => 'Expert en gestion de projets humanitaires, coordonne les actions sur le terrain.',          'rand' => 11],
-                    ['nom' => 'Rose-Merline Charles',     'fonction' => 'Psychologue Clinicienne',     'bio' => 'Spécialiste en accompagnement psychologique des patients et familles.',                    'rand' => 12],
-                    ['nom' => 'Jean-Claude Michel',       'fonction' => 'Responsable Administratif',   'bio' => 'Gère les aspects administratifs et financiers de l\'organisation.',                        'rand' => 13],
+                    ['nom' => 'Dr. Marie Jean-Baptiste',  'fonction' => 'Présidente Fondatrice',       'bio' => 'Oncologue avec plus de 20 ans d\'expérience, dédiée à la lutte contre le cancer en Haïti.', 'rand' => 10],
+                    ['nom' => 'Pierre Richard Alexandre', 'fonction' => 'Coordinateur des Programmes',  'bio' => 'Expert en gestion de projets humanitaires, coordonne les actions sur le terrain.',          'rand' => 11],
+                    ['nom' => 'Rose-Merline Charles',     'fonction' => 'Psychologue Clinicienne',      'bio' => 'Spécialiste en accompagnement psychologique des patients et familles.',                    'rand' => 12],
+                    ['nom' => 'Jean-Claude Michel',       'fonction' => 'Responsable Administratif',    'bio' => 'Gère les aspects administratifs et financiers de l\'organisation.',                        'rand' => 13],
                 ];
                 foreach ($membres_defaut as $i => $m):
                 ?>
                     <div class="team-card" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
                         <div class="team-image">
-                            <img src="https://picsum.photos/400/500?random=<?= $m['rand'] ?>" alt="<?= htmlspecialchars($m['nom']) ?>">
+                            <img src="https://picsum.photos/400/500?random=<?= $m['rand'] ?>"
+                                 alt="<?= htmlspecialchars($m['nom']) ?>">
                         </div>
                         <div class="team-info">
                             <h3><?= htmlspecialchars($m['nom']) ?></h3>
@@ -758,7 +756,6 @@ require_once 'templates/header.php';
                             <p class="bio"><?= htmlspecialchars($m['bio']) ?></p>
                             <div class="team-social">
                                 <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                                 <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
                             </div>
                         </div>
@@ -769,16 +766,20 @@ require_once 'templates/header.php';
                     <div class="team-card" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
                         <div class="team-image">
                             <?php
-                                // imageUrl() cherche dans UPLOADS_PATH — on contourne pour images/equipe/
-                                if (!empty($membre['photo'])) {
-                                    $photo_src = rtrim(SITE_URL, '/') . '/' . ltrim($membre['photo'], '/');
-                                } else {
-                                    $photo_src = 'https://ui-avatars.com/api/?name=' . urlencode($membre['prenom'] . '+' . $membre['nom']) . '&size=400&background=D94F7A&color=fff&font-size=0.33';
-                                }
+                            if (!empty($membre['photo'])) {
+                                $photo_src = rtrim(SITE_URL, '/') . '/' . ltrim($membre['photo'], '/');
+                            } else {
+                                $photo_src = 'https://ui-avatars.com/api/?name='
+                                    . urlencode($membre['prenom'] . '+' . $membre['nom'])
+                                    . '&size=400&background=D94F7A&color=fff&font-size=0.33';
+                            }
+                            $fallback = 'https://ui-avatars.com/api/?name='
+                                . urlencode($membre['prenom'] . '+' . $membre['nom'])
+                                . '&size=400&background=D94F7A&color=fff&font-size=0.33';
                             ?>
                             <img src="<?= htmlspecialchars($photo_src) ?>"
                                  alt="<?= htmlspecialchars($membre['prenom'] . ' ' . $membre['nom']) ?>"
-                                 onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=<?= urlencode($membre['prenom'] . '+' . $membre['nom']) ?>&size=400&background=D94F7A&color=fff&font-size=0.33';">
+                                 onerror="this.onerror=null;this.src='<?= htmlspecialchars($fallback) ?>';">
                         </div>
                         <div class="team-info">
                             <h3><?= e($membre['prenom'] . ' ' . $membre['nom']) ?></h3>
@@ -788,7 +789,21 @@ require_once 'templates/header.php';
                             <?php endif; ?>
                             <div class="team-social">
                                 <?php if (!empty($membre['email'])): ?>
-                                    <a href="mailto:<?= e($membre['email']) ?>" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                    <a href="mailto:<?= e($membre['email']) ?>" aria-label="Email">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                <?php endif; ?>
+                                <?php
+                                $reseaux = [];
+                                if (!empty($membre['reseaux_sociaux'])) {
+                                    $reseaux = is_array($membre['reseaux_sociaux'])
+                                        ? $membre['reseaux_sociaux']
+                                        : json_decode($membre['reseaux_sociaux'], true) ?? [];
+                                }
+                                if (!empty($reseaux['linkedin'])): ?>
+                                    <a href="<?= e($reseaux['linkedin']) ?>" target="_blank" rel="noopener" aria-label="LinkedIn">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
                                 <?php endif; ?>
                             </div>
                         </div>

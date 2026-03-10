@@ -398,5 +398,3 @@ function getParam($key, $default = '')
         return $default;
     }
 }
-
-

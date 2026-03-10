@@ -30,12 +30,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Validation
         if (empty($data['nom'])) {
             $error = 'Le nom est requis.';
+        } elseif (!preg_match("/^[\p{L}\s'\-]{2,60}$/u", $data['nom'])) {
+            $error = 'Le nom ne doit contenir que des lettres.';
         } elseif (empty($data['prenom'])) {
             $error = 'Le prénom est requis.';
+        } elseif (!preg_match("/^[\p{L}\s'\-]{2,60}$/u", $data['prenom'])) {
+            $error = 'Le prénom ne doit contenir que des lettres.';
         } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $error = 'Email invalide.';
+        } elseif (!empty($data['telephone']) && !preg_match('/^[0-9+\s\-().]{7,20}$/', $data['telephone'])) {
+            $error = 'Numéro de téléphone invalide. Chiffres uniquement.';
+        } elseif (!empty($data['code_postal']) && !preg_match('/^[0-9]{3,10}$/', $data['code_postal'])) {
+            $error = 'Code postal invalide (chiffres uniquement).';
+        } elseif (!empty($data['ville']) && !preg_match("/^[\p{L}\s'\-]{2,60}$/u", $data['ville'])) {
+            $error = 'La ville ne doit contenir que des lettres.';
         } elseif (strlen($data['password']) < 8) {
             $error = 'Le mot de passe doit contenir au moins 8 caractères.';
+        } elseif (!preg_match('/[A-Z]/', $data['password'])) {
+            $error = 'Le mot de passe doit contenir au moins une majuscule.';
+        } elseif (!preg_match('/[0-9]/', $data['password'])) {
+            $error = 'Le mot de passe doit contenir au moins un chiffre.';
         } elseif ($data['password'] !== $data['confirm_password']) {
             $error = 'Les mots de passe ne correspondent pas.';
         } elseif (!isset($_POST['conditions'])) {
@@ -611,6 +625,233 @@ $csrf_token = generateCSRFToken();
                 this.style.borderColor = '#4CAF50';
             }
         });
+    </script>
+
+    <script>
+// ════════════════════════════════════════════════════════════
+// RESTRICTIONS FORMULAIRE — commun aux 3 pages
+// ════════════════════════════════════════════════════════════
+(function () {
+
+    // ── Utilitaires ────────────────────────────────────────
+    function addError(input, msg) {
+        removeError(input);
+        input.style.borderColor = '#DC2626';
+        var el = document.createElement('span');
+        el.className = 'field-error-msg';
+        el.style.cssText = 'color:#DC2626;font-size:12px;margin-top:4px;display:block;';
+        el.textContent = msg;
+        input.parentNode.insertBefore(el, input.nextSibling);
+    }
+
+    function removeError(input) {
+        input.style.borderColor = '';
+        var next = input.nextSibling;
+        while (next) {
+            if (next.classList && next.classList.contains('field-error-msg')) {
+                next.parentNode.removeChild(next);
+                break;
+            }
+            next = next.nextSibling;
+        }
+    }
+
+    function addOk(input) {
+        removeError(input);
+        input.style.borderColor = '#16A34A';
+    }
+
+    // ── 1. NOM & PRÉNOM — lettres, espaces, tirets, apostrophes seulement ──
+    document.querySelectorAll('input[name="nom"], input[name="prenom"]').forEach(function (inp) {
+        inp.setAttribute('autocomplete', inp.name === 'nom' ? 'family-name' : 'given-name');
+        inp.setAttribute('maxlength', '60');
+
+        inp.addEventListener('keypress', function (e) {
+            // Autoriser : lettres (toutes langues via regex unicode), espace, tiret, apostrophe
+            if (!/[\p{L}\s\-']/u.test(e.key) && e.key.length === 1) {
+                e.preventDefault();
+            }
+        });
+        inp.addEventListener('input', function () {
+            this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s\-']/g, '');
+        });
+        inp.addEventListener('blur', function () {
+            var v = this.value.trim();
+            if (v.length < 2) addError(this, 'Minimum 2 caractères.');
+            else addOk(this);
+        });
+    });
+
+    // ── 2. TÉLÉPHONE — chiffres, +, espaces, tirets, parenthèses ──────────
+    document.querySelectorAll('input[type="tel"], input[name="telephone"]').forEach(function (inp) {
+        inp.setAttribute('inputmode', 'tel');
+        inp.setAttribute('maxlength', '20');
+        inp.setAttribute('placeholder', inp.placeholder || 'Ex: +509 37 00 00 00');
+
+        inp.addEventListener('keypress', function (e) {
+            if (!/[0-9+\s\-().]/.test(e.key) && e.key.length === 1) {
+                e.preventDefault();
+            }
+        });
+        inp.addEventListener('input', function () {
+            var clean = this.value.replace(/[^0-9+\s\-(). ]/g, '');
+            if (this.value !== clean) this.value = clean;
+        });
+        inp.addEventListener('blur', function () {
+            var v = this.value.trim();
+            if (v.length === 0 && !this.required) { removeError(this); return; }
+            if (v.length < 7 || !/^[0-9+\s\-().]+$/.test(v)) {
+                addError(this, 'Numéro invalide. Utilisez uniquement des chiffres.');
+            } else {
+                addOk(this);
+            }
+        });
+    });
+
+    // ── 3. EMAIL ────────────────────────────────────────────────────────────
+    document.querySelectorAll('input[type="email"]').forEach(function (inp) {
+        inp.addEventListener('blur', function () {
+            var v = this.value.trim();
+            if (v.length === 0) { removeError(this); return; }
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!re.test(v)) {
+                addError(this, 'Adresse email invalide.');
+            } else {
+                addOk(this);
+            }
+        });
+        inp.addEventListener('input', function () {
+            removeError(this);
+            this.style.borderColor = '';
+        });
+    });
+
+    // ── 4. MOT DE PASSE — minimum 8 car, 1 majuscule, 1 chiffre ───────────
+    var pwInput = document.getElementById('password');
+    var confirmInput = document.getElementById('confirm_password');
+
+    if (pwInput) {
+        pwInput.setAttribute('minlength', '8');
+        pwInput.addEventListener('blur', function () {
+            var v = this.value;
+            if (v.length === 0) { removeError(this); return; }
+            if (v.length < 8) {
+                addError(this, 'Minimum 8 caractères requis.');
+            } else if (!/[A-Z]/.test(v)) {
+                addError(this, 'Ajoutez au moins une lettre majuscule.');
+            } else if (!/[0-9]/.test(v)) {
+                addError(this, 'Ajoutez au moins un chiffre.');
+            } else {
+                addOk(this);
+            }
+        });
+    }
+
+    if (confirmInput && pwInput) {
+        confirmInput.addEventListener('blur', function () {
+            if (this.value.length === 0) { removeError(this); return; }
+            if (this.value !== pwInput.value) {
+                addError(this, 'Les mots de passe ne correspondent pas.');
+            } else {
+                addOk(this);
+            }
+        });
+    }
+
+    // ── 5. CODE POSTAL — chiffres uniquement ───────────────────────────────
+    var cp = document.getElementById('code_postal');
+    if (cp) {
+        cp.setAttribute('inputmode', 'numeric');
+        cp.setAttribute('maxlength', '10');
+        cp.addEventListener('keypress', function (e) {
+            if (!/[0-9]/.test(e.key) && e.key.length === 1) e.preventDefault();
+        });
+        cp.addEventListener('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+        cp.addEventListener('blur', function () {
+            var v = this.value.trim();
+            if (v.length === 0) { removeError(this); return; }
+            if (v.length < 3) addError(this, 'Code postal invalide.');
+            else addOk(this);
+        });
+    }
+
+    // ── 6. DATE DE NAISSANCE — âge entre 16 et 100 ans ────────────────────
+    var dob = document.querySelector('input[name="date_naissance"]');
+    if (dob) {
+        var today = new Date();
+        var maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+        var minDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+        dob.setAttribute('max', maxDate.toISOString().split('T')[0]);
+        dob.setAttribute('min', minDate.toISOString().split('T')[0]);
+
+        dob.addEventListener('blur', function () {
+            var v = this.value;
+            if (!v) { removeError(this); return; }
+            var d = new Date(v);
+            if (d > maxDate) {
+                addError(this, 'Vous devez avoir au moins 16 ans.');
+            } else if (d < minDate) {
+                addError(this, 'Date invalide.');
+            } else {
+                addOk(this);
+            }
+        });
+    }
+
+    // ── 7. MOTIVATIONS — minimum 50 caractères ────────────────────────────
+    var motiv = document.querySelector('textarea[name="motivations"]');
+    if (motiv) {
+        // Compteur de caractères
+        var counter = document.createElement('span');
+        counter.style.cssText = 'font-size:12px;color:#6B7280;display:block;margin-top:4px;text-align:right;';
+        counter.textContent = '0 / 50 caractères minimum';
+        motiv.parentNode.appendChild(counter);
+
+        motiv.addEventListener('input', function () {
+            var len = this.value.length;
+            counter.textContent = len + ' / 50 caractères minimum';
+            counter.style.color = len >= 50 ? '#16A34A' : '#6B7280';
+            if (len >= 50) removeError(this);
+        });
+        motiv.addEventListener('blur', function () {
+            if (this.value.length > 0 && this.value.length < 50) {
+                addError(this, 'Décrivez vos motivations (minimum 50 caractères).');
+            } else if (this.value.length >= 50) {
+                addOk(this);
+            }
+        });
+    }
+
+    // ── 8. DISPONIBILITÉS — longueur raisonnable ──────────────────────────
+    var dispo = document.querySelector('input[name="disponibilites"]');
+    if (dispo) {
+        dispo.setAttribute('maxlength', '200');
+    }
+
+    // ── 9. PROFESSION — lettres uniquement (pas de chiffres seuls) ────────
+    document.querySelectorAll('input[name="profession"]').forEach(function (inp) {
+        inp.setAttribute('maxlength', '80');
+        inp.addEventListener('input', function () {
+            this.value = this.value.replace(/[^a-zA-ZÀ-ÿ0-9\s\-',.()]/g, '');
+        });
+    });
+
+    // ── 10. VILLE — lettres et espaces ────────────────────────────────────
+    var ville = document.getElementById('ville');
+    if (ville) {
+        ville.setAttribute('maxlength', '60');
+        ville.addEventListener('keypress', function (e) {
+            if (!/[a-zA-ZÀ-ÿ\s\-']/.test(e.key) && e.key.length === 1) e.preventDefault();
+        });
+        ville.addEventListener('input', function () {
+            this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s\-']/g, '');
+        });
+    }
+
+})();
+
     </script>
 </body>
 

@@ -68,10 +68,10 @@ function getInitials(string $nom): string
    Pas de grille en background
 ===================================================== */
         :root {
-            --navy: #0D1B35;
-            --navy-2: #1A2D50;
-            --rose: #AC2F58;
-            --rose-lite: #FAE8EE;
+            --navy: #003399;
+            --navy-2: #1a56cc;
+            --rose: #1a56cc;
+            --rose-lite: #e8effe;
             --bg: #F4F6FB;
             --white: #FFFFFF;
             --text: #1A1A2E;
@@ -111,10 +111,9 @@ function getInitials(string $nom): string
 
         /* ══ PAGE HERO ═════════════════════════════════════ */
         .page-hero {
-            background: var(--navy);
+            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
             padding: 84px 0 68px;
             text-align: center;
-            /* Pas de ::before avec grille */
             position: relative;
         }
 
@@ -505,7 +504,7 @@ function getInitials(string $nom): string
 
         .btn-contact:active,
         .btn-contact:focus {
-            background: #8B1A3A;
+            background: #003399;
             color: #FFFFFF;
             outline: none;
         }
@@ -623,7 +622,7 @@ function getInitials(string $nom): string
 
         .btn-rejoindre:active,
         .btn-rejoindre:focus {
-            background: #8B1A3A;
+            background: #003399;
             color: #FFFFFF;
             outline: none;
             transform: translateY(0);

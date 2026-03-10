@@ -24,7 +24,7 @@ $jours_restants = ceil(($prochaine_marche - time()) / (60 * 60 * 24));
     
     <style>
         .marche-header {
-            background: linear-gradient(135deg, #FF69B4 0%, #003399 100%);
+            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
             color: white;
             padding: 100px 0;
             text-align: center;
@@ -74,13 +74,13 @@ $jours_restants = ceil(($prochaine_marche - time()) / (60 * 60 * 24));
         .info-icon {
             width: 70px;
             height: 70px;
-            background: rgba(255,105,180,0.1);
+            background: rgba(26,86,204,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            color: #FF69B4;
+            color: #1a56cc;
             font-size: 28px;
         }
         
@@ -147,7 +147,7 @@ $jours_restants = ceil(($prochaine_marche - time()) / (60 * 60 * 24));
         }
         
         .inscription-marche {
-            background: linear-gradient(135deg, #FF69B4 0%, #003399 100%);
+            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
             color: white;
             padding: 80px 0;
             text-align: center;
@@ -170,7 +170,7 @@ $jours_restants = ceil(($prochaine_marche - time()) / (60 * 60 * 24));
         
         .btn-marche {
             background: white;
-            color: #FF69B4;
+            color: #1a56cc;
             padding: 15px 50px;
             border-radius: 50px;
             text-decoration: none;
@@ -242,7 +242,7 @@ $jours_restants = ceil(($prochaine_marche - time()) / (60 * 60 * 24));
             top: -20px;
             left: 30px;
             font-size: 80px;
-            color: #FF69B4;
+            color: #1a56cc;
             opacity: 0.3;
         }
         
@@ -273,7 +273,7 @@ $jours_restants = ceil(($prochaine_marche - time()) / (60 * 60 * 24));
         }
         
         .faq-question i {
-            color: #FF69B4;
+            color: #1a56cc;
         }
         
         .faq-answer {

@@ -236,61 +236,97 @@ require_once 'templates/header.php';
             </div>
         </div>
         <div class="blog-grid">
-            <article class="blog-card" data-aos="fade-up" data-aos-delay="0">
+            <?php
+            // Articles statiques de fallback si aucun article en BDD
+            $articles_fallback = [
+                [
+                    'slug'            => null,
+                    'id'              => null,
+                    'titre'           => "L'importance du dépistage précoce",
+                    'resume'          => "Découvrez pourquoi le dépistage précoce peut sauver des vies et comment le GSCC vous accompagne dans cette démarche.",
+                    'image_couverture'=> 'images/image3.jpg',
+                    'date_publication'=> '2024-02-15 00:00:00',
+                    'categorie_nom'   => 'Prévention',
+                ],
+                [
+                    'slug'            => null,
+                    'id'              => null,
+                    'titre'           => "Grande marche contre le cancer",
+                    'resume'          => "Rejoignez-nous pour notre marche annuelle de sensibilisation et de collecte de fonds pour les patients haïtiens.",
+                    'image_couverture'=> 'images/image4.jpg',
+                    'date_publication'=> '2024-03-10 00:00:00',
+                    'categorie_nom'   => 'Événement',
+                ],
+                [
+                    'slug'            => null,
+                    'id'              => null,
+                    'titre'           => "Nouveau programme d'accompagnement",
+                    'resume'          => "Le GSCC lance un programme innovant de soutien psychologique pour les patients et leurs familles à travers Haïti.",
+                    'image_couverture'=> 'images/image5.jpg',
+                    'date_publication'=> '2024-04-05 00:00:00',
+                    'categorie_nom'   => 'Projet',
+                ],
+            ];
+
+            // Utiliser les articles de la BDD si disponibles, sinon le fallback
+            $articles_affiches = !empty($derniers_articles) ? $derniers_articles : $articles_fallback;
+
+            foreach ($articles_affiches as $i => $article):
+                // Construire le lien correct vers l'article
+                if (!empty($article['slug'])) {
+                    $lien_article = 'article.php?slug=' . urlencode($article['slug']);
+                } elseif (!empty($article['id'])) {
+                    $lien_article = 'article.php?id=' . (int)$article['id'];
+                } else {
+                    $lien_article = 'blog.php';
+                }
+
+                // Image de couverture
+                $img = !empty($article['image_couverture'])
+                    ? htmlspecialchars($article['image_couverture'])
+                    : 'images/image3.jpg';
+
+                // Date formatée
+                $date_fmt = !empty($article['date_publication'])
+                    ? formatDateFr($article['date_publication'])
+                    : '';
+
+                // Catégorie
+                $categorie = !empty($article['categorie_nom'])
+                    ? htmlspecialchars($article['categorie_nom'])
+                    : 'Actualité';
+
+                // Résumé tronqué
+                $resume = !empty($article['resume'])
+                    ? truncate(strip_tags($article['resume']), 110)
+                    : '';
+            ?>
+            <article class="blog-card" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
                 <div class="blog-image">
-                    <!-- BUG CORRIGÉ : attribut alt descriptif + loading lazy -->
-                    <img src="images/image3.jpg"
-                        alt="L'importance du dépistage précoce" loading="lazy">
-                    <span class="blog-category">Prévention</span>
+                    <img src="<?= $img ?>"
+                         alt="<?= htmlspecialchars($article['titre']) ?>"
+                         loading="lazy"
+                         onerror="this.onerror=null;this.src='images/image3.jpg';">
+                    <span class="blog-category"><?= $categorie ?></span>
                 </div>
                 <div class="blog-content">
-                    <h3><a href="article.php">L'importance du dépistage précoce</a></h3>
-                    <p>Découvrez pourquoi le dépistage précoce peut sauver des vies et comment
-                        le GSCC vous accompagne dans cette démarche.</p>
+                    <h3>
+                        <a href="<?= $lien_article ?>">
+                            <?= htmlspecialchars($article['titre']) ?>
+                        </a>
+                    </h3>
+                    <p><?= htmlspecialchars($resume) ?></p>
                     <div class="blog-meta">
-                        <span><i class="far fa-calendar"></i> 15 Fév 2024</span>
-                        <a href="article.php" class="read-more">
+                        <?php if ($date_fmt): ?>
+                            <span><i class="far fa-calendar"></i> <?= $date_fmt ?></span>
+                        <?php endif; ?>
+                        <a href="<?= $lien_article ?>" class="read-more">
                             Lire la suite <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </article>
-            <article class="blog-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="blog-image">
-                    <img src="images/image4.jpg"
-                        alt="Grande marche contre le cancer" loading="lazy">
-                    <span class="blog-category">Événement</span>
-                </div>
-                <div class="blog-content">
-                    <h3><a href="article.php">Grande marche contre le cancer</a></h3>
-                    <p>Rejoignez-nous pour notre marche annuelle de sensibilisation et de
-                        collecte de fonds pour les patients haïtiens.</p>
-                    <div class="blog-meta">
-                        <span><i class="far fa-calendar"></i> 10 Mar 2024</span>
-                        <a href="article.php" class="read-more">
-                            Lire la suite <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </article>
-            <article class="blog-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="blog-image">
-                    <img src="images/image5.jpg"
-                        alt="Nouveau programme d'accompagnement" loading="lazy">
-                    <span class="blog-category">Projet</span>
-                </div>
-                <div class="blog-content">
-                    <h3><a href="article.php">Nouveau programme d'accompagnement</a></h3>
-                    <p>Le GSCC lance un programme innovant de soutien psychologique pour les
-                        patients et leurs familles à travers Haïti.</p>
-                    <div class="blog-meta">
-                        <span><i class="far fa-calendar"></i> 5 Avr 2024</span>
-                        <a href="article.php" class="read-more">
-                            Lire la suite <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </article>
+            <?php endforeach; ?>
         </div>
         <div class="section-cta" data-aos="fade-up">
             <a href="blog.php" class="btn btn-outline-primary">
