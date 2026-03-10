@@ -130,7 +130,7 @@ $csrf_token = generateCSRFToken();
 
         /* ── Header ── */
         .page-header {
-            background: linear-gradient(135deg, #003399 0%, #2E7D32 100%);
+            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
             color: white;
             padding: 60px 0;
             text-align: center;

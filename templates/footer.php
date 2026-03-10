@@ -27,13 +27,13 @@
                         <i class="fab fa-instagram"></i>
                     </a>
                     </a>
-                    <a href="<?= getParam('linkedin', '#') ?>" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/company/98641192/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
                     <a href="https://www.youtube.com/@gscchaiti" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                         <i class="fab fa-youtube"></i>
                     </a>
-                    <a href="<?= getParam('tiktok', '#') ?>" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                    <a href="https://www.tiktok.com/@gscchaiti" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
                         <i class="fab fa-tiktok"></i>
                     </a>
                     <a href="https://wa.me/50929474722" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">

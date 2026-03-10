@@ -506,7 +506,7 @@ $csrf_token = generateCSRFToken();
                             <a href="https://web.facebook.com/GSCCHAITI" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                             <a href="https://x.com/gscchaiti_" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                             <a href="https://www.instagram.com/gscchaiti" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.linkedin.com/company/98641192/admin/dashboard/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                             <a href="https://www.youtube.com/@gscchaiti" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>

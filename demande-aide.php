@@ -173,15 +173,7 @@ $csrf_token = function_exists('generateCSRFToken') ? generateCSRFToken() : bin2h
             overflow: hidden;
         }
 
-        .page-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
-            background-size: 56px 56px;
-        }
+
 
         /* ligne verte en bas — couleur du site */
         .page-hero::after {
