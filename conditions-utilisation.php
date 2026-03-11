@@ -213,41 +213,42 @@ $date_maj = '15 janvier 2025';
             --grey: #4B5563;
             --grey-light: #6B7280;
         }
-        p, li, td, th, span:not(.badge):not(.tag):not(.label) {
-            color: #0D1117;
+
+        /* Texte sur fond coloré — toujours blanc */
+        .page-header, .page-header *,
+        .cta-section, .cta-section *,
+        .hero, .hero *,
+        .btn-contact, .btn-contact *,
+        .faq-search button,
+        .faq-category-btn.active,
+        .faq-category-btn:hover {
+            color: #FFFFFF !important;
         }
-        .section-text p,
-        .section-content p,
-        .legal-text p,
-        .faq-answer p,
-        .content-text p,
-        .intro-text,
-        .update-date,
-        .toc-link,
-        .cookie-desc,
-        .stat-label,
-        .contact-text,
-        .breadcrumb a,
-        .breadcrumb span {
-            color: #1F2937 !important;
+
+        /* Texte sur fond clair — gris lisible */
+        .section-text p, .section-content p,
+        .legal-text p, .faq-answer p,
+        .content-text p, .intro-text,
+        .update-date, .toc-link, .cookie-desc,
+        .stat-label, .contact-text,
+        .breadcrumb a, .breadcrumb span {
+            color: #374151 !important;
         }
-        h1, h2, h3, h4, h5, h6 {
-            color: #0D1117;
-        }
-        .section-title,
-        .faq-question,
-        .toc-title,
-        .page-subtitle {
+
+        /* Titres dans le contenu — noir profond */
+        .main-content h1, .main-content h2, .main-content h3,
+        .main-content h4, .main-content h5, .main-content h6,
+        .legal-section h1, .legal-section h2, .legal-section h3,
+        .legal-section h4, .legal-section h5, .legal-section h6,
+        .faq-section h1, .faq-section h2, .faq-section h3,
+        .faq-section h4, .faq-section h5, .faq-section h6,
+        .section-title, .toc-title, .page-subtitle {
             color: #0D1117 !important;
         }
-        /* Texte sur fond coloré reste blanc */
-        .page-header p,
-        .page-header h1,
-        .cta-section p,
-        .cta-section h2,
-        .hero p,
-        .hero h1 {
-            color: #FFFFFF !important;
+
+        /* Boutons non-actifs (fond blanc) */
+        .faq-category-btn:not(.active):not(:hover) {
+            color: #0D1117 !important;
         }
     </style>
 </head>

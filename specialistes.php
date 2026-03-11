@@ -802,7 +802,7 @@ function getInitials(string $nom): string
                                 </div>
                                 <div class="info-row">
                                     <i class="fas fa-phone"></i>
-                                    <a href="tel:<?= htmlspecialchars(preg_replace('/\s+/', '', $s['telephone'])) ?>">
+                                    <a>
                                         <?= htmlspecialchars($s['telephone']) ?>
                                     </a>
                                 </div>

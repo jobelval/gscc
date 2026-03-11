@@ -422,41 +422,35 @@ $faqs = [
             --grey: #4B5563;
             --grey-light: #6B7280;
         }
-        p, li, td, th, span:not(.badge):not(.tag):not(.label) {
-            color: #0D1117;
+
+        /* Texte sur fond coloré — toujours blanc */
+        .page-header, .page-header *,
+        .cta-section, .cta-section *,
+        .hero, .hero *,
+        .btn-contact, .btn-contact *,
+        .faq-search button,
+        .faq-category-btn.active,
+        .faq-category-btn:hover {
+            color: #FFFFFF !important;
         }
-        .section-text p,
-        .section-content p,
-        .legal-text p,
-        .faq-answer p,
-        .content-text p,
-        .intro-text,
-        .update-date,
-        .toc-link,
-        .cookie-desc,
-        .stat-label,
-        .contact-text,
-        .breadcrumb a,
-        .breadcrumb span {
-            color: #1F2937 !important;
+
+        /* Texte sur fond clair */
+        .faq-answer p, .faq-answer li,
+        .faq-contact p, .faq-not-found p,
+        .faq-meta {
+            color: #4B5563 !important;
         }
-        h1, h2, h3, h4, h5, h6 {
-            color: #0D1117;
-        }
-        .section-title,
-        .faq-question,
-        .toc-title,
-        .page-subtitle {
+
+        .faq-question h3,
+        .faq-category-title,
+        .faq-contact h3,
+        .faq-not-found h3 {
             color: #0D1117 !important;
         }
-        /* Texte sur fond coloré reste blanc */
-        .page-header p,
-        .page-header h1,
-        .cta-section p,
-        .cta-section h2,
-        .hero p,
-        .hero h1 {
-            color: #FFFFFF !important;
+
+        /* Boutons non-actifs (fond blanc) */
+        .faq-category-btn:not(.active):not(:hover) {
+            color: #0D1117 !important;
         }
     </style>
 </head>

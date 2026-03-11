@@ -680,11 +680,11 @@ $timestamp_marche = $prochaine_marche * 1000;
                 <h2 class="section-title">Ils soutiennent la marche</h2>
             </div>
             <div class="partners-row" data-aos="fade-up" data-aos-delay="80">
-                <a href="partenaires.php" class="partner-pill"><i class="fas fa-university"></i> Sogebank</a>
-                <a href="partenaires.php" class="partner-pill"><i class="fas fa-signal"></i> Digicel</a>
-                <a href="partenaires.php" class="partner-pill"><i class="fas fa-landmark"></i> BNC</a>
-                <a href="partenaires.php" class="partner-pill"><i class="fas fa-broadcast-tower"></i> RTC</a>
-                <a href="partenaires.php" class="partner-pill"><i class="fas fa-newspaper"></i> Le Nouvelliste</a>
+                <a href="#" class="partner-pill"><i class="fas fa-university"></i> Sogebank</a>
+                <a href="#" class="partner-pill"><i class="fas fa-signal"></i> Digicel</a>
+                <a href="#" class="partner-pill"><i class="fas fa-landmark"></i> BNC</a>
+                <a href="#" class="partner-pill"><i class="fas fa-broadcast-tower"></i> RTC</a>
+                <a href="#" class="partner-pill"><i class="fas fa-newspaper"></i> Le Nouvelliste</a>
             </div>
         </div>
     </section>
