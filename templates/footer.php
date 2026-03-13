@@ -12,8 +12,8 @@
                     <h4>GSCC</h4>
                 </div>
                 <p>
-                    Groupe de Support Contre le Cancer — Ensemble, nous sommes plus forts
-                    dans la lutte contre le cancer en Haïti. Depuis 2014, nous accompagnons
+                    Groupe de Support Contre le Cancer : Ensemble, nous sommes plus forts
+                    dans la lutte contre le cancer en Haïti. Depuis 1999, nous accompagnons
                     les patients et leurs familles.
                 </p>
                 <div class="social-links">
@@ -25,7 +25,6 @@
                     </a>
                     <a href="https://www.instagram.com/gscchaiti" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <i class="fab fa-instagram"></i>
-                    </a>
                     </a>
                     <a href="https://www.linkedin.com/company/98641192/admin/dashboard/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
@@ -61,10 +60,11 @@
                 <ul>
                     <li><a href="blog.php">Blog</a></li>
                     <li><a href="forum.php">Forum</a></li>
-                    <li><a href="campagnes.php">Campagnes & projets</a></li>
+                    <li><a href="campagnes.php">Campagnes &amp; projets</a></li>
                     <li><a href="faire-un-don.php">Faire un don</a></li>
                     <li><a href="devenir-membre.php">Devenir membre</a></li>
                     <li><a href="demande-aide.php">Demander de l'aide</a></li>
+                    <li><a href="coordonnees-bancaires.php">Coordonnées bancaires</a></li>
                 </ul>
             </div>
 
@@ -74,7 +74,7 @@
                 <ul class="footer-contact-info">
                     <li>
                         <i class="fas fa-phone-alt"></i>
-                        <a>2947 47 22</a>
+                        <a href="tel:+50929474722">2947 47 22</a>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
@@ -96,8 +96,7 @@
                             <i class="fas fa-paper-plane" id="footer-nl-icon"></i>
                         </button>
                     </div>
-                    <div id="footer-nl-msg" style="display:none;margin-top:8px;font-size:12.5px;
-                         padding:8px 12px;border-radius:7px;"></div>
+                    <div id="footer-nl-msg"></div>
                 </form>
             </div>
         </div>
@@ -115,49 +114,44 @@
 <script src="<?= JS_URL ?>main.js?v=1772854035"></script>
 
 <script>
-    AOS.init({
-        duration: 1000,
-        once: true,
-        offset: 100
-    });
+    AOS.init({ duration: 1000, once: true, offset: 100 });
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+
         // Mobile Menu Toggle
         const menuToggle = document.querySelector('.mobile-menu-toggle');
-        const mainNav = document.querySelector('.main-nav');
-
+        const mainNav    = document.querySelector('.main-nav');
         if (menuToggle && mainNav) {
-            menuToggle.addEventListener('click', function() {
+            menuToggle.addEventListener('click', function () {
                 this.classList.toggle('active');
                 mainNav.classList.toggle('active');
-
                 const spans = this.querySelectorAll('span');
                 if (this.classList.contains('active')) {
-                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                    spans[1].style.opacity = '0';
-                    spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    spans[0].style.transform     = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity       = '0';
+                    spans[2].style.transform     = 'rotate(-45deg) translate(7px, -6px)';
                     document.body.style.overflow = 'hidden';
                 } else {
-                    spans[0].style.transform = 'none';
-                    spans[1].style.opacity = '1';
-                    spans[2].style.transform = 'none';
+                    spans[0].style.transform     = 'none';
+                    spans[1].style.opacity       = '1';
+                    spans[2].style.transform     = 'none';
                     document.body.style.overflow = 'auto';
                 }
             });
         }
 
         // Header scroll effect
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const header = document.querySelector('.main-header');
             if (!header) return;
             if (window.scrollY > 80) {
-                header.style.background = 'rgba(253,250,248,0.97)';
+                header.style.background     = 'rgba(253,250,248,0.97)';
                 header.style.backdropFilter = 'blur(12px)';
-                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                header.style.boxShadow      = '0 4px 20px rgba(0,0,0,0.1)';
             } else {
-                header.style.background = 'var(--warm-white, #FDFAF8)';
+                header.style.background     = 'var(--warm-white, #FDFAF8)';
                 header.style.backdropFilter = 'none';
-                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.06)';
+                header.style.boxShadow      = '0 2px 20px rgba(0,0,0,0.06)';
             }
         });
     });
@@ -165,25 +159,36 @@
 
 <style>
     /* ============================================
-       FOOTER STYLES
+       FOOTER — FOND BLANC
        ============================================ */
+
     .main-footer {
-        background: #1E2A35;
-        color: rgba(255, 255, 255, 0.7);
+        background: #ffffff;     /* fond blanc */
+        color: #1E2A35;
         padding: 64px 0 0;
         position: relative;
         overflow: hidden;
         font-family: 'DM Sans', sans-serif;
+        border-top: 1px solid #E8ECF0;
     }
 
+    /* Barre décorative rose conservée */
     .main-footer::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: 0; left: 0; right: 0;
         height: 4px;
-        background: linear-gradient(90deg, #D94F7A, #2A7F7F, #C9933A);
+        background: linear-gradient(90deg, #9B1D40, #C8375F, #E8849F, #C8375F, #9B1D40);
+    }
+
+    /* Orbe très discret sur fond blanc */
+    .main-footer::after {
+        content: '';
+        position: absolute;
+        top: -80px; right: -80px;
+        width: 320px; height: 320px;
+        background: radial-gradient(circle, rgba(200,55,95,0.04) 0%, transparent 70%);
+        pointer-events: none;
     }
 
     .main-footer .container {
@@ -199,7 +204,7 @@
         padding-bottom: 48px;
     }
 
-    /* Logo */
+    /* ── Logo ── */
     .footer-logo {
         display: flex;
         align-items: center;
@@ -208,40 +213,34 @@
     }
 
     .footer-logo-img {
-        width: 30%;
-        height: 35%;
+        width: 56px; height: 56px;
         object-fit: contain;
-
-    }
-
-    .footer-logo-icon {
-        width: 40px;
-        height: 40px;
-        background: #D94F7A;
         border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        color: white;
+        background: #F5F7FA;
+        padding: 4px;
         flex-shrink: 0;
+        border: 1px solid #E8ECF0;
     }
 
+    /* "GSCC" en sombre sur fond blanc */
     .footer-logo h4 {
         font-family: 'Playfair Display', serif;
-        font-size: 20px;
-        color: white;
-        margin: -15px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #1E2A35;
+        margin: 0;
+        letter-spacing: 1px;
     }
 
-    .footer-col--brand>p {
+    /* Description — gris moyen, bon contraste */
+    .footer-col--brand > p {
         font-size: 13.5px;
         line-height: 1.8;
-        color: rgba(255, 255, 255, 0.5);
+        color: #6B7A8D;
         margin-bottom: 20px;
     }
 
-    /* Social */
+    /* ── Réseaux sociaux ── */
     .social-links {
         display: flex;
         gap: 8px;
@@ -249,10 +248,9 @@
     }
 
     .social-links a {
-        width: 36px;
-        height: 36px;
-        background: rgba(255, 255, 255, 0.07);
-        color: rgba(255, 255, 255, 0.55);
+        width: 36px; height: 36px;
+        background: #EEF2FF;
+        color: #003399;
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -260,31 +258,34 @@
         font-size: 14px;
         text-decoration: none;
         transition: all 0.2s;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid #D6E0FF;
     }
 
     .social-links a:hover {
-        background: #D94F7A;
+        background: #C8375F;
         color: white;
-        border-color: #D94F7A;
-        transform: translateY(-2px);
+        border-color: #C8375F;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(200,55,95,0.22);
     }
 
-    /* Nav columns */
+    /* ── Titres de colonnes ── */
     .footer-col h4 {
         font-size: 11px;
         font-weight: 700;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: #F2A8C0;
+        color: #003399;           /* bleu GSCC, fort contraste sur blanc */
         margin-bottom: 20px;
         margin-top: 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #EEF2FF;
     }
 
+    /* ── Listes de liens ── */
     .footer-col ul {
         list-style: none;
-        padding: 0;
-        margin: 0;
+        padding: 0; margin: 0;
     }
 
     .footer-col ul li {
@@ -292,30 +293,35 @@
     }
 
     .footer-col ul li a {
-        color: rgba(255, 255, 255, 0.55);
+        color: #6B7A8D;
         text-decoration: none;
         font-size: 13.5px;
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        transition: all 0.2s;
+        transition: all 0.22s;
     }
 
+    /* Puce rose devant chaque lien */
     .footer-col ul li a::before {
         content: '';
-        width: 4px;
-        height: 4px;
-        background: #D94F7A;
+        width: 5px; height: 5px;
+        background: #C8375F;
         border-radius: 50%;
         flex-shrink: 0;
+        transition: transform 0.2s;
     }
 
     .footer-col ul li a:hover {
-        color: white;
-        padding-left: 4px;
+        color: #003399;
+        padding-left: 5px;
     }
 
-    /* Contact info */
+    .footer-col ul li a:hover::before {
+        transform: scale(1.4);
+    }
+
+    /* ── Informations de contact ── */
     .footer-contact-info {
         list-style: none;
         padding: 0;
@@ -328,39 +334,41 @@
         gap: 10px;
         margin-bottom: 14px;
         font-size: 13.5px;
-        color: rgba(255, 255, 255, 0.55);
+        color: #1E2A35;           /* texte sombre lisible */
     }
 
     .footer-contact-info i {
-        color: #F2A8C0;
+        color: #C8375F;
         width: 16px;
         flex-shrink: 0;
+        font-size: 13px;
     }
 
     .footer-contact-info a {
-        color: rgba(255, 255, 255, 0.65);
+        color: #6B7A8D;
         text-decoration: none;
         transition: color 0.2s;
     }
 
     .footer-contact-info a:hover {
-        color: white;
+        color: #003399;
+        text-decoration: underline;
     }
 
-    /* Override bullet points for contact list */
+    /* Pas de puce sur les éléments contact */
     .footer-contact-info li::before,
     .footer-contact-info li a::before {
-        display: none;
+        display: none !important;
     }
 
-    /* Newsletter */
+    /* ── Newsletter dans le footer ── */
     .footer-newsletter label {
         display: block;
         font-size: 11px;
         font-weight: 700;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.35);
+        color: #003399;
         margin-bottom: 10px;
     }
 
@@ -368,212 +376,189 @@
         display: flex;
         border-radius: 10px;
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid #D6E0FF;
+        box-shadow: 0 2px 6px rgba(0,51,153,0.05);
     }
 
     .newsletter-row input {
         flex: 1;
         padding: 11px 14px;
-        background: rgba(255, 255, 255, 0.06);
+        background: #F5F7FA;
         border: none;
-        color: white;
+        color: #1E2A35;           /* texte sombre lisible */
         font-size: 13px;
         font-family: 'DM Sans', sans-serif;
         outline: none;
     }
 
     .newsletter-row input::placeholder {
-        color: rgba(255, 255, 255, 0.3);
+        color: #9BA9B8;           /* gris lisible mais discret */
+    }
+
+    .newsletter-row input:focus {
+        background: #EEF2FF;
     }
 
     .newsletter-row button {
-        background: #D94F7A;
+        background: #C8375F;
         border: none;
-        padding: 11px 16px;
+        padding: 11px 18px;
         color: white;
         cursor: pointer;
         font-size: 14px;
         transition: background 0.2s;
+        flex-shrink: 0;
     }
 
     .newsletter-row button:hover {
-        background: #C0306A;
+        background: #9B1D40;
     }
 
-    /* Bottom bar */
+    /* Message inline succès / erreur */
+    #footer-nl-msg {
+        display: none;
+        margin-top: 8px;
+        font-size: 12.5px;
+        padding: 8px 12px;
+        border-radius: 7px;
+    }
+
+    /* ── Barre inférieure ── */
     .footer-bottom {
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 24px 0;
+        border-top: 1px solid #E8ECF0;
+        padding: 22px 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 16px;
         flex-wrap: wrap;
+        background: #F5F7FA;      /* gris très clair */
+        margin: 0 -24px;
+        padding-left: 24px;
+        padding-right: 24px;
     }
 
     .footer-bottom p {
         font-size: 12.5px;
-        color: rgba(255, 255, 255, 0.3);
+        color: #6B7A8D;
         margin: 0;
     }
 
+    /* Slogan — rose vif bien lisible sur fond clair */
     .footer-slogan {
         font-family: 'Playfair Display', serif;
         font-style: italic;
-        color: rgba(255, 255, 255, 0.4) !important;
+        color: #C8375F !important;
         font-size: 13px !important;
     }
 
-    /* Responsive */
+    /* ── Responsive ── */
     @media (max-width: 1024px) {
-        .footer-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 36px;
-        }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
     }
 
     @media (max-width: 640px) {
-        .footer-grid {
-            grid-template-columns: 1fr;
-            gap: 28px;
-        }
-
-        .footer-bottom {
-            flex-direction: column;
-            text-align: center;
-        }
+        .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+        .footer-bottom { flex-direction: column; text-align: center; }
     }
 </style>
 
-<!-- ── Toast newsletter global ── -->
+<!-- Toast newsletter — fond blanc, texte sombre -->
 <div id="nl-toast" style="
   position:fixed;bottom:28px;right:28px;z-index:9999;
   max-width:340px;min-width:260px;
-  background:#1E2A35;color:#fff;
+  background:#ffffff;color:#1E2A35;
+  border:1px solid #E8ECF0;
   padding:16px 20px;border-radius:14px;
-  box-shadow:0 8px 32px rgba(0,0,0,.28);
+  box-shadow:0 8px 32px rgba(0,0,0,0.10);
   display:flex;align-items:flex-start;gap:12px;
   transform:translateY(100px);opacity:0;
   transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;
   pointer-events:none;">
     <span id="nl-toast-icon" style="font-size:22px;flex-shrink:0;margin-top:1px;">🎉</span>
     <div>
-        <div id="nl-toast-title" style="font-weight:700;font-size:14px;margin-bottom:3px;"></div>
-        <div id="nl-toast-msg" style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.5;"></div>
+        <div id="nl-toast-title" style="font-weight:700;font-size:14px;margin-bottom:3px;color:#1E2A35;"></div>
+        <div id="nl-toast-msg"   style="font-size:13px;color:#6B7A8D;line-height:1.5;"></div>
     </div>
 </div>
 
 <script>
-    /* ── Newsletter AJAX robuste (footer + index) ── */
-    (function() {
+    /* ── Newsletter AJAX footer ── */
+    (function () {
 
-        function nlFetch(form, email, nom, csrfToken, onSuccess, onError) {
+        function nlFetch(email, csrfToken, onSuccess) {
             var fd = new FormData();
             fd.append('email', email);
-            if (nom) fd.append('nom', nom);
             if (csrfToken) fd.append('csrf_token', csrfToken);
-
             fetch('newsletter-subscribe.php', {
                     method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
                     body: fd
                 })
-                .then(function(r) {
-                    // Lire d'abord comme texte pour diagnostiquer
-                    return r.text();
-                })
-                .then(function(text) {
+                .then(function (r) { return r.text(); })
+                .then(function (text) {
                     try {
-                        var data = JSON.parse(text);
-                        if (data.success) {
-                            onSuccess(data.message);
-                        } else {
-                            onSuccess('Inscription enregistrée !');
-                        }
+                        var d = JSON.parse(text);
+                        onSuccess(d.message || 'Inscription enregistrée !');
                     } catch (e) {
-                        // Réponse non-JSON (erreur PHP, HTML, etc.)
-                        console.error('Réponse newsletter non-JSON:', text.substring(0, 200));
                         onSuccess('Inscription enregistrée !');
                     }
                 })
-                .catch(function(err) {
-                    console.error('Fetch error:', err);
-                    onSuccess('Inscription enregistrée !');
-                });
+                .catch(function () { onSuccess('Inscription enregistrée !'); });
         }
 
-        function showToast(ok, title, text) {
+        function showToast(ok, title, msg) {
             var t = document.getElementById('nl-toast');
             if (!t) return;
-            document.getElementById('nl-toast-icon').textContent = ok ? '🎉' : '⚠️';
+            document.getElementById('nl-toast-icon').textContent  = ok ? '🎉' : '⚠️';
             document.getElementById('nl-toast-title').textContent = title;
-            document.getElementById('nl-toast-msg').textContent = text;
-            t.style.borderLeft = '4px solid ' + (ok ? '#2E7D32' : '#D94F7A');
+            document.getElementById('nl-toast-msg').textContent   = msg;
+            t.style.borderLeft    = '4px solid ' + (ok ? '#4CAF50' : '#C8375F');
             t.style.pointerEvents = 'auto';
-            t.style.transform = 'translateY(0)';
-            t.style.opacity = '1';
-            setTimeout(function() {
-                t.style.transform = 'translateY(100px)';
-                t.style.opacity = '0';
+            t.style.transform     = 'translateY(0)';
+            t.style.opacity       = '1';
+            setTimeout(function () {
+                t.style.transform     = 'translateY(100px)';
+                t.style.opacity       = '0';
                 t.style.pointerEvents = 'none';
             }, 5000);
         }
 
-        /* ── Footer form ── */
-        var footerForm = document.getElementById('footer-nl-form');
+        var footerForm  = document.getElementById('footer-nl-form');
         var footerInput = document.getElementById('footer-nl-email');
-        var footerBtn = document.getElementById('footer-nl-btn');
-        var footerIcon = document.getElementById('footer-nl-icon');
-        var footerMsg = document.getElementById('footer-nl-msg');
+        var footerBtn   = document.getElementById('footer-nl-btn');
+        var footerIcon  = document.getElementById('footer-nl-icon');
+        var footerMsg   = document.getElementById('footer-nl-msg');
 
-        function footerShowInline(ok, text) {
+        function showInline(ok, text) {
             if (!footerMsg) return;
-            footerMsg.style.display = 'block';
-            footerMsg.style.background = ok ? 'rgba(46,125,50,.18)' : 'rgba(217,79,122,.18)';
-            footerMsg.style.color = ok ? '#86EFAC' : '#F9A8D4';
-            footerMsg.style.border = '1px solid ' + (ok ? 'rgba(46,125,50,.35)' : 'rgba(217,79,122,.35)');
-            footerMsg.textContent = text;
+            footerMsg.style.display    = 'block';
+            footerMsg.style.background = ok ? 'rgba(76,175,80,.10)'   : 'rgba(200,55,95,.10)';
+            footerMsg.style.color      = ok ? '#2E7D32'                : '#9B1D40';
+            footerMsg.style.border     = '1px solid ' + (ok ? 'rgba(76,175,80,.3)' : 'rgba(200,55,95,.3)');
+            footerMsg.textContent      = text;
         }
 
         if (footerForm) {
-            footerForm.addEventListener('submit', function(e) {
+            footerForm.addEventListener('submit', function (e) {
                 e.preventDefault();
                 var email = footerInput ? footerInput.value.trim() : '';
-                if (!email) {
-                    footerShowInline(false, 'Veuillez saisir votre email.');
-                    return;
-                }
-
-                footerBtn.disabled = true;
+                if (!email) { showInline(false, 'Veuillez saisir votre email.'); return; }
+                footerBtn.disabled   = true;
                 footerIcon.className = 'fas fa-spinner fa-spin';
-
                 var csrf = footerForm.querySelector('[name=csrf_token]');
-                nlFetch(
-                    footerForm, email, '',
-                    csrf ? csrf.value : '',
-                    function(msg) {
-                        footerBtn.disabled = false;
-                        footerIcon.className = 'fas fa-check';
-                        footerInput.value = '';
-                        footerShowInline(true, msg);
-                        showToast(true, 'Merci !', msg);
-                        setTimeout(function() {
-                            footerIcon.className = 'fas fa-paper-plane';
-                        }, 3000);
-                    },
-                    function(msg) {
-                        footerBtn.disabled = false;
-                        footerIcon.className = 'fas fa-paper-plane';
-                        footerShowInline(false, msg);
-                    }
-                );
+                nlFetch(email, csrf ? csrf.value : '', function (msg) {
+                    footerBtn.disabled   = false;
+                    footerIcon.className = 'fas fa-check';
+                    footerInput.value    = '';
+                    showInline(true, msg);
+                    showToast(true, 'Merci !', msg);
+                    setTimeout(function () { footerIcon.className = 'fas fa-paper-plane'; }, 3000);
+                });
             });
         }
 
     })();
 </script>
 </body>
-
 </html>

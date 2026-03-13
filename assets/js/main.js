@@ -31,15 +31,44 @@ document.addEventListener('DOMContentLoaded', function () {
        3. Temoignages Slider (Swiper)
        ══════════════════════════════════════════════════════════ */
     if (document.querySelector('.testimonials-swiper')) {
-        new Swiper('.testimonials-swiper', {
+        var tSwiper = new Swiper('.testimonials-swiper', {
             loop: true,
             autoplay: { delay: 5000, disableOnInteraction: false },
             pagination: { el: '.testimonials-swiper .swiper-pagination', clickable: true },
             slidesPerView: 1,
             spaceBetween: 24,
-            breakpoints: { 768: { slidesPerView: 2 } },
+            autoHeight: false,
+            watchSlidesProgress: true,
+            breakpoints: { 768: { slidesPerView: 2, spaceBetween: 24 } },
             speed: 700,
+            on: {
+                init:                    function () { tEqualHeight(this); },
+                resize:                  function () { tEqualHeight(this); },
+                slideChangeTransitionEnd: function () { tEqualHeight(this); },
+            },
         });
+
+        function tEqualHeight(swiper) {
+            var slides = swiper.slides;
+            // reset
+            slides.forEach(function (s) {
+                var c = s.querySelector('.testimonial-card');
+                if (c) c.style.height = '';
+            });
+            // mesure max
+            var maxH = 0;
+            slides.forEach(function (s) {
+                var c = s.querySelector('.testimonial-card');
+                if (c && c.offsetHeight > maxH) maxH = c.offsetHeight;
+            });
+            // applique
+            if (maxH > 0) {
+                slides.forEach(function (s) {
+                    var c = s.querySelector('.testimonial-card');
+                    if (c) c.style.height = maxH + 'px';
+                });
+            }
+        }
     }
 
     /* ══════════════════════════════════════════════════════════

@@ -32,15 +32,19 @@ require_once 'templates/header.php';
                 style="background-image: linear-gradient(rgba(0,30,80,0.62), rgba(0,30,80,0.62)), url('images/image1.jpg');">
                 <div class="container">
 
-                    <div class="slide-content">
-                        <span class="slide-tag">Agissez maintenant</span>
-                        <h1>Faire un don</h1>
-                        <p>Avec votre don, vous permettrez à des personnes à faibles revenus
-                            d'accéder à un traitement efficace qui leur sauvera la vie.</p>
-                        <a href="faire-un-don.php" class="btn btn-primary">
-                            <i class="fas fa-heart"></i> Je donne maintenant
-                        </a>
+
+                    <div class="slide-content slide-content--quote">
+                        <span class="slide-tag">Message d'espoir</span>
+                        <h1>Vous n'êtes pas seul</h1>
+                        <blockquote>
+                            "Voir un être cher frôler la mort et s'engager avec lui dans un corps
+                            à corps dont personne ne connaît l'issue, cela demande de puiser en
+                            soi une force inouïe. Vous n'êtes pas seul, vous avez en vous un guide
+                            qui vous prendra par la main. L'amour fait des miracles."
+                        </blockquote>
+                        <p class="quote-author">— Pascale Liautaud Drouin</p>
                     </div>
+
                 </div>
             </div>
 
@@ -51,8 +55,7 @@ require_once 'templates/header.php';
                     <div class="slide-content">
                         <span class="slide-tag">Accompagnement personnalisé</span>
                         <h1>Besoin de soutien&nbsp;?</h1>
-                        <p>Vous souffrez d'un cancer et souhaitez faire une demande de soutien
-                            financier du GSCC&nbsp;? Contactez-nous dès maintenant.</p>
+                        <p>Plus de 25 ans de lutte pour des soins oncologiques accessibles et équitables</p>
                         <a href="demande-aide.php" class="btn btn-secondary">
                             <i class="fas fa-hand-holding-heart"></i> Demander de l'aide
                         </a>
@@ -64,16 +67,14 @@ require_once 'templates/header.php';
             <div class="swiper-slide"
                 style="background-image:linear-gradient(rgba(0,30,80,0.62), rgba(0,30,80,0.62)), url('images/image3.jpg');">
                 <div class="container">
-                    <div class="slide-content slide-content--quote">
-                        <span class="slide-tag">Message d'espoir</span>
-                        <h1>Vous n'êtes pas seul</h1>
-                        <blockquote>
-                            "Voir un être cher frôler la mort et s'engager avec lui dans un corps
-                            à corps dont personne ne connaît l'issue, cela demande de puiser en
-                            soi une force inouïe. Vous n'êtes pas seul, vous avez en vous un guide
-                            qui vous prendra par la main. L'amour fait des miracles."
-                        </blockquote>
-                        <p class="quote-author">— Pascale Liautaud Drouin</p>
+                    <div class="slide-content">
+                        <span class="slide-tag">Agissez maintenant</span>
+                        <h1>Faire un don</h1>
+                        <p>Avec votre don, vous permettrez à des personnes à faibles revenus
+                            d'accéder à un traitement efficace qui leur sauvera la vie.</p>
+                        <a href="faire-un-don.php" class="btn btn-primary">
+                            <i class="fas fa-heart"></i> Je donne maintenant
+                        </a>
                     </div>
                 </div>
             </div>
@@ -92,9 +93,9 @@ require_once 'templates/header.php';
     <div class="hours-content">
         <h4><i class="far fa-clock"></i> Heures d'ouverture</h4>
         <ul>
-            <li><span>Lun – Ven :</span> 9h00 – 15h00</li>
-            <li><span>Sam :</span> 9h00 – 12h00</li>
-            <li><span>Dim :</span> Fermé</li>
+            <li><span>Lun – Ven :</span> 9h00 – 14h00</li>
+            <li><span>Sam - Dim :</span> Fermé</li>
+
         </ul>
     </div>
 </div>
@@ -123,7 +124,7 @@ require_once 'templates/header.php';
             </div>
             <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
                 <div class="stat-icon"><i class="fas fa-handshake"></i></div>
-                <div class="stat-number" data-count="50">0</div>
+                <div class="stat-number" data-count="10">0</div>
                 <div class="stat-label">Partenaires actifs</div>
             </div>
         </div>
@@ -145,8 +146,7 @@ require_once 'templates/header.php';
                 <span style="background:#C9933A"></span>
             </div>
             <p class="section-subtitle">
-                Depuis 1999, le GSCC accompagne les patients et leurs familles avec amour,
-                dignité et professionnalisme.
+                Sensibiliser la population haïtienne au dépistage des différents types de cancer et accompagner les patients en leur apportant un soutien qui leur permette de faire face à la maladie avec espoir et dignité.
             </p>
         </div>
 
@@ -156,28 +156,38 @@ require_once 'templates/header.php';
                     <i class="fas fa-heart" style="color:#003399;"></i>
                 </div>
                 <h3>Soutien aux patients</h3>
-                <p>Nous accompagnons les patients tout au long de leur parcours afin de leur offrir écoute, orientation et soutien dans les moments difficiles.</p>
+                <p>Soutien médical, psychologique,
+                    nutritionnel et social.
+                    Suivis médicaux, subventions, dons de
+                    médicaments.
+                    Suivi auprès des ambassades pour faciliter
+                    les traitements à l’étranger.</p>
             </div>
             <div class="mission-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="mission-icon-wrap" style="background:#FDE8EF;">
                     <i class="fas fa-dove" style="color:#D94F7A;"></i>
                 </div>
-                <h3>Accompagnement</h3>
-                <p>Nous aidons les familles à mieux comprendre la maladie et à soutenir leurs proches grâce à des conseils, des ressources et un accompagnement adapté.</p>
+                <h3>Plaidoyer et mobilisation</h3>
+                <p>
+                    La création d’un centre de chimiothérapie dans chaque département du pays.
+                    La création d’un centre de radiothérapie en Haïti pour permettre aux patients d’accéder à des soins essentiels.</p>
             </div>
             <div class="mission-card" data-aos="fade-up" data-aos-delay="300">
                 <div class="mission-icon-wrap" style="background:#F0FDF4;">
                     <i class="fas fa-hand-holding-heart" style="color:#4CAF50;"></i>
                 </div>
-                <h3>Sensibilisation</h3>
-                <p>Nous organisons des activités de sensibilisation pour informer la population et promouvoir la prévention et la solidarité autour des patients.</p>
+                <h3>Sensibilisation et dépistage</h3>
+                <p>Organisation de campagnes dans la zone
+                    métropolitaine et les provinces et dans les
+                    médias (radio, télé, réseaux sociaux) pour
+                    informer et dépister la population.</p>
             </div>
             <div class="mission-card" data-aos="fade-up" data-aos-delay="400">
                 <div class="mission-icon-wrap" style="background:#FFF8EE;">
                     <i class="fas fa-leaf" style="color:#C9933A;"></i>
                 </div>
-                <h3>Amélioration</h3>
-                <p>Nous mettons en place des actions et des programmes visant à améliorer les conditions de vie et le bien-être des patients.</p>
+                <h3>Renforcement du système de soins</h3>
+                <p>Nous travaillons avec les institutions et partenaires pour renforcer les capacités du système de santé dans la lutte contre le cancer et améliorer l’accès aux traitements spécialisés.</p>
             </div>
         </div>
     </div>
@@ -190,14 +200,13 @@ require_once 'templates/header.php';
     <div class="container">
         <div class="section-header" data-aos="fade-up">
             <span class="section-tag section-tag--light">Passez à l'action</span>
-            <h2>Agissons ensemble</h2>
+            <h2>Ansanm nou pi fò pase kansè</h2>
         </div>
         <div class="cta-grid">
             <div class="cta-card" data-aos="zoom-in" data-aos-delay="0">
                 <div class="cta-icon-wrap"><i class="fas fa-id-card"></i></div>
                 <h3>Devenez membre</h3>
-                <p>Rejoignez notre communauté et participez activement à nos actions
-                    contre le cancer.</p>
+                <p>Rejoignez notre communauté et semez l’espoir face au cancer.</p>
                 <a href="devenir-membre.php" class="btn btn-light">Je rejoins</a>
             </div>
             <div class="cta-card" data-aos="zoom-in" data-aos-delay="100">
@@ -210,10 +219,9 @@ require_once 'templates/header.php';
             <div class="cta-card featured-cta" data-aos="zoom-in" data-aos-delay="200">
                 <div class="cta-icon-wrap"><i class="fas fa-heart"></i></div>
                 <h3>Faites un don</h3>
-                <p>Chaque don, petit ou grand, aide à sauver des vies et à financer
-                    nos programmes.</p>
+                <p>Chaque contribution sauve des vies et offre l’espoir à des milliers de familles</p>
                 <a href="faire-un-don.php" class="btn-donate-white">
-                    <i class="fas fa-heart"></i> Je donne maintenant
+                    <i class="fas fa-heart"></i> Je donne
                 </a>
             </div>
         </div>
@@ -244,8 +252,8 @@ require_once 'templates/header.php';
                     'id'              => null,
                     'titre'           => "L'importance du dépistage précoce",
                     'resume'          => "Découvrez pourquoi le dépistage précoce peut sauver des vies et comment le GSCC vous accompagne dans cette démarche.",
-                    'image_couverture'=> 'images/image3.jpg',
-                    'date_publication'=> '2024-02-15 00:00:00',
+                    'image_couverture' => 'images/image3.jpg',
+                    'date_publication' => '2024-02-15 00:00:00',
                     'categorie_nom'   => 'Prévention',
                 ],
                 [
@@ -253,8 +261,8 @@ require_once 'templates/header.php';
                     'id'              => null,
                     'titre'           => "Grande marche contre le cancer",
                     'resume'          => "Rejoignez-nous pour notre marche annuelle de sensibilisation et de collecte de fonds pour les patients haïtiens.",
-                    'image_couverture'=> 'images/image4.jpg',
-                    'date_publication'=> '2024-03-10 00:00:00',
+                    'image_couverture' => 'images/image4.jpg',
+                    'date_publication' => '2024-03-10 00:00:00',
                     'categorie_nom'   => 'Événement',
                 ],
                 [
@@ -262,8 +270,8 @@ require_once 'templates/header.php';
                     'id'              => null,
                     'titre'           => "Nouveau programme d'accompagnement",
                     'resume'          => "Le GSCC lance un programme innovant de soutien psychologique pour les patients et leurs familles à travers Haïti.",
-                    'image_couverture'=> 'images/image5.jpg',
-                    'date_publication'=> '2024-04-05 00:00:00',
+                    'image_couverture' => 'images/image5.jpg',
+                    'date_publication' => '2024-04-05 00:00:00',
                     'categorie_nom'   => 'Projet',
                 ],
             ];
@@ -301,31 +309,31 @@ require_once 'templates/header.php';
                     ? truncate(strip_tags($article['resume']), 110)
                     : '';
             ?>
-            <article class="blog-card" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
-                <div class="blog-image">
-                    <img src="<?= $img ?>"
-                         alt="<?= htmlspecialchars($article['titre']) ?>"
-                         loading="lazy"
-                         onerror="this.onerror=null;this.src='images/image3.jpg';">
-                    <span class="blog-category"><?= $categorie ?></span>
-                </div>
-                <div class="blog-content">
-                    <h3>
-                        <a href="<?= $lien_article ?>">
-                            <?= htmlspecialchars($article['titre']) ?>
-                        </a>
-                    </h3>
-                    <p><?= htmlspecialchars($resume) ?></p>
-                    <div class="blog-meta">
-                        <?php if ($date_fmt): ?>
-                            <span><i class="far fa-calendar"></i> <?= $date_fmt ?></span>
-                        <?php endif; ?>
-                        <a href="<?= $lien_article ?>" class="read-more">
-                            Lire la suite <i class="fas fa-arrow-right"></i>
-                        </a>
+                <article class="blog-card" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
+                    <div class="blog-image">
+                        <img src="<?= $img ?>"
+                            alt="<?= htmlspecialchars($article['titre']) ?>"
+                            loading="lazy"
+                            onerror="this.onerror=null;this.src='images/image3.jpg';">
+                        <span class="blog-category"><?= $categorie ?></span>
                     </div>
-                </div>
-            </article>
+                    <div class="blog-content">
+                        <h3>
+                            <a href="<?= $lien_article ?>">
+                                <?= htmlspecialchars($article['titre']) ?>
+                            </a>
+                        </h3>
+                        <p><?= htmlspecialchars($resume) ?></p>
+                        <div class="blog-meta">
+                            <?php if ($date_fmt): ?>
+                                <span><i class="far fa-calendar"></i> <?= $date_fmt ?></span>
+                            <?php endif; ?>
+                            <a href="<?= $lien_article ?>" class="read-more">
+                                Lire la suite <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
             <?php endforeach; ?>
         </div>
         <div class="section-cta" data-aos="fade-up">
@@ -363,15 +371,13 @@ require_once 'templates/header.php';
                             <i class="fas fa-star"></i>
                         </div>
                         <blockquote>
-                            Grâce au soutien du GSCC, j'ai pu suivre mon traitement dans de
-                            bonnes conditions. Leur accompagnement a été essentiel dans mon
-                            combat contre le cancer.
+                            Se yon onè li ye pou mwen pou m fè pati yon enstitisyon tankou GSCC. Koz la nòb paske chak patisipasyon ou bay – ke se swa nan tan w oswa nan lajan w – li bay lavi ak yon konpatriyot.
                         </blockquote>
                         <div class="testimonial-author">
-                            <img src="https://picsum.photos/80/80?random=7" alt="Marie C.">
+                            <img src="images/temoignage/sister_M.jpg" alt="Marie C.">
                             <div>
                                 <strong>Marie C.</strong>
-                                <span>Patiente accompagnée</span>
+                                <span>Membre</span>
                             </div>
                         </div>
                     </div>
@@ -384,15 +390,13 @@ require_once 'templates/header.php';
                             <i class="fas fa-star"></i>
                         </div>
                         <blockquote>
-                            Je suis bénévole au GSCC depuis 2 ans. Voir l'impact positif de nos
-                            actions sur les patients et leurs familles est une source de
-                            motivation incroyable.
+                            Chak moun ki ale GSCC jwenn yon sipò ki pa konparab, yon sipò ki pote lespwa nan moman kote lavi yo parèt difisil
                         </blockquote>
                         <div class="testimonial-author">
-                            <img src="https://picsum.photos/80/80?random=8" alt="Jean-Paul D.">
+                            <img src="images/temoignage/carel_pedre.jpg" alt="Carel Pedre">
                             <div>
-                                <strong>Jean-Paul D.</strong>
-                                <span>Bénévole</span>
+                                <strong>Carel Pedre</strong>
+                                <span>Ambassadeur GSCC</span>
                             </div>
                         </div>
                     </div>
@@ -405,15 +409,21 @@ require_once 'templates/header.php';
                             <i class="fas fa-star"></i>
                         </div>
                         <blockquote>
-                            Le GSCC m'a apporté un soutien psychologique précieux quand j'en
-                            avais le plus besoin. Leur équipe est à l'écoute et vraiment dévouée
-                            à leur mission.
+                            M gen yon
+                            remèsiman espesyal
+                            Pou m ta voye bay
+                            Mme Wendy,
+                            Paske san Mme Wendy,
+                            san GSCC,
+                            Mon âme serait bien loin
+                            dans la demeure
+                            du silence
                         </blockquote>
                         <div class="testimonial-author">
-                            <img src="https://picsum.photos/80/80?random=9" alt="Sophie L.">
+                            <img src="images/temoignage/Faustin.jpg" alt="Faustin">
                             <div>
                                 <strong>Sophie L.</strong>
-                                <span>Proche de patient</span>
+                                <span>Combattante</span>
                             </div>
                         </div>
                     </div>

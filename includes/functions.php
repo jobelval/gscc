@@ -91,9 +91,9 @@ function verifyCSRFToken($token)
 function setFlashMessage($type, $message)
 {
     $_SESSION['flash'] = [
-        'type' => $type,
+        'type'    => $type,
         'message' => $message,
-        'time' => time()
+        'time'    => time()
     ];
 }
 
@@ -156,24 +156,16 @@ function formatDateFr($date)
     }
 
     $months = [
-        1 => 'janvier',
-        2 => 'février',
-        3 => 'mars',
-        4 => 'avril',
-        5 => 'mai',
-        6 => 'juin',
-        7 => 'juillet',
-        8 => 'août',
-        9 => 'septembre',
-        10 => 'octobre',
-        11 => 'novembre',
-        12 => 'décembre'
+        1  => 'janvier',   2  => 'février',  3  => 'mars',
+        4  => 'avril',     5  => 'mai',       6  => 'juin',
+        7  => 'juillet',   8  => 'août',      9  => 'septembre',
+        10 => 'octobre',   11 => 'novembre',  12 => 'décembre'
     ];
 
     $timestamp = strtotime($date);
-    $day = date('j', $timestamp);
+    $day   = date('j', $timestamp);
     $month = $months[date('n', $timestamp)];
-    $year = date('Y', $timestamp);
+    $year  = date('Y', $timestamp);
 
     return "$day $month $year";
 }
@@ -287,12 +279,11 @@ function logError($message)
 {
     $logFile = ROOT_PATH . 'logs/error.log';
 
-    // Créer le dossier logs s'il n'existe pas
     if (!file_exists(dirname($logFile))) {
         mkdir(dirname($logFile), 0777, true);
     }
 
-    $timestamp = date('Y-m-d H:i:s');
+    $timestamp  = date('Y-m-d H:i:s');
     $logMessage = "[$timestamp] $message" . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND | LOCK_EX);
 }
@@ -306,7 +297,7 @@ function uploadFile($file, $destination, $allowedTypes = ['jpg', 'jpeg', 'png', 
         return ['success' => false, 'error' => 'Erreur lors de l\'upload'];
     }
 
-    $fileInfo = pathinfo($file['name']);
+    $fileInfo  = pathinfo($file['name']);
     $extension = strtolower($fileInfo['extension']);
 
     if (!in_array($extension, $allowedTypes)) {
@@ -318,7 +309,7 @@ function uploadFile($file, $destination, $allowedTypes = ['jpg', 'jpeg', 'png', 
     }
 
     $newFilename = uniqid() . '_' . bin2hex(random_bytes(8)) . '.' . $extension;
-    $uploadPath = $destination . $newFilename;
+    $uploadPath  = $destination . $newFilename;
 
     if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
         return ['success' => true, 'filename' => $newFilename];
@@ -339,12 +330,11 @@ function sendEmail($to, $subject, $message, $from = null)
     $headers = [
         'MIME-Version: 1.0',
         'Content-type: text/html; charset=utf-8',
-        'From: ' . $from,
+        'From: '     . $from,
         'Reply-To: ' . $from,
         'X-Mailer: PHP/' . phpversion()
     ];
 
-    // Template d'email
     $htmlMessage = "
     <!DOCTYPE html>
     <html>
@@ -367,7 +357,7 @@ function sendEmail($to, $subject, $message, $from = null)
                 " . nl2br($message) . "
             </div>
             <div class='footer'>
-                <p>© " . date('Y') . " " . SITE_NAME . ". Tous droits réservés.</p>
+                <p>&copy; " . date('Y') . " " . SITE_NAME . ". Tous droits réservés.</p>
             </div>
         </div>
     </body>
@@ -386,7 +376,7 @@ function getParam($key, $default = '')
     try {
         static $params = null;
         if ($params === null) {
-            $stmt = $pdo->query("SELECT * FROM parametres");
+            $stmt   = $pdo->query("SELECT * FROM parametres");
             $params = [];
             while ($row = $stmt->fetch()) {
                 $params[$row['cle']] = $row['valeur'];
@@ -396,5 +386,216 @@ function getParam($key, $default = '')
     } catch (PDOException $e) {
         logError("Erreur getParam: " . $e->getMessage());
         return $default;
+    }
+}
+
+/**
+ * Connexion PDO singleton
+ */
+function getDB(): PDO
+{
+    static $pdo = null;
+    if ($pdo === null) {
+        $pdo = new PDO(
+            'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
+            DB_USER,
+            DB_PASS,
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
+    }
+    return $pdo;
+}
+
+
+// ════════════════════════════════════════════════════════════
+//  AUTHENTIFICATION
+// ════════════════════════════════════════════════════════════
+
+/**
+ * Inscription — crée un nouveau compte utilisateur.
+ *
+ * @param string $telephone  Optionnel
+ * @return array ['success' => bool, 'error' => string|null]
+ */
+function registerUser(
+    string $nom,
+    string $prenom,
+    string $email,
+    string $password,
+    string $telephone = ''
+): array {
+    global $pdo;
+
+    try {
+        // Email déjà utilisé ?
+        $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ? LIMIT 1");
+        $stmt->execute([$email]);
+        if ($stmt->fetch()) {
+            return ['success' => false, 'error' => 'Cette adresse email est déjà utilisée.'];
+        }
+
+        // Hash bcrypt sécurisé
+        $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+
+        $stmt = $pdo->prepare("
+            INSERT INTO utilisateurs
+                (nom, prenom, email, mot_de_passe, telephone,
+                 role, type_membre, statut, date_inscription)
+            VALUES
+                (:nom, :prenom, :email, :mdp, :tel,
+                 'membre', 'actif', 'actif', NOW())
+        ");
+        $stmt->execute([
+            ':nom'    => $nom,
+            ':prenom' => $prenom,
+            ':email'  => $email,
+            ':mdp'    => $hash,
+            ':tel'    => $telephone ?: null,   // NULL si champ vide
+        ]);
+
+        $userId = $pdo->lastInsertId();
+
+        session_regenerate_id(true);
+        $_SESSION['user_id']     = $userId;
+        $_SESSION['user_email']  = $email;
+        $_SESSION['user_nom']    = $nom;
+        $_SESSION['user_prenom'] = $prenom;
+        $_SESSION['user_role']   = 'membre';
+
+        return ['success' => true];
+
+    } catch (PDOException $e) {
+        error_log('registerUser error: ' . $e->getMessage());
+        return ['success' => false, 'error' => 'Une erreur est survenue. Veuillez réessayer.'];
+    }
+}
+
+/**
+ * Connexion — vérifie les identifiants et ouvre la session.
+ *
+ * @return array ['success' => bool, 'error' => string|null]
+ */
+function loginUser(string $email, string $password): array
+{
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare("
+            SELECT id, nom, prenom, email, mot_de_passe, role, statut
+            FROM utilisateurs
+            WHERE email = ?
+            LIMIT 1
+        ");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            return ['success' => false, 'error' => 'Email ou mot de passe incorrect.'];
+        }
+
+        if ($user['statut'] !== 'actif') {
+            return ['success' => false, 'error' => 'Ce compte a été désactivé. Contactez l\'administrateur.'];
+        }
+
+        if (!password_verify($password, $user['mot_de_passe'])) {
+            return ['success' => false, 'error' => 'Email ou mot de passe incorrect.'];
+        }
+
+        // Mise à jour de la dernière connexion
+        $pdo->prepare("UPDATE utilisateurs SET derniere_connexion = NOW() WHERE id = ?")
+            ->execute([$user['id']]);
+
+        session_regenerate_id(true);
+        $_SESSION['user_id']     = $user['id'];
+        $_SESSION['user_email']  = $user['email'];
+        $_SESSION['user_nom']    = $user['nom'];
+        $_SESSION['user_prenom'] = $user['prenom'];
+        $_SESSION['user_role']   = $user['role'];
+
+        return ['success' => true];
+
+    } catch (PDOException $e) {
+        error_log('loginUser error: ' . $e->getMessage());
+        return ['success' => false, 'error' => 'Une erreur est survenue. Veuillez réessayer.'];
+    }
+}
+
+/**
+ * Connexion Google — connecte ou crée automatiquement un compte.
+ *
+ * @return array ['success' => bool, 'error' => string|null]
+ */
+function loginOrCreateGoogleUser(
+    string $email,
+    string $prenom,
+    string $nom,
+    string $googleId,
+    string $photo = ''
+): array {
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = ? LIMIT 1");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            // Compte existant : met à jour google_id et photo_url si vides
+            $pdo->prepare("
+                UPDATE utilisateurs
+                SET
+                    google_id          = COALESCE(google_id, :gid),
+                    photo_url          = COALESCE(NULLIF(photo_url, ''), :photo),
+                    derniere_connexion = NOW()
+                WHERE id = :id
+            ")->execute([
+                ':gid'   => $googleId,
+                ':photo' => $photo,
+                ':id'    => $user['id'],
+            ]);
+
+            if ($user['statut'] !== 'actif') {
+                return ['success' => false, 'error' => 'Ce compte est désactivé. Contactez l\'administrateur.'];
+            }
+
+        } else {
+            // Nouveau compte créé via Google (email déjà vérifié par Google)
+            $stmt = $pdo->prepare("
+                INSERT INTO utilisateurs
+                    (nom, prenom, email, mot_de_passe, google_id, photo_url,
+                     role, type_membre, statut, email_verifie, date_inscription)
+                VALUES
+                    (:nom, :prenom, :email, '', :google_id, :photo,
+                     'membre', 'actif', 'actif', 1, NOW())
+            ");
+            $stmt->execute([
+                ':nom'       => $nom    ?: explode('@', $email)[0],
+                ':prenom'    => $prenom ?: '',
+                ':email'     => $email,
+                ':google_id' => $googleId,
+                ':photo'     => $photo,
+            ]);
+
+            $user = [
+                'id'     => $pdo->lastInsertId(),
+                'nom'    => $nom    ?: explode('@', $email)[0],
+                'prenom' => $prenom ?: '',
+                'email'  => $email,
+                'role'   => 'membre',
+            ];
+        }
+
+        session_regenerate_id(true);
+        $_SESSION['user_id']     = $user['id'];
+        $_SESSION['user_email']  = $user['email'];
+        $_SESSION['user_nom']    = $user['nom'];
+        $_SESSION['user_prenom'] = $user['prenom'];
+        $_SESSION['user_role']   = $user['role'];
+
+        return ['success' => true];
+
+    } catch (PDOException $e) {
+        error_log('loginOrCreateGoogleUser error: ' . $e->getMessage());
+        return ['success' => false, 'error' => 'Erreur lors de la connexion Google.'];
     }
 }

@@ -19,6 +19,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
     <!-- CSS principal -->
     <link rel="stylesheet" href="<?= CSS_URL ?>style.css">
@@ -272,7 +273,7 @@
             width: 100%;
             z-index: 100;
             transition: box-shadow 0.3s;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .main-header .container {
@@ -321,6 +322,7 @@
         .logo-text {
             display: flex;
             flex-direction: column;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .logo-name {
@@ -330,6 +332,7 @@
             font-weight: 700;
             color: var(--charcoal);
             line-height: 1;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .logo-slogan {
@@ -967,8 +970,8 @@
                             <a href="#"> Présentation<i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="presentation.php#propos">À propos du GSCC</a></li>
-                                <li><a href="presentation.php#mission">Mission</a></li>
-                                <li><a href="presentation.php#vision">Vision</a></li>
+                                <li><a href="presentation.php#mission">Mission & Vision</a></li>
+                                <!-- <li><a href="presentation.php#vision">Vision</a></li> -->
                                 <li><a href="presentation.php#historique">Historique</a></li>
                                 <li><a href="presentation.php#equipe">Équipe</a></li>
                                 <li><a href="presentation.php#valeurs">Valeurs & engagements</a></li>
@@ -988,7 +991,7 @@
                         <li class="menu-item has-dropdown">
                             <a href="#">Soins et soutien <i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="specialistes.php">Spécialistes</a></li>
+                                <li><a href="survivants.php">Nos survivants</a></li>
                                 <li><a href="ressources.php">S'informer et comprendre</a></li>
                                 <li><a href="demande-aide.php">Accompagnement personnalisé</a></li>
                             </ul>
@@ -999,7 +1002,6 @@
                             <ul class="dropdown-menu">
                                 <li><a href="sensibilisation.php">Sensibilisation</a></li>
                                 <li><a href="levees-fonds.php">Levées de Fonds</a></li>
-                                <li><a href="formations.php">Formations</a></li>
                                 <li><a href="unir-agir.php">Unir et agir</a></li>
                                 <li><a href="foire-annuelle.php">Grande Foire Annuelle</a></li>
                                 <li><a href="marche-contre-cancer.php">Marche Contre le Cancer</a></li>

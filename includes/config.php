@@ -15,6 +15,10 @@ if (session_status() === PHP_SESSION_ACTIVE) {
 // =============================================
 // 2. CONFIGURATION DES SESSIONS (MAINTENANT POSSIBLE)
 // =============================================
+define('GOOGLE_CLIENT_ID',     'XXXXXXX.apps.googleusercontent.com');
+define('GOOGLE_CLIENT_SECRET', 'XXXXXXX');
+define('GOOGLE_REDIRECT_URI',  'https://tonsite.com/auth/google-callback.php');
+
 
 // Supprimer les warnings en vérifiant si les paramètres peuvent être modifiés
 if (session_status() === PHP_SESSION_NONE) {
