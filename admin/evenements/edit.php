@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'&&adminCheckCsrf()){
 
     $image = $ev['image']??null;
     if(!empty($_FILES['image']['name'])){
-        $up=uploadFile($_FILES['image'],UPLOADS_PATH.'evenements/',['jpg','jpeg','png','webp']);
+        $up=uploadFile($_FILES['image'],ROOT_PATH.'uploads/evenements/',['jpg','jpeg','png','webp']);
         if($up['success']) $image='uploads/evenements/'.$up['filename'];
         else $errors[]=$up['error'];
     }
@@ -120,7 +120,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                         <input type="number" name="capacite_max" class="form-control" min="0" value="<?= htmlspecialchars($v('capacite_max',0)) ?>">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Prix (HTG — 0 = Gratuit)</label>
+                        <label class="form-label">Prix ($ — 0 = Gratuit)</label>
                         <input type="number" name="prix" class="form-control" min="0" step="0.01" value="<?= htmlspecialchars($v('prix',0)) ?>">
                     </div>
                     <button type="submit" class="btn btn-primary w-100"><i class="fas fa-save"></i> <?= $is_edit?'Mettre à jour':'Créer' ?></button>
@@ -130,7 +130,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                 <div class="card-header"><div class="card-title"><i class="fas fa-image"></i> Image</div></div>
                 <div class="card-body">
                     <?php $img=$ev['image']??''; if($img):?>
-                    <img id="imgPreview" src="<?= SITE_URL.'/assets/'.htmlspecialchars($img) ?>" style="width:100%;border-radius:8px;margin-bottom:10px;max-height:160px;object-fit:cover;border:1px solid var(--border);" onerror="this.style.display='none'">
+                    <img id="imgPreview" src="<?= SITE_URL.'/'.htmlspecialchars($img) ?>" style="width:100%;border-radius:8px;margin-bottom:10px;max-height:160px;object-fit:cover;border:1px solid var(--border);" onerror="this.style.display='none'">
                     <?php else:?><img id="imgPreview" style="display:none;width:100%;border-radius:8px;margin-bottom:10px;"><?php endif;?>
                     <input type="file" name="image" class="form-control" accept="image/*" style="font-size:.82rem;" onchange="previewImg(this)">
                 </div>

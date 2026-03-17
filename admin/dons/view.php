@@ -47,7 +47,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <table style="width:100%;font-size:.9rem;border-collapse:collapse;">
                 <?php
                 $rows = [
-                    ['Montant',    number_format($don['montant'],2,',',' ').' HTG'],
+                    ['Montant',    '$'.number_format($don['montant'],2,'.',' ')],
                     ['Type',       ucfirst($don['type_don'])],
                     ['Mode',       ucfirst($don['mode_paiement'])],
                     ['Statut',     statusBadge($don['statut'])],

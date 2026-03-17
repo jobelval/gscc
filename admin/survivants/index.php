@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'&&adminCheckCsrf()){
         $del_ids=$ids?:[$sid];
         foreach($del_ids as $i){
             $r=$pdo->prepare("SELECT photo FROM survivants WHERE id=?");$r->execute([$i]);$rw=$r->fetch();
-            if($rw&&$rw['photo']&&file_exists(UPLOADS_PATH.'survivants/'.$rw['photo'])) @unlink(UPLOADS_PATH.'survivants/'.$rw['photo']);
+            if($rw&&$rw['photo']&&file_exists(ROOT_PATH.'uploads/'.$rw['photo'])) @unlink(ROOT_PATH.'uploads/'.$rw['photo']);
         }
         $pdo->prepare("DELETE FROM survivants WHERE id IN (".implode(',',$del_ids).")")->execute();
         adminFlash('success','Supprimé(s).');header('Location:index.php');exit;
@@ -43,9 +43,10 @@ if($_SERVER['REQUEST_METHOD']==='POST'&&adminCheckCsrf()){
 
         $photo='';
         if(!empty($_FILES['photo']['name'])){
-            if(!is_dir(UPLOADS_PATH.'survivants/')) mkdir(UPLOADS_PATH.'survivants/',0755,true);
-            $up=uploadFile($_FILES['photo'],UPLOADS_PATH.'survivants/',['jpg','jpeg','png','webp']);
-            if($up['success']) $photo=$up['filename'];
+            $survDir=ROOT_PATH.'uploads/survivants/';
+            if(!is_dir($survDir)) mkdir($survDir,0755,true);
+            $up=uploadFile($_FILES['photo'],$survDir,['jpg','jpeg','png','webp']);
+            if($up['success']) $photo='survivants/'.$up['filename'];
         }
 
         if($action==='save_edit'&&$edit_id){
@@ -122,8 +123,8 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <td><input type="checkbox" name="ids[]" value="<?= $s['id'] ?>" class="row-check"></td>
                     <td>
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <?php if($s['photo']&&file_exists(UPLOADS_PATH.'survivants/'.$s['photo'])):?>
-                            <img src="<?= SITE_URL ?>/assets/uploads/survivants/<?= htmlspecialchars($s['photo']) ?>" class="avatar avatar-sm" style="object-fit:cover;" onerror="this.style.display='none'">
+                            <?php if($s['photo']&&file_exists(ROOT_PATH.'uploads/'.$s['photo'])):?>
+                            <img src="<?= SITE_URL ?>/uploads/<?= htmlspecialchars($s['photo']) ?>" class="avatar avatar-sm" style="object-fit:cover;" onerror="this.style.display='none'">
                             <?php else:?>
                             <div class="avatar avatar-sm">🎗️</div>
                             <?php endif;?>

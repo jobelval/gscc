@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
     if ($tid && $action === 'delete') {
         // Supprimer photo si existante
         $row = $pdo->prepare("SELECT photo FROM temoignages WHERE id=?"); $row->execute([$tid]); $r=$row->fetch();
-        if ($r && $r['photo'] && file_exists(UPLOADS_PATH.'temoignages/'.$r['photo'])) @unlink(UPLOADS_PATH.'temoignages/'.$r['photo']);
+        if ($r && $r['photo'] && file_exists(ROOT_PATH.'uploads/temoignages/'.$r['photo'])) @unlink(ROOT_PATH.'uploads/temoignages/'.$r['photo']);
         $pdo->prepare("DELETE FROM temoignages WHERE id=?")->execute([$tid]);
         adminFlash('success','Témoignage supprimé.');
         header('Location:index.php'); exit;
@@ -51,12 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
         if ($nom && $temo) {
             $photo = '';
             if (!empty($_FILES['photo']['name'])) {
-                $up = uploadFile($_FILES['photo'], UPLOADS_PATH.'temoignages/', ['jpg','jpeg','png','webp']);
+                $temoDir = ROOT_PATH.'uploads/temoignages/';
+                if (!is_dir($temoDir)) mkdir($temoDir, 0755, true);
+                $up = uploadFile($_FILES['photo'], $temoDir, ['jpg','jpeg','png','webp']);
                 if ($up['success']) $photo = $up['filename'];
             }
             if ($action==='create') {
                 $pdo->prepare("INSERT INTO temoignages (nom,fonction,temoignage,note,photo,statut,date_creation,created_by) VALUES (?,?,?,?,?,?,NOW(),?)")
-                    ->execute([$nom,$fonc,$temo,$note,$photo?:'default-avatar.png',$statut,$_SESSION['admin_id']]);
+                    ->execute([$nom,$fonc,$temo,$note,$photo?:null,$statut,$_SESSION['admin_id']]);
                 adminFlash('success','Témoignage ajouté.');
             } else {
                 $sql = "UPDATE temoignages SET nom=?,fonction=?,temoignage=?,note=?,statut=?";
@@ -135,9 +137,9 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <td>
                         <div style="display:flex;align-items:center;gap:9px;">
                             <?php
-                            $photoPath = UPLOADS_PATH.'temoignages/'.($t['photo']??'');
+                            $photoPath = ROOT_PATH.'uploads/temoignages/'.($t['photo']??'');
                             if ($t['photo'] && file_exists($photoPath)): ?>
-                                <img src="<?= SITE_URL ?>/assets/uploads/temoignages/<?= htmlspecialchars($t['photo']) ?>"
+                                <img src="<?= SITE_URL ?>/uploads/temoignages/<?= htmlspecialchars($t['photo']) ?>"
                                      class="avatar avatar-sm" style="border-radius:50%;object-fit:cover;" onerror="this.style.display='none'">
                             <?php else: ?>
                                 <div class="avatar avatar-sm"><?= strtoupper(substr($t['nom'],0,1)) ?></div>

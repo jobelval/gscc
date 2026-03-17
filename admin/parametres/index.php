@@ -345,7 +345,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
             $stat_rows = [
                 ['Articles',    $sys['articles']??0,    'newspaper'],
                 ['Utilisateurs',$sys['users']??0,       'users'],
-                ['Total dons',  number_format($sys['dons']??0,0,',',' ').' HTG', 'hand-holding-heart'],
+                ['Total dons',  '$'.number_format($sys['dons']??0,0,',',' '), 'hand-holding-heart'],
                 ['Médias galerie',$sys['galerie']??0,   'images'],
                 ['Abonnés NL',  $sys['newsletter']??0,  'paper-plane'],
                 ['Taille BDD',  ($sys['db_size']??0).' Mo', 'server'],

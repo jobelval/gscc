@@ -73,8 +73,7 @@ function uploadArticleImage(array $file): array
         ? rtrim(ROOT_PATH, '/\\')
         : rtrim(dirname(__DIR__, 2), '/\\');
 
-    $upload_dir = $root . DIRECTORY_SEPARATOR . 'assets'
-                       . DIRECTORY_SEPARATOR . 'uploads'
+    $upload_dir = $root . DIRECTORY_SEPARATOR . 'uploads'
                        . DIRECTORY_SEPARATOR . 'articles'
                        . DIRECTORY_SEPARATOR;
 
@@ -100,8 +99,8 @@ function uploadArticleImage(array $file): array
     }
 
     // Le front-end construit : SITE_URL . '/' . image_couverture
-    // Donc on stocke le chemin DEPUIS la racine du site : assets/uploads/articles/...
-    return ['success' => true, 'filename' => $filename, 'path' => 'assets/uploads/articles/' . $filename];
+    // Donc on stocke le chemin DEPUIS la racine du site : uploads/articles/...
+    return ['success' => true, 'filename' => $filename, 'path' => 'uploads/articles/' . $filename];
 }
 
 /* ── Traitement formulaire ── */
@@ -304,7 +303,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <!-- Preview existante -->
                     <div id="imgPreviewWrap" style="<?= $ei?'':'display:none;' ?>margin-bottom:12px;">
                         <img id="imgPreview"
-                             src="<?= $ei ? htmlspecialchars(SITE_URL.'/assets/'.ltrim($ei,'/')) : '' ?>"
+                             src="<?= $ei ? htmlspecialchars(SITE_URL.'/'.ltrim($ei,'/')) : '' ?>"
                              style="width:100%;border-radius:8px;object-fit:cover;max-height:180px;border:1px solid var(--border);"
                              onerror="this.parentElement.style.display='none'">
                     </div>

@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
                 'size'     => $files['size'][$i],
             ];
 
-            $dest = UPLOADS_PATH . 'galerie/';
+            $dest = ROOT_PATH . 'uploads/galerie/';
             if (!is_dir($dest)) mkdir($dest, 0755, true);
 
             $up = uploadFile($single, $dest, ['jpg','jpeg','png','webp','gif']);

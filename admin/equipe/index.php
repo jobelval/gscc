@@ -34,16 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
         }
         if ($rs) $rs_json = json_encode($rs);
 
-        $photo = $eid ? ($pdo->prepare("SELECT photo FROM equipe WHERE id=?")->execute([$eid]) ? '' : '') : '';
+        $photo = '';
         if ($eid) {
             $cur = $pdo->prepare("SELECT photo FROM equipe WHERE id=?"); $cur->execute([$eid]);
             $photo = $cur->fetchColumn() ?: '';
         }
 
         if (!empty($_FILES['photo']['name'])) {
-            if (!is_dir(ROOT_PATH . 'images/equipe/')) mkdir(ROOT_PATH . 'images/equipe/', 0755, true);
-            $up = uploadFile($_FILES['photo'], ROOT_PATH . 'images/equipe/', ['jpg','jpeg','png','webp']);
-            if ($up['success']) $photo = 'images/equipe/' . $up['filename'];
+            $equipeDir = ROOT_PATH . 'uploads/equipe/';
+            if (!is_dir($equipeDir)) mkdir($equipeDir, 0755, true);
+            $up = uploadFile($_FILES['photo'], $equipeDir, ['jpg','jpeg','png','webp']);
+            if ($up['success']) $photo = 'uploads/equipe/' . $up['filename'];
         }
 
         if ($nom && $prenom) {

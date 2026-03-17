@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'&&adminCheckCsrf()){
 
     $new_file = $m['url_fichier'];
     if($m['type']==='photo'&&!empty($_FILES['photo']['name'])){
-        $up=uploadFile($_FILES['photo'],UPLOADS_PATH.'galerie/',['jpg','jpeg','png','webp','gif']);
+        $up=uploadFile($_FILES['photo'],ROOT_PATH.'uploads/galerie/',['jpg','jpeg','png','webp','gif']);
         if($up['success']){ $new_file='uploads/galerie/'.$up['filename']; }
         else $errors[]=$up['error'];
     }
@@ -71,7 +71,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
         <div class="card-header"><div class="card-title"><i class="fas fa-eye"></i> Aperçu actuel</div></div>
         <div class="card-body" style="text-align:center;">
             <?php if($m['type']==='photo'):?>
-            <img id="imgPreview" src="<?= SITE_URL.'/assets/'.htmlspecialchars($m['url_thumbnail']?:$m['url_fichier']) ?>"
+            <img id="imgPreview" src="<?= SITE_URL.'/'.htmlspecialchars($m['url_thumbnail']?:$m['url_fichier']) ?>"
                  style="max-width:100%;border-radius:8px;border:1px solid var(--border);" onerror="this.style.display='none'">
             <?php else:?>
             <div style="background:#000;border-radius:8px;overflow:hidden;">

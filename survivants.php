@@ -753,7 +753,7 @@ require_once 'templates/header.php';
                 // Initiales pour l'avatar
                 $initiales = strtoupper(substr($s['prenom'],0,1) . substr($s['nom'],0,1));
                 $has_photo = !empty($s['photo']);
-                $photo_url = $has_photo ? rtrim(SITE_URL,'/').'/images/'.$s['photo'] : null;
+                $photo_url = $has_photo ? rtrim(SITE_URL,'/').'/uploads/'.$s['photo'] : null;
                 $has_long  = !empty(trim($s['histoire_longue'] ?? ''));
             ?>
             <div class="surv-card" data-aos="fade-up" data-aos-delay="<?= ($i % 3) * 100 ?>">
@@ -831,7 +831,7 @@ require_once 'templates/header.php';
     if (empty(trim($s['histoire_longue'] ?? ''))) continue;
     $initiales = strtoupper(substr($s['prenom'],0,1) . substr($s['nom'],0,1));
     $has_photo = !empty($s['photo']);
-    $photo_url = $has_photo ? rtrim(SITE_URL,'/').'/images/'.$s['photo'] : null;
+    $photo_url = $has_photo ? rtrim(SITE_URL,'/').'/uploads/'.$s['photo'] : null;
     // Convertir les sauts de ligne en paragraphes
     $paragraphes = array_filter(explode("\n", trim($s['histoire_longue'])));
 ?>

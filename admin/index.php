@@ -113,9 +113,9 @@ require_once __DIR__ . '/includes/header.php';
     <div class="stat-card">
         <div class="stat-icon green"><i class="fas fa-hand-holding-heart"></i></div>
         <div class="stat-info">
-            <div class="stat-value"><?= number_format($stats['dons_total'], 0, ',', ' ') ?></div>
-            <div class="stat-label">Total dons (HTG)</div>
-            <div class="stat-delta up"><i class="fas fa-arrow-up"></i> <?= number_format($dons_30j,0,',',' ') ?> ce mois</div>
+            <div class="stat-value">$<?= number_format($stats['dons_total'], 0, ',', ' ') ?></div>
+            <div class="stat-label">Total dons ($)</div>
+            <div class="stat-delta up"><i class="fas fa-arrow-up"></i> $<?= number_format($dons_30j,0,',',' ') ?> ce mois</div>
         </div>
     </div>
     <div class="stat-card">
@@ -185,7 +185,7 @@ if ($stats['temoignages'] > 0) $urgents[] = ['icon'=>'quote-right','color'=>'pur
     <a href="<?= SITE_URL ?>/admin/galerie/upload.php" class="quick-action-btn">
         <i class="fas fa-cloud-upload-alt"></i> Upload média
     </a>
-    <a href="<?= SITE_URL ?>/admin/newsletter/composer.php" class="quick-action-btn">
+    <a href="<?= SITE_URL ?>/admin/newsletter/index.php?tab=composer" class="quick-action-btn">
         <i class="fas fa-paper-plane"></i> Newsletter
     </a>
     <a href="<?= SITE_URL ?>/admin/utilisateurs/index.php" class="quick-action-btn">
@@ -413,7 +413,7 @@ if ($stats['temoignages'] > 0) $urgents[] = ['icon'=>'quote-right','color'=>'pur
             labels: niceLabels,
             datasets: [
                 {
-                    label: 'Montant (HTG)',
+                    label: 'Montant ($)',
                     data: amounts,
                     backgroundColor: 'rgba(0,51,153,.15)',
                     borderColor: '#003399',
@@ -446,7 +446,7 @@ if ($stats['temoignages'] > 0) $urgents[] = ['icon'=>'quote-right','color'=>'pur
                     callbacks: {
                         label: (ctx) => {
                             if (ctx.datasetIndex === 0)
-                                return ' ' + ctx.parsed.y.toLocaleString('fr-FR') + ' HTG';
+                                return ' $' + ctx.parsed.y.toLocaleString('fr-FR');
                             return ' ' + ctx.parsed.y + ' don(s)';
                         }
                     }

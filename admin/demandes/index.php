@@ -157,7 +157,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <?php endif; ?>
                 </td>
                 <td style="font-size:.85rem;">
-                    <?= $d['montant_demande'] ? number_format($d['montant_demande'],2,',',' ').' HTG' : '—' ?>
+                    <?= $d['montant_demande'] ? '$'.number_format($d['montant_demande'],2,'.',' ') : '—' ?>
                     <?php if ($d['montant_accorde']): ?>
                     <br><span style="color:var(--success);font-size:.75rem;">Accordé : <?= number_format($d['montant_accorde'],2,',',' ') ?></span>
                     <?php endif; ?>
@@ -213,7 +213,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Montant accordé (HTG)</label>
+                    <label class="form-label">Montant accordé ($)</label>
                     <input type="number" name="montant_accorde" id="dMontant" class="form-control" min="0" step="0.01" placeholder="0.00">
                 </div>
                 <div class="form-group" style="margin-bottom:0;">

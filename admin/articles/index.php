@@ -194,7 +194,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                         <td>
                             <div style="display:flex;align-items:center;gap:10px;">
                                 <?php if ($a['image_couverture']): ?>
-                                    <img src="<?= SITE_URL ?>/assets/<?= htmlspecialchars($a['image_couverture']) ?>"
+                                    <img src="<?= SITE_URL ?>/<?= htmlspecialchars($a['image_couverture']) ?>"
                                          class="thumb-sm" onerror="this.style.display='none'">
                                 <?php endif; ?>
                                 <div>

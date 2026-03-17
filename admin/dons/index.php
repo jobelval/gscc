@@ -101,14 +101,14 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="stat-card">
         <div class="stat-icon green"><i class="fas fa-sack-dollar"></i></div>
         <div class="stat-info">
-            <div class="stat-value"><?= number_format($totaux['total']??0,0,',',' ') ?></div>
-            <div class="stat-label">Total cumulé (HTG)</div>
+            <div class="stat-value">$<?= number_format($totaux['total']??0,0,',',' ') ?></div>
+            <div class="stat-label">Total cumulé ($)</div>
         </div>
     </div>
     <div class="stat-card">
         <div class="stat-icon blue"><i class="fas fa-check-circle"></i></div>
         <div class="stat-info">
-            <div class="stat-value"><?= number_format($totaux['total_complete']??0,0,',',' ') ?></div>
+            <div class="stat-value">$<?= number_format($totaux['total_complete']??0,0,',',' ') ?></div>
             <div class="stat-label">Dons complétés</div>
             <div class="stat-delta up"><i class="fas fa-check"></i> <?= $totaux['nb_complete']??0 ?> transactions</div>
         </div>
@@ -116,8 +116,8 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="stat-card">
         <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
         <div class="stat-info">
-            <div class="stat-value"><?= number_format($totaux['total_attente']??0,0,',',' ') ?></div>
-            <div class="stat-label">En attente (HTG)</div>
+            <div class="stat-value">$<?= number_format($totaux['total_attente']??0,0,',',' ') ?></div>
+            <div class="stat-label">En attente ($)</div>
             <div class="stat-delta" style="color:var(--warning);"><?= $totaux['nb_attente']??0 ?> transaction(s)</div>
         </div>
     </div>
@@ -150,7 +150,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                 </div>
                 <span style="font-size:.8rem;font-weight:600;text-transform:capitalize;"><?= $ms['mode_paiement'] ?></span>
             </div>
-            <div style="font-size:1rem;font-weight:700;"><?= number_format($ms['tot'],0,',',' ') ?> HTG</div>
+            <div style="font-size:1rem;font-weight:700;">$<?= number_format($ms['tot'],0,',',' ') ?></div>
             <div style="font-size:.75rem;color:var(--text-muted);"><?= $ms['n'] ?> don(s)</div>
         </div>
         <?php endforeach; ?>
@@ -216,9 +216,8 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     </td>
                     <td>
                         <span style="font-size:1rem;font-weight:700;color:var(--success);">
-                            <?= number_format($don['montant'],2,',',' ') ?>
+                            $<?= number_format($don['montant'],2,'.',' ') ?>
                         </span>
-                        <span style="font-size:.75rem;color:var(--text-muted);">HTG</span>
                     </td>
                     <td>
                         <?php

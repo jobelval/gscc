@@ -226,7 +226,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                             <span class="fw-600" style="color:var(--success);"><?= $u['nb_dons'] ?></span>
                             <span style="color:var(--text-muted);">don(s)</span>
                             <?php if ($u['total_dons'] > 0): ?>
-                            <br><span style="font-size:.75rem;color:var(--text-muted);"><?= number_format($u['total_dons'],0,',',' ') ?> HTG</span>
+                            <br><span style="font-size:.75rem;color:var(--text-muted);">$<?= number_format($u['total_dons'],0,',',' ') ?></span>
                             <?php endif; ?>
                         </td>
                         <td style="font-size:.78rem;color:var(--text-muted);"><?= dateFr($u['date_inscription']) ?></td>

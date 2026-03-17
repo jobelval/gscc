@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && adminCheckCsrf()) {
 
     $image = $item['image_couverture'] ?? null;
     if (!empty($_FILES['image']['name'])) {
-        $up = uploadFile($_FILES['image'], UPLOADS_PATH.'campagnes/', ['jpg','jpeg','png','webp']);
+        $up = uploadFile($_FILES['image'], ROOT_PATH.'uploads/campagnes/', ['jpg','jpeg','png','webp']);
         if ($up['success']) $image = 'uploads/campagnes/'.$up['filename'];
         else $errors[] = $up['error'];
     }
@@ -195,7 +195,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                                    placeholder="Ex. Sensibiliser 10 000 femmes">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Objectif financier (HTG)</label>
+                            <label class="form-label">Objectif financier ($)</label>
                             <input type="number" name="objectif_montant" class="form-control"
                                    value="<?= htmlspecialchars($v('objectif_montant','')) ?>"
                                    min="0" step="0.01" placeholder="0.00">
@@ -244,7 +244,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                 <div class="card-body">
                     <?php $img = $item['image_couverture'] ?? ''; ?>
                     <?php if ($img): ?>
-                    <img src="<?= SITE_URL ?>/assets/<?= htmlspecialchars($img) ?>"
+                    <img src="<?= SITE_URL ?>/<?= htmlspecialchars($img) ?>"
                          id="imgPreview"
                          style="width:100%;border-radius:8px;margin-bottom:10px;max-height:160px;object-fit:cover;border:1px solid var(--border);"
                          onerror="this.style.display='none'">

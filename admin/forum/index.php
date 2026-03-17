@@ -71,6 +71,22 @@ try {
              WHERE $sw ORDER BY s.est_epingle DESC,s.date_creation DESC LIMIT $per OFFSET $offset"
         );
         $stmt->execute($params); $items=$stmt->fetchAll();
+
+        // Pré-charger les réponses pour tous les sujets visibles
+        $replies_map = [];
+        if ($items) {
+            $ids = implode(',', array_map(fn($s)=>(int)$s['id'], $items));
+            $rep_stmt = $pdo->query(
+                "SELECT r.*, CONCAT(u.prenom,' ',u.nom) auteur_nom
+                 FROM forum_reponses r
+                 LEFT JOIN utilisateurs u ON r.auteur_id=u.id
+                 WHERE r.sujet_id IN ($ids)
+                 ORDER BY r.date_creation ASC"
+            );
+            foreach ($rep_stmt->fetchAll() as $rep) {
+                $replies_map[$rep['sujet_id']][] = $rep;
+            }
+        }
     } else {
         // Catégories
         $cats=$pdo->query(
@@ -143,7 +159,16 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <div><?= htmlspecialchars($s['auteur_nom']??'—') ?></div>
                     <div style="font-size:.74rem;color:var(--text-muted);"><?= htmlspecialchars($s['auteur_email']??'') ?></div>
                 </td>
-                <td style="text-align:center;"><span class="badge badge-secondary"><?= $s['nb_rep'] ?></span></td>
+                <td style="text-align:center;">
+                    <?php if ($s['nb_rep'] > 0): ?>
+                    <button type="button" onclick="toggleReplies(<?= $s['id'] ?>)"
+                            class="badge badge-secondary" style="cursor:pointer;border:none;background:var(--secondary);">
+                        <i class="fas fa-reply" style="font-size:.65rem;"></i> <?= $s['nb_rep'] ?>
+                    </button>
+                    <?php else: ?>
+                    <span class="badge badge-secondary">0</span>
+                    <?php endif; ?>
+                </td>
                 <td style="font-size:.84rem;"><?= number_format($s['vue_compteur']) ?></td>
                 <td>
                     <?php if ($s['est_resolu']): ?><span class="badge badge-success" style="font-size:.65rem;">✅ Résolu</span><?php endif; ?>
@@ -180,6 +205,40 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     </div>
                 </td>
             </tr>
+            <?php if (!empty($replies_map[$s['id']])): ?>
+            <tr id="replies-<?= $s['id'] ?>" style="display:none;background:#FAFBFF;">
+                <td colspan="8" style="padding:0;">
+                    <div style="padding:10px 16px 14px 40px;">
+                        <div style="font-size:.78rem;font-weight:700;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;">
+                            <i class="fas fa-reply"></i> Réponses (<?= count($replies_map[$s['id']]) ?>)
+                        </div>
+                        <?php foreach ($replies_map[$s['id']] as $rep): ?>
+                        <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">
+                            <div style="flex:1;min-width:0;">
+                                <span style="font-weight:600;font-size:.82rem;">
+                                    <?= htmlspecialchars($rep['auteur_nom'] ?? 'Anonyme') ?>
+                                </span>
+                                <span style="font-size:.75rem;color:var(--text-muted);margin-left:8px;">
+                                    <?= dateFr($rep['date_creation'],'d/m/Y H:i') ?>
+                                </span>
+                                <div style="font-size:.84rem;color:var(--text);margin-top:4px;line-height:1.5;">
+                                    <?= htmlspecialchars(truncate($rep['contenu'] ?? '',200)) ?>
+                                </div>
+                            </div>
+                            <form method="POST" style="flex-shrink:0;" onsubmit="return confirm('Supprimer cette réponse ?')">
+                                <input type="hidden" name="_csrf" value="<?= adminCsrfToken() ?>">
+                                <input type="hidden" name="rid" value="<?= $rep['id'] ?>">
+                                <input type="hidden" name="action" value="del_reply">
+                                <button type="submit" class="btn btn-xs btn-danger" title="Supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </td>
+            </tr>
+            <?php endif; ?>
             <?php endforeach; else: ?>
             <tr><td colspan="8"><div class="empty-state"><i class="fas fa-comments"></i><h3>Aucun sujet</h3></div></td></tr>
             <?php endif; ?>
@@ -282,4 +341,11 @@ function editCat(id,nom,desc,ordre,actif){
 </script>
 <?php endif; ?>
 
+<script>
+function toggleReplies(id) {
+    var row = document.getElementById('replies-' + id);
+    if (!row) return;
+    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+}
+</script>
 <?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>

@@ -210,7 +210,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     $nm->execute([$id]); $nb_dem = (int)$nm->fetchColumn();
                     ?>
                     <p style="margin-bottom:8px;"><strong><?= $da['n'] ?></strong> don(s) enregistré(s)</p>
-                    <p style="margin-bottom:8px;color:var(--success);font-weight:700;"><?= number_format($da['tot'],0,',',' ') ?> HTG</p>
+                    <p style="margin-bottom:8px;color:var(--success);font-weight:700;">$<?= number_format($da['tot'],0,',',' ') ?></p>
                     <p style="margin-bottom:8px;"><strong><?= $nb_dem ?></strong> demande(s) d'aide</p>
                     <hr class="divider">
                     <p style="color:var(--text-muted);">Inscrit le : <?= dateFr($user['date_inscription'],'d/m/Y') ?></p>

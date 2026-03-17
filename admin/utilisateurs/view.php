@@ -101,7 +101,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <tbody>
                     <?php foreach ($user_dons as $d): ?>
                     <tr>
-                        <td class="fw-600" style="color:var(--success);"><?= number_format($d['montant'],2,',',' ') ?> HTG</td>
+                        <td class="fw-600" style="color:var(--success);">$<?= number_format($d['montant'],2,'.',' ') ?></td>
                         <td><?= ucfirst($d['mode_paiement']) ?></td>
                         <td><?= statusBadge($d['statut']) ?></td>
                         <td style="font-size:.78rem;color:var(--text-muted);"><?= dateFr($d['date_don'],'d/m/Y') ?></td>

@@ -160,7 +160,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <!-- Thumbnail -->
                     <div style="height:150px;background:var(--body-bg);overflow:hidden;position:relative;">
                         <?php if ($m['type'] === 'photo'): ?>
-                            <?php $imgUrl = SITE_URL . '/assets/' . $m['url_thumbnail'] ?: SITE_URL . '/assets/' . $m['url_fichier']; ?>
+                            <?php $imgUrl = SITE_URL . '/' . ($m['url_thumbnail'] ?: $m['url_fichier']); ?>
                             <img src="<?= htmlspecialchars($imgUrl) ?>"
                                  style="width:100%;height:100%;object-fit:cover;"
                                  onerror="this.src='';this.parentElement.style.background='#E2E8F0';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:36px;color:#94A3B8;\'>📷</div>';"

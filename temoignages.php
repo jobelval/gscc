@@ -628,7 +628,11 @@ $rest = array_slice($temoignages, 1);
                         </blockquote>
                         <div class="featured-author">
                             <div class="featured-avatar">
-                                <img src="<?= htmlspecialchars($featured['photo'] ?? '') ?>"
+                                <?php
+                                $fp = $featured['photo'] ?? '';
+                                $fp_src = (str_starts_with($fp,'http') || empty($fp)) ? $fp : SITE_URL.'/uploads/temoignages/'.$fp;
+                                ?>
+                                <img src="<?= htmlspecialchars($fp_src) ?>"
                                     alt="<?= htmlspecialchars($featured['nom']) ?>"
                                     loading="lazy"
                                     onerror="this.style.display='none'">
@@ -670,7 +674,11 @@ $rest = array_slice($temoignages, 1);
 
                         <div class="card-header">
                             <div class="card-avatar">
-                                <img src="<?= htmlspecialchars($t['photo'] ?? '') ?>"
+                                <?php
+                                $tp = $t['photo'] ?? '';
+                                $tp_src = (str_starts_with($tp,'http') || empty($tp)) ? $tp : SITE_URL.'/uploads/temoignages/'.$tp;
+                                ?>
+                                <img src="<?= htmlspecialchars($tp_src) ?>"
                                     alt="<?= htmlspecialchars($t['nom']) ?>"
                                     loading="lazy"
                                     onerror="this.style.display='none'">

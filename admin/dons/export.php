@@ -39,7 +39,7 @@ $out = fopen('php://output', 'w');
 fprintf($out, chr(0xEF).chr(0xBB).chr(0xBF));
 
 // En-têtes
-fputcsv($out, ['ID','Nom donateur','Email','Téléphone','Montant (HTG)','Type','Mode paiement','Statut','Commentaire','Date','Membre GSCC'], ';');
+fputcsv($out, ['ID','Nom donateur','Email','Téléphone','Montant ($)','Type','Mode paiement','Statut','Commentaire','Date','Membre GSCC'], ';');
 
 foreach ($rows as $row) {
     fputcsv($out, [

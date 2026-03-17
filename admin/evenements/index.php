@@ -102,7 +102,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <td style="font-size:.82rem;white-space:nowrap;color:var(--text-muted);"><?= dateFr($ev['date_debut'],'d/m/Y H:i') ?></td>
                     <td style="font-size:.82rem;white-space:nowrap;color:var(--text-muted);"><?= $ev['date_fin']?dateFr($ev['date_fin'],'d/m/Y H:i'):'—' ?></td>
                     <td style="font-size:.84rem;text-align:center;"><?= $ev['capacite_max']?$ev['capacite_max']:'∞' ?></td>
-                    <td style="font-size:.84rem;"><?= $ev['prix']>0?number_format($ev['prix'],2,',',' ').' HTG':'Gratuit' ?></td>
+                    <td style="font-size:.84rem;"><?= $ev['prix']>0?'$'.number_format($ev['prix'],2,'.',' '):'Gratuit' ?></td>
                     <td><?= statusBadge($ev['statut']) ?></td>
                     <td class="col-actions">
                         <a href="edit.php?id=<?= $ev['id'] ?>" class="btn btn-xs btn-primary"><i class="fas fa-pen"></i></a>
