@@ -74,7 +74,7 @@
                 <ul class="footer-contact-info">
                     <li>
                         <i class="fas fa-phone-alt"></i>
-                        <a href="tel:+50929474722">2947 47 22</a>
+                        <span>2947 47 22</span>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>

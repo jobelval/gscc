@@ -56,7 +56,7 @@
        TOP BAR — fixe en haut
        ================================================ */
         .top-bar {
-            background: var(--charcoal);
+            background: linear-gradient(135deg, #FCE8EF 0%, #eb3a75 100%);
             font-family: 'DM Sans', sans-serif;
             font-size: 14px;
             padding: 9px 0;
@@ -518,16 +518,28 @@
             cursor: pointer;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
             transition: background 0.2s;
         }
-        .mob-close-btn:hover { background: #C0306A; }
-        .mob-close-btn.visible { display: flex; }
-        @media (max-width: 768px) {
-            .mob-close-btn { top: 120px; }
+
+        .mob-close-btn:hover {
+            background: #C0306A;
         }
+
+        .mob-close-btn.visible {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .mob-close-btn {
+                top: 120px;
+            }
+        }
+
         @media (max-width: 480px) {
-            .mob-close-btn { top: 110px; }
+            .mob-close-btn {
+                top: 110px;
+            }
         }
 
         /* Flash */
@@ -1110,8 +1122,8 @@
                     nav.style.cssText = [
                         'display:block',
                         'position:fixed',
-                        'top:0','left:0',
-                        'width:100%','height:100%',
+                        'top:0', 'left:0',
+                        'width:100%', 'height:100%',
                         'background:#FDFAF8',
                         'z-index:999999',
                         'overflow-y:auto',
@@ -1122,21 +1134,21 @@
                     /* Liste des items */
                     var menu = nav.querySelector('.nav-menu');
                     menu.style.cssText = [
-                        'display:flex','flex-direction:column',
-                        'align-items:stretch','width:100%',
-                        'padding:0','margin:0',
-                        'list-style:none','gap:4px'
+                        'display:flex', 'flex-direction:column',
+                        'align-items:stretch', 'width:100%',
+                        'padding:0', 'margin:0',
+                        'list-style:none', 'gap:4px'
                     ].join(';');
 
                     /* Style de chaque item principal (mobile uniquement) */
                     nav.querySelectorAll('.menu-item > a').forEach(function(a) {
                         a.style.cssText = [
-                            'display:flex','justify-content:space-between',
+                            'display:flex', 'justify-content:space-between',
                             'align-items:center',
                             'padding:14px 18px',
-                            'font-size:16px','font-weight:600',
-                            'color:#1E2A35','text-decoration:none',
-                            'border-radius:10px','background:transparent',
+                            'font-size:16px', 'font-weight:600',
+                            'color:#1E2A35', 'text-decoration:none',
+                            'border-radius:10px', 'background:transparent',
                             'border-bottom:1px solid #E8ECF0'
                         ].join(';');
                     });
@@ -1186,7 +1198,7 @@
                         }
                         e.preventDefault();
 
-                        var dd     = item.querySelector('.dropdown-menu');
+                        var dd = item.querySelector('.dropdown-menu');
                         var isOpen = dd.style.display === 'block';
 
                         /* Fermer tous les autres sous-menus */
@@ -1195,7 +1207,7 @@
                         });
                         nav.querySelectorAll('.menu-item > a').forEach(function(a) {
                             a.style.background = 'transparent';
-                            a.style.color      = '#1E2A35';
+                            a.style.color = '#1E2A35';
                         });
 
                         if (!isOpen) {
@@ -1229,7 +1241,7 @@
                             });
 
                             this.style.background = '#FDE8EF';
-                            this.style.color      = '#D94F7A';
+                            this.style.color = '#D94F7A';
                         }
                     });
                 });
@@ -1283,13 +1295,16 @@
                On repositionne après chargement complet. */
             if (window.location.hash) {
                 window.addEventListener('load', function() {
-                    var id  = window.location.hash.substring(1);
-                    var el  = document.getElementById(id);
+                    var id = window.location.hash.substring(1);
+                    var el = document.getElementById(id);
                     if (!el) return;
                     setTimeout(function() {
                         var offset = 160; /* hauteur header + marge */
-                        var top    = el.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({ top: top, behavior: 'smooth' });
+                        var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({
+                            top: top,
+                            behavior: 'smooth'
+                        });
                     }, 100);
                 });
             }

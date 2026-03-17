@@ -1,9 +1,13 @@
 <?php
-// admin/login.php
-require_once '../includes/config.php';
+/**
+ * GSCC CMS — admin/login.php
+ */
 
-// Rediriger si déjà connecté en tant qu'admin
-if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+require_once dirname(__DIR__) . '/includes/config.php';
+require_once __DIR__ . '/includes/auth.php';
+
+// Déjà connecté ?
+if (isset($_SESSION['admin_id']) && $_SESSION['admin_role'] === 'admin') {
     header('Location: index.php');
     exit;
 }
@@ -11,253 +15,258 @@ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = sanitize($_POST['email'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    
-    if (empty($email) || empty($password)) {
-        $error = 'Veuillez remplir tous les champs';
+
+    // Protection brute-force
+    $attempts_key = 'login_attempts_' . md5($_SERVER['REMOTE_ADDR'] ?? '');
+    $attempts     = $_SESSION[$attempts_key] ?? ['n' => 0, 't' => time()];
+
+    if ($attempts['n'] >= 5 && (time() - $attempts['t']) < 900) {
+        $wait = ceil((900 - (time() - $attempts['t'])) / 60);
+        $error = "Trop de tentatives. Réessayez dans {$wait} minute(s).";
+    } elseif (!$email || !$password) {
+        $error = 'Veuillez remplir tous les champs.';
     } else {
-        $result = loginUser($email, $password);
-        
-        if ($result['success']) {
-            if ($result['user']['role'] === 'admin') {
-                $_SESSION['admin_logged_in'] = true;
-                $redirect = $_SESSION['redirect_after_login'] ?? 'index.php';
-                unset($_SESSION['redirect_after_login']);
-                header('Location: ' . $redirect);
-                exit;
+        try {
+            $stmt = $pdo->prepare(
+                "SELECT id, email, mot_de_passe, nom, prenom, role, statut, photo_url
+                 FROM utilisateurs WHERE email = ? LIMIT 1"
+            );
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+
+            if ($user && password_verify($password, $user['mot_de_passe'])) {
+                if ($user['statut'] !== 'actif') {
+                    $error = 'Votre compte est désactivé. Contactez un administrateur.';
+                } elseif (!in_array($user['role'], ['admin', 'moderateur'])) {
+                    $error = 'Accès refusé. Droits administrateur requis.';
+                } else {
+                    // Connexion réussie
+                    session_regenerate_id(true);
+                    $_SESSION['admin_id']     = $user['id'];
+                    $_SESSION['admin_email']  = $user['email'];
+                    $_SESSION['admin_nom']    = $user['nom'];
+                    $_SESSION['admin_prenom'] = $user['prenom'];
+                    $_SESSION['admin_role']   = $user['role'];
+                    $_SESSION['admin_photo']  = $user['photo_url'];
+                    $_SESSION['admin_ip']     = $_SERVER['REMOTE_ADDR'] ?? '';
+                    $_SESSION['admin_last_activity'] = time();
+
+                    // MAJ dernière connexion
+                    $pdo->prepare("UPDATE utilisateurs SET derniere_connexion = NOW() WHERE id = ?")
+                        ->execute([$user['id']]);
+
+                    // Reset tentatives
+                    unset($_SESSION[$attempts_key]);
+
+                    $redirect = $_SESSION['redirect_after_login'] ?? SITE_URL . '/admin/index.php';
+                    unset($_SESSION['redirect_after_login']);
+                    header('Location: ' . $redirect);
+                    exit;
+                }
             } else {
-                $error = 'Accès non autorisé. Compte administrateur requis.';
-                session_destroy();
+                // Incrémenter tentatives
+                if ((time() - $attempts['t']) > 900) {
+                    $attempts = ['n' => 0, 't' => time()];
+                }
+                $attempts['n']++;
+                $_SESSION[$attempts_key] = $attempts;
+                $remaining = 5 - $attempts['n'];
+                $error = "Email ou mot de passe incorrect." . ($remaining > 0 ? " ({$remaining} essai(s) restant(s))" : '');
             }
-        } else {
-            $error = $result['error'];
+        } catch (PDOException $e) {
+            $error = 'Erreur de connexion. Veuillez réessayer.';
         }
     }
 }
+
+$login_error = $_SESSION['login_error'] ?? '';
+unset($_SESSION['login_error']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration - Connexion</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Connexion — GSCC CMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: linear-gradient(135deg, #0F1C2E 0%, #003399 60%, #0F1C2E 100%);
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
         }
-        
-        .login-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 400px;
-            padding: 40px;
-            animation: slideUp 0.5s ease;
+        .login-wrap {
+            width: 100%; max-width: 420px;
         }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .login-logo {
+            text-align: center; margin-bottom: 32px;
         }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
+        .login-logo .icon {
+            width: 72px; height: 72px;
+            background: rgba(255,255,255,.10);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 34px; margin: 0 auto 14px;
         }
-        
-        .login-header h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 10px;
+        .login-logo h1 { color: #fff; font-size: 1.4rem; font-weight: 700; }
+        .login-logo p  { color: rgba(255,255,255,.45); font-size: .82rem; margin-top: 4px; }
+
+        .login-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 36px 36px 32px;
+            box-shadow: 0 24px 80px rgba(0,0,0,.3);
         }
-        
-        .login-header p {
-            color: #666;
-            font-size: 14px;
+        .login-card h2 {
+            font-size: 1.15rem; font-weight: 700; color: #1E293B;
+            margin-bottom: 6px;
         }
-        
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
+        .login-card .subtitle {
+            font-size: .82rem; color: #64748B; margin-bottom: 28px;
         }
-        
-        .logo i {
-            font-size: 40px;
-            color: white;
+
+        .form-group { margin-bottom: 18px; }
+        .form-label { display: block; font-size: .82rem; font-weight: 600; color: #1E293B; margin-bottom: 6px; }
+        .input-wrap { position: relative; }
+        .input-wrap i {
+            position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+            color: #94A3B8; font-size: 14px;
         }
-        
-        .form-group {
+        input {
+            width: 100%;
+            padding: 11px 13px 11px 38px;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: .9rem; font-family: 'Inter', sans-serif;
+            color: #1E293B; outline: none;
+            transition: border-color .18s, box-shadow .18s;
+        }
+        input:focus { border-color: #003399; box-shadow: 0 0 0 3px rgba(0,51,153,.08); }
+
+        .toggle-pw {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: #94A3B8; cursor: pointer;
+            font-size: 14px; padding: 4px;
+        }
+        .toggle-pw:hover { color: #003399; }
+
+        .error-box {
+            background: #FFF5F5; border: 1px solid #FCA5A5;
+            border-radius: 8px; padding: 12px 14px;
+            color: #991B1B; font-size: .84rem;
+            display: flex; align-items: center; gap: 9px;
             margin-bottom: 20px;
         }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 500;
-            font-size: 14px;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-        }
-        
+
         .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            width: 100%; padding: 13px;
+            background: linear-gradient(135deg, #003399, #1a56cc);
+            color: #fff; border: none; border-radius: 8px;
+            font-size: .95rem; font-weight: 700; font-family: 'Inter', sans-serif;
+            cursor: pointer; transition: all .18s;
+            display: flex; align-items: center; justify-content: center; gap: 9px;
+            box-shadow: 0 4px 16px rgba(0,51,153,.28);
         }
-        
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        .btn-login:hover { background: linear-gradient(135deg, #002277, #003399); transform: translateY(-1px); }
+        .btn-login:active { transform: translateY(0); }
+
+        .login-footer {
+            margin-top: 20px; text-align: center;
+            font-size: .78rem; color: #94A3B8;
         }
-        
-        .alert {
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+
+        .security-info {
+            margin-top: 24px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            color: rgba(255,255,255,.35); font-size: .75rem;
         }
-        
-        .alert-error {
-            background: #fee;
-            color: #c33;
-            border: 1px solid #fcc;
-        }
-        
-        .alert-success {
-            background: #efe;
-            color: #3c3;
-            border: 1px solid #cfc;
-        }
-        
-        .alert i {
-            font-size: 18px;
-        }
-        
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .back-link a {
-            color: #666;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-        
-        .back-link a:hover {
-            color: #667eea;
-        }
-        
-        .back-link i {
-            margin-right: 5px;
-        }
+        .security-info i { font-size: 12px; }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <div class="logo">
-                <i class="fas fa-shield-alt"></i>
-            </div>
-            <h1>Administration GSCC</h1>
-            <p>Connectez-vous pour gérer le site</p>
+    <div class="login-wrap">
+
+        <div class="login-logo">
+            <div class="icon">🎗️</div>
+            <h1>GSCC CMS</h1>
+            <p>Groupe de Support Contre le Cancer — Haïti</p>
         </div>
-        
-        <?php if (isset($_GET['expired'])): ?>
-            <div class="alert alert-error">
-                <i class="fas fa-clock"></i>
-                Votre session a expiré. Veuillez vous reconnecter.
+
+        <div class="login-card">
+            <h2>Bienvenue 👋</h2>
+            <p class="subtitle">Connectez-vous à votre espace d'administration.</p>
+
+            <?php if ($error || $login_error): ?>
+                <div class="error-box">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <?= htmlspecialchars($error ?: $login_error) ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="POST" autocomplete="on">
+                <input type="hidden" name="_csrf" value="<?= adminCsrfToken() ?>">
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Adresse email</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email"
+                               value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                               placeholder="admin@gscchaiti.com"
+                               required autofocus autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password"
+                               placeholder="••••••••••••"
+                               required autocomplete="current-password">
+                        <button type="button" class="toggle-pw" onclick="togglePw()" id="pwToggle">
+                            <i class="fas fa-eye" id="pwIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-right-to-bracket"></i> Se connecter
+                </button>
+            </form>
+
+            <div class="login-footer">
+                © <?= date('Y') ?> GSCC — Accès réservé au personnel autorisé
             </div>
-        <?php endif; ?>
-        
-        <?php if ($error): ?>
-            <div class="alert alert-error">
-                <i class="fas fa-exclamation-circle"></i>
-                <?= e($error) ?>
-            </div>
-        <?php endif; ?>
-        
-        <form method="POST" action="">
-            <div class="form-group">
-                <label for="email">
-                    <i class="fas fa-envelope"></i>
-                    Email
-                </label>
-                <input type="email" class="form-control" id="email" name="email" 
-                       value="<?= e($_POST['email'] ?? '') ?>" required autofocus>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">
-                    <i class="fas fa-lock"></i>
-                    Mot de passe
-                </label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            
-            <button type="submit" class="btn-login">
-                <i class="fas fa-sign-in-alt"></i>
-                Se connecter
-            </button>
-        </form>
-        
-        <div class="back-link">
-            <a href="../index.php">
-                <i class="fas fa-arrow-left"></i>
-                Retour au site
-            </a>
         </div>
+
+        <div class="security-info">
+            <i class="fas fa-shield-halved"></i>
+            Connexion sécurisée — Session chiffrée
+        </div>
+
     </div>
+
+    <script>
+    function togglePw() {
+        const pw = document.getElementById('password');
+        const ic = document.getElementById('pwIcon');
+        if (pw.type === 'password') {
+            pw.type = 'text';
+            ic.className = 'fas fa-eye-slash';
+        } else {
+            pw.type = 'password';
+            ic.className = 'fas fa-eye';
+        }
+    }
+    </script>
 </body>
 </html>

@@ -1,474 +1,310 @@
 <?php
-// admin/articles/index.php
-require_once '../includes/admin_auth.php';
+/**
+ * GSCC CMS — admin/articles/index.php
+ * Liste et gestion des articles
+ */
+require_once dirname(__DIR__, 2) . '/includes/config.php';
+require_once dirname(__DIR__) . '/includes/auth.php';
+requireAdmin();
 
-// Pagination
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = ITEMS_PER_PAGE;
-$offset = ($page - 1) * $limit;
+$page_title   = 'Articles';
+$page_section = 'articles';
+$breadcrumb   = [['label' => 'Articles']];
 
-// Filtres
-$statut = isset($_GET['statut']) ? sanitize($_GET['statut']) : '';
-$categorie = isset($_GET['categorie']) ? (int)$_GET['categorie'] : 0;
-$search = isset($_GET['search']) ? sanitize($_GET['search']) : '';
+/* ── Actions bulk ── */
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
+    $action = $_POST['bulk_action'] ?? '';
+    $ids    = array_map('intval', $_POST['ids'] ?? []);
 
-// Construction de la requête
-$where = [];
+    if ($ids && $action) {
+        try {
+            switch ($action) {
+                case 'publish':
+                    $pdo->prepare("UPDATE articles SET statut='publie' WHERE id IN (" . implode(',', $ids) . ")")->execute();
+                    adminFlash('success', count($ids) . ' article(s) publié(s).');
+                    break;
+                case 'draft':
+                    $pdo->prepare("UPDATE articles SET statut='brouillon' WHERE id IN (" . implode(',', $ids) . ")")->execute();
+                    adminFlash('success', count($ids) . ' article(s) passé(s) en brouillon.');
+                    break;
+                case 'delete':
+                    $pdo->prepare("DELETE FROM articles WHERE id IN (" . implode(',', $ids) . ")")->execute();
+                    adminFlash('success', count($ids) . ' article(s) supprimé(s).');
+                    break;
+            }
+        } catch (PDOException $e) {
+            adminFlash('error', 'Erreur : ' . $e->getMessage());
+        }
+        header('Location: index.php');
+        exit;
+    }
+}
+
+/* ── Filtres & pagination ── */
+$search   = trim($_GET['q'] ?? '');
+$statut   = $_GET['statut'] ?? '';
+$cat_id   = (int)($_GET['cat'] ?? 0);
+$page     = max(1, (int)($_GET['p'] ?? 1));
+$per_page = 20;
+$offset   = ($page - 1) * $per_page;
+
+$where  = ['1=1'];
 $params = [];
 
-if ($statut && $statut !== 'tous') {
-    $where[] = "a.statut = ?";
+if ($search) {
+    $where[]  = "(a.titre LIKE ? OR a.tags LIKE ?)";
+    $params[] = "%$search%";
+    $params[] = "%$search%";
+}
+if ($statut) {
+    $where[]  = "a.statut = ?";
     $params[] = $statut;
 }
-
-if ($categorie > 0) {
-    $where[] = "a.categorie_id = ?";
-    $params[] = $categorie;
+if ($cat_id) {
+    $where[]  = "a.categorie_id = ?";
+    $params[] = $cat_id;
 }
 
-if ($search) {
-    $where[] = "(a.titre LIKE ? OR a.contenu LIKE ?)";
-    $params[] = "%$search%";
-    $params[] = "%$search%";
+$sql_where = implode(' AND ', $where);
+
+try {
+    $total = $pdo->prepare("SELECT COUNT(*) FROM articles a WHERE $sql_where");
+    $total->execute($params);
+    $total = (int)$total->fetchColumn();
+
+    $stmt = $pdo->prepare(
+        "SELECT a.*, c.nom as cat_nom,
+                CONCAT(u.prenom,' ',u.nom) as auteur_nom
+         FROM articles a
+         LEFT JOIN categories c ON a.categorie_id = c.id
+         LEFT JOIN utilisateurs u ON a.auteur_id = u.id
+         WHERE $sql_where
+         ORDER BY a.date_creation DESC
+         LIMIT $per_page OFFSET $offset"
+    );
+    $stmt->execute($params);
+    $articles = $stmt->fetchAll();
+
+    $categories = $pdo->query("SELECT id, nom FROM categories WHERE type='blog' ORDER BY nom")->fetchAll();
+
+    // Stats rapides
+    $st = $pdo->query("SELECT statut, COUNT(*) n FROM articles GROUP BY statut")->fetchAll(PDO::FETCH_KEY_PAIR);
+} catch (PDOException $e) {
+    $articles = $categories = [];
+    $total = 0;
+    $st = [];
 }
 
-$where_clause = $where ? "WHERE " . implode(" AND ", $where) : "";
+$pages = (int)ceil($total / $per_page);
 
-// Récupérer le nombre total d'articles
-$sql_count = "SELECT COUNT(*) FROM articles a $where_clause";
-$stmt = $pdo->prepare($sql_count);
-$stmt->execute($params);
-$total_articles = $stmt->fetchColumn();
-$total_pages = ceil($total_articles / $limit);
-
-// Récupérer les articles
-$sql = "SELECT a.*, c.nom as categorie_nom, 
-        CONCAT(u.prenom, ' ', u.nom) as auteur_nom 
-        FROM articles a 
-        LEFT JOIN categories c ON a.categorie_id = c.id 
-        LEFT JOIN utilisateurs u ON a.auteur_id = u.id 
-        $where_clause 
-        ORDER BY a.date_creation DESC 
-        LIMIT ? OFFSET ?";
-$params[] = $limit;
-$params[] = $offset;
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
-$articles = $stmt->fetchAll();
-
-// Récupérer les catégories pour le filtre
-$stmt = $pdo->query("SELECT * FROM categories WHERE type = 'blog' ORDER BY nom");
-$categories = $stmt->fetchAll();
+require_once dirname(__DIR__) . '/includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des articles - Administration</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
-    <style>
-        /* Styles spécifiques à la gestion des articles */
-        .articles-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+<div class="page-header">
+    <div>
+        <div class="page-title">Articles <span style="font-size:1rem;font-weight:400;color:var(--text-muted);">(<?= $total ?>)</span></div>
+        <div class="page-subtitle">Gérer le contenu éditorial du site</div>
+    </div>
+    <a href="create.php" class="btn btn-primary"><i class="fas fa-plus"></i> Nouvel article</a>
+</div>
 
-        .btn-add {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
+<!-- Mini stats -->
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+    <?php
+    $tabs = [
+        ''          => ['Tous',       $total,            'secondary'],
+        'publie'    => ['Publiés',    $st['publie']??0,  'success'],
+        'brouillon' => ['Brouillons', $st['brouillon']??0,'warning'],
+        'archive'   => ['Archivés',   $st['archive']??0, 'secondary'],
+    ];
+    foreach ($tabs as $val => $tab):
+        $active = ($statut === $val) ? 'border-color:var(--primary);background:var(--primary-light);color:var(--primary);' : '';
+    ?>
+    <a href="?statut=<?= $val ?>&q=<?= urlencode($search) ?>"
+       style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:.82rem;font-weight:600;text-decoration:none;color:var(--text);<?= $active ?>">
+        <?= $tab[0] ?> <span class="badge badge-<?= $tab[2] ?>"><?= $tab[1] ?></span>
+    </a>
+    <?php endforeach; ?>
+</div>
 
-        .btn-add:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .filters-bar {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-group label {
-            display: block;
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .filter-control {
-            width: 100%;
-            padding: 8px 12px;
-            border: 2px solid #f0f0f0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .filter-control:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .search-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            align-self: flex-end;
-        }
-
-        .articles-table {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .articles-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .articles-table th {
-            background: #f8f9fa;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .articles-table td {
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
-            vertical-align: middle;
-        }
-
-        .articles-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        .article-thumb {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-
-        .article-title {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 3px;
-        }
-
-        .article-meta {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .badge-publie {
-            background: #e8f5e8;
-            color: #4caf50;
-        }
-
-        .badge-brouillon {
-            background: #fff3e0;
-            color: #ff9800;
-        }
-
-        .badge-archive {
-            background: #fee;
-            color: #f44336;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-action {
-            width: 35px;
-            height: 35px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-edit {
-            background: #2196f3;
-        }
-
-        .btn-delete {
-            background: #f44336;
-        }
-
-        .btn-view {
-            background: #4caf50;
-        }
-
-        .btn-action:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 30px;
-        }
-
-        .page-link {
-            padding: 8px 15px;
-            border-radius: 8px;
-            background: white;
-            color: #333;
-            text-decoration: none;
-            border: 1px solid #f0f0f0;
-            transition: all 0.3s ease;
-        }
-
-        .page-link:hover,
-        .page-link.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: white;
-            border-radius: 15px;
-        }
-
-        .empty-state i {
-            font-size: 60px;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-
-        .empty-state h3 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            color: #999;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="admin-container">
-        <!-- Sidebar -->
-        <?php include '../includes/sidebar.php'; ?>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="top-bar">
-                <div class="page-title">
-                    <h1>Gestion des articles</h1>
-                    <p><?= $total_articles ?> article(s) au total</p>
-                </div>
-                <div class="user-info">
-                    <span><?= e($admin_nom) ?></span>
-                    <a href="../logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
-                </div>
+<div class="card">
+    <div class="card-header">
+        <form method="GET" class="toolbar" style="margin:0;width:100%;">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" name="q" class="form-control" placeholder="Rechercher un article…"
+                       value="<?= htmlspecialchars($search) ?>">
             </div>
-
-            <!-- En-tête avec bouton d'ajout -->
-            <div class="articles-header">
-                <div></div>
-                <a href="ajouter.php" class="btn-add">
-                    <i class="fas fa-plus-circle"></i>
-                    Nouvel article
-                </a>
-            </div>
-
-            <!-- Filtres -->
-            <div class="filters-bar">
-                <form method="GET" style="width: 100%; display: flex; flex-wrap: wrap; gap: 15px;">
-                    <div class="filter-group">
-                        <label>Rechercher</label>
-                        <input type="text" name="search" class="filter-control"
-                            placeholder="Titre ou contenu..." value="<?= e($search) ?>">
-                    </div>
-
-                    <div class="filter-group">
-                        <label>Statut</label>
-                        <select name="statut" class="filter-control">
-                            <option value="tous">Tous les statuts</option>
-                            <option value="publie" <?= $statut === 'publie' ? 'selected' : '' ?>>Publié</option>
-                            <option value="brouillon" <?= $statut === 'brouillon' ? 'selected' : '' ?>>Brouillon</option>
-                            <option value="archive" <?= $statut === 'archive' ? 'selected' : '' ?>>Archivé</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label>Catégorie</label>
-                        <select name="categorie" class="filter-control">
-                            <option value="0">Toutes les catégories</option>
-                            <?php foreach ($categories as $cat): ?>
-                                <option value="<?= $cat['id'] ?>" <?= $categorie == $cat['id'] ? 'selected' : '' ?>>
-                                    <?= e($cat['nom']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="search-btn">
-                        <i class="fas fa-search"></i>
-                        Filtrer
-                    </button>
-                </form>
-            </div>
-
-            <!-- Liste des articles -->
-            <?php if (empty($articles)): ?>
-                <div class="empty-state">
-                    <i class="fas fa-newspaper"></i>
-                    <h3>Aucun article trouvé</h3>
-                    <p>Commencez par créer votre premier article !</p>
-                    <a href="ajouter.php" class="btn-add">
-                        <i class="fas fa-plus-circle"></i>
-                        Créer un article
-                    </a>
-                </div>
-            <?php else: ?>
-                <div class="articles-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Image</th>
-                                <th>Titre</th>
-                                <th>Catégorie</th>
-                                <th>Auteur</th>
-                                <th>Date</th>
-                                <th>Vues</th>
-                                <th>Statut</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($articles as $article): ?>
-                                <tr>
-                                    <td>
-                                        <?php if ($article['image_couverture']): ?>
-                                            <img src="<?= UPLOADS_URL . $article['image_couverture'] ?>"
-                                                alt="<?= e($article['titre']) ?>" class="article-thumb">
-                                        <?php else: ?>
-                                            <div style="width: 60px; height: 60px; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                                <i class="fas fa-image" style="color: #999;"></i>
-                                            </div>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td>
-                                        <div class="article-title"><?= e($article['titre']) ?></div>
-                                        <div class="article-meta"><?= truncate(strip_tags($article['resume']), 50) ?></div>
-                                    </td>
-                                    <td><?= e($article['categorie_nom'] ?? 'Non catégorisé') ?></td>
-                                    <td><?= e($article['auteur_nom'] ?? 'Inconnu') ?></td>
-                                    <td><?= formatDate($article['date_publication'] ?? $article['date_creation']) ?></td>
-                                    <td><?= number_format($article['vue_compteur'] ?? 0) ?></td>
-                                    <td>
-                                        <span class="badge badge-<?= $article['statut'] ?>">
-                                            <?= $article['statut'] ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="actions">
-                                            <a href="modifier.php?id=<?= $article['id'] ?>" class="btn-action btn-edit" title="Modifier">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a href="../../article.php?id=<?= $article['id'] ?>" target="_blank"
-                                                class="btn-action btn-view" title="Voir">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="supprimer.php?id=<?= $article['id'] ?>"
-                                                class="btn-action btn-delete"
-                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')"
-                                                title="Supprimer">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination -->
-                <?php if ($total_pages > 1): ?>
-                    <div class="pagination">
-                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                            <a href="?page=<?= $i ?>&statut=<?= $statut ?>&categorie=<?= $categorie ?>&search=<?= urlencode($search) ?>"
-                                class="page-link <?= $page == $i ? 'active' : '' ?>">
-                                <?= $i ?>
-                            </a>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
+            <select name="cat" class="form-control" style="width:180px;">
+                <option value="">Toutes catégories</option>
+                <?php foreach ($categories as $c): ?>
+                <option value="<?= $c['id'] ?>" <?= $cat_id==$c['id']?'selected':'' ?>>
+                    <?= htmlspecialchars($c['nom']) ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+            <select name="statut" class="form-control" style="width:150px;">
+                <option value="">Tous statuts</option>
+                <option value="publie"    <?= $statut=='publie'   ?'selected':'' ?>>Publié</option>
+                <option value="brouillon" <?= $statut=='brouillon'?'selected':'' ?>>Brouillon</option>
+                <option value="archive"   <?= $statut=='archive'  ?'selected':'' ?>>Archivé</option>
+            </select>
+            <button type="submit" class="btn btn-secondary"><i class="fas fa-filter"></i> Filtrer</button>
+            <?php if ($search || $statut || $cat_id): ?>
+                <a href="index.php" class="btn btn-ghost"><i class="fas fa-times"></i> Réinitialiser</a>
             <?php endif; ?>
-        </div>
+        </form>
     </div>
 
-    <script>
-        // Confirmation de suppression
-        document.querySelectorAll('.btn-delete').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                if (!confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
-                    e.preventDefault();
-                }
-            });
-        });
-    </script>
-</body>
+    <form method="POST" id="bulkForm">
+        <input type="hidden" name="_csrf" value="<?= adminCsrfToken() ?>">
 
-</html>
+        <!-- Bulk toolbar -->
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:#FAFBFF;border-bottom:1px solid var(--border);">
+            <select name="bulk_action" class="form-control" style="width:200px;">
+                <option value="">— Action groupée —</option>
+                <option value="publish">Publier la sélection</option>
+                <option value="draft">Passer en brouillon</option>
+                <option value="delete">Supprimer la sélection</option>
+            </select>
+            <button type="submit" class="btn btn-secondary btn-sm"
+                    onclick="return confirm('Appliquer cette action ?')">Appliquer</button>
+            <span style="margin-left:auto;font-size:.8rem;color:var(--text-muted);" id="selCount"></span>
+        </div>
+
+        <div class="table-wrap">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th class="col-check"><input type="checkbox" id="selectAll"></th>
+                        <th>Titre</th>
+                        <th>Catégorie</th>
+                        <th>Auteur</th>
+                        <th>Statut</th>
+                        <th>Vues</th>
+                        <th>Date</th>
+                        <th class="col-actions">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php if ($articles): ?>
+                    <?php foreach ($articles as $a): ?>
+                    <tr>
+                        <td><input type="checkbox" name="ids[]" value="<?= $a['id'] ?>" class="row-check"></td>
+                        <td>
+                            <div style="display:flex;align-items:center;gap:10px;">
+                                <?php if ($a['image_couverture']): ?>
+                                    <img src="<?= SITE_URL ?>/assets/<?= htmlspecialchars($a['image_couverture']) ?>"
+                                         class="thumb-sm" onerror="this.style.display='none'">
+                                <?php endif; ?>
+                                <div>
+                                    <div class="fw-600 truncate" style="max-width:280px;">
+                                        <?= htmlspecialchars($a['titre']) ?>
+                                    </div>
+                                    <?php if ($a['est_vedette']): ?>
+                                        <span class="badge badge-warning" style="font-size:.65rem;">⭐ Vedette</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-primary"><?= htmlspecialchars($a['cat_nom'] ?? '—') ?></span></td>
+                        <td style="font-size:.82rem;color:var(--text-muted);"><?= htmlspecialchars($a['auteur_nom'] ?? '—') ?></td>
+                        <td><?= statusBadge($a['statut']) ?></td>
+                        <td style="font-size:.85rem;"><?= number_format($a['vue_compteur']) ?></td>
+                        <td style="font-size:.82rem;color:var(--text-muted);white-space:nowrap;">
+                            <?= $a['date_publication'] ? dateFr($a['date_publication']) : dateFr($a['date_creation']) ?>
+                        </td>
+                        <td class="col-actions">
+                            <a href="edit.php?id=<?= $a['id'] ?>" class="btn btn-xs btn-secondary" title="Modifier">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a href="<?= SITE_URL ?>/article.php?slug=<?= urlencode($a['slug']) ?>" target="_blank"
+                               class="btn btn-xs btn-secondary" title="Voir">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button type="button" class="btn btn-xs btn-danger" title="Supprimer"
+                                    onclick="deleteArticle(<?= $a['id'] ?>)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="8">
+                        <div class="empty-state">
+                            <i class="fas fa-newspaper"></i>
+                            <h3>Aucun article trouvé</h3>
+                            <p>Modifiez vos filtres ou créez votre premier article.</p>
+                            <a href="create.php" class="btn btn-primary" style="margin-top:14px;">
+                                <i class="fas fa-plus"></i> Créer un article
+                            </a>
+                        </div>
+                    </td></tr>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </form>
+
+    <!-- Pagination -->
+    <?php if ($pages > 1): ?>
+    <div class="card-footer" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>Page <?= $page ?> sur <?= $pages ?> — <?= $total ?> article(s)</span>
+        <div class="pagination">
+            <?php
+            $qs = http_build_query(['q'=>$search,'statut'=>$statut,'cat'=>$cat_id]);
+            for ($i = 1; $i <= $pages; $i++):
+            ?>
+                <a href="?p=<?= $i ?>&<?= $qs ?>" class="page-link <?= $i==$page?'active':'' ?>"><?= $i ?></a>
+            <?php endfor; ?>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
+
+<!-- Delete modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="modal-title">Confirmer la suppression</span>
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <p>Voulez-vous vraiment supprimer cet article ? Cette action est irréversible.</p>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeModal()" class="btn btn-secondary">Annuler</button>
+            <form method="POST" id="deleteForm" style="display:inline;">
+                <input type="hidden" name="_csrf" value="<?= adminCsrfToken() ?>">
+                <input type="hidden" name="bulk_action" value="delete">
+                <input type="hidden" name="ids[]" id="deleteId">
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function deleteArticle(id) {
+    document.getElementById('deleteId').value = id;
+    document.getElementById('deleteModal').classList.add('show');
+}
+function closeModal() {
+    document.getElementById('deleteModal').classList.remove('show');
+}
+
+// Compteur sélection
+document.querySelectorAll('.row-check').forEach(cb => {
+    cb.addEventListener('change', updateCount);
+});
+document.getElementById('selectAll').addEventListener('change', function() {
+    document.querySelectorAll('.row-check').forEach(cb => cb.checked = this.checked);
+    updateCount();
+});
+function updateCount() {
+    const n = document.querySelectorAll('.row-check:checked').length;
+    document.getElementById('selCount').textContent = n > 0 ? n + ' sélectionné(s)' : '';
+}
+</script>
+
+<?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>

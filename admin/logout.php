@@ -1,8 +1,5 @@
 <?php
-// admin/logout.php
-session_start();
-session_unset();
-session_destroy();
-header('Location: login.php?logged_out=1');
-exit;
-?>
+require_once dirname(__DIR__) . '/includes/config.php';
+require_once __DIR__ . '/includes/auth.php';
+
+adminLogout();

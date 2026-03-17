@@ -20,7 +20,7 @@ require_once 'templates/header.php';
     margin: 0 auto;
 }
 .bank-page-title {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'montserrat', sans-serif; 
     font-size: 1.9rem;
     font-weight: 700;
     color: #1E2A35;
