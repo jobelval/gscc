@@ -7,7 +7,7 @@
 require_once dirname(__DIR__) . '/includes/config.php';
 require_once __DIR__ . '/includes/auth.php';
 
-requireAdmin();
+requireModerator();
 
 $page_title   = 'Tableau de bord';
 $page_section = 'dashboard';
@@ -179,10 +179,7 @@ if ($stats['temoignages'] > 0) $urgents[] = ['icon'=>'quote-right','color'=>'pur
     <a href="<?= SITE_URL ?>/admin/campagnes/create.php" class="quick-action-btn">
         <i class="fas fa-bullhorn"></i> Nouvelle campagne
     </a>
-    <a href="<?= SITE_URL ?>/admin/evenements/create.php" class="quick-action-btn">
-        <i class="fas fa-calendar-plus"></i> Événement
-    </a>
-    <a href="<?= SITE_URL ?>/admin/galerie/upload.php" class="quick-action-btn">
+<a href="<?= SITE_URL ?>/admin/galerie/upload.php" class="quick-action-btn">
         <i class="fas fa-cloud-upload-alt"></i> Upload média
     </a>
     <a href="<?= SITE_URL ?>/admin/newsletter/index.php?tab=composer" class="quick-action-btn">

@@ -168,7 +168,7 @@
         padding: 64px 0 0;
         position: relative;
         overflow: hidden;
-        font-family: 'DM Sans', sans-serif;
+        font-family: 'Montserrat', sans-serif;
         border-top: 1px solid #E8ECF0;
     }
 

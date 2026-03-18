@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__, 2) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/auth.php';
-requireAdmin();
+requireModerator();
 if ($_SERVER['REQUEST_METHOD']==='POST' && adminCheckCsrf()) {
     $cat_id = (int)($_POST['cat_id']??0);
     $nom    = trim($_POST['nom']??'');

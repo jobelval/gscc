@@ -71,45 +71,54 @@ function navItem(string $href, string $icon, string $label, string $active_key, 
             <?= navItem(SITE_URL.'/admin/index.php', 'gauge-high', 'Tableau de bord', 'dashboard', $section) ?>
         </div>
 
-        <!-- Contenu -->
+        <?php if ($admin['role'] === 'admin'): ?>
+        <!-- Contenu (admin seulement) -->
         <div class="nav-group">
             <div class="nav-group-label">Contenu</div>
             <?= navItem(SITE_URL.'/admin/articles/index.php',    'newspaper',     'Articles',          'articles',    $section) ?>
             <?= navItem(SITE_URL.'/admin/campagnes/index.php',   'bullhorn',      'Campagnes & Projets','campagnes',  $section) ?>
-            <?= navItem(SITE_URL.'/admin/evenements/index.php',  'calendar-days', 'Événements',        'evenements',  $section) ?>
-            <?= navItem(SITE_URL.'/admin/galerie/index.php',     'images',        'Galerie',           'galerie',     $section) ?>
+<?= navItem(SITE_URL.'/admin/galerie/index.php',     'images',        'Galerie',           'galerie',     $section) ?>
             <?= navItem(SITE_URL.'/admin/survivants/index.php',  'heart-pulse',   'Survivants',        'survivants',  $section) ?>
             <?= navItem(SITE_URL.'/admin/equipe/index.php',      'users',         'Équipe',            'equipe',      $section) ?>
         </div>
+        <?php endif; ?>
 
         <!-- Communauté -->
         <div class="nav-group">
             <div class="nav-group-label">Communauté</div>
+            <?php if ($admin['role'] === 'admin'): ?>
             <?= navItem(SITE_URL.'/admin/utilisateurs/index.php', 'user-group',  'Utilisateurs',        'utilisateurs',$section) ?>
+            <?php endif; ?>
             <?= navItem(SITE_URL.'/admin/benevoles/index.php',    'hands-helping','Bénévoles',          'benevoles',   $section, (int)$nb_benevoles) ?>
             <?= navItem(SITE_URL.'/admin/forum/index.php',        'comments',    'Forum',               'forum',       $section) ?>
             <?= navItem(SITE_URL.'/admin/temoignages/index.php',  'quote-right', 'Témoignages',         'temoignages', $section, (int)$nb_temos) ?>
         </div>
 
-        <!-- Dons & Aide -->
+        <?php if ($admin['role'] === 'admin'): ?>
+        <!-- Dons & Aide (admin seulement) -->
         <div class="nav-group">
             <div class="nav-group-label">Dons & Aide</div>
             <?= navItem(SITE_URL.'/admin/dons/index.php',      'hand-holding-heart','Dons',          'dons',      $section) ?>
             <?= navItem(SITE_URL.'/admin/demandes/index.php',  'file-medical',      'Demandes d\'aide','demandes', $section, (int)$nb_demandes) ?>
         </div>
+        <?php endif; ?>
 
         <!-- Communication -->
         <div class="nav-group">
             <div class="nav-group-label">Communication</div>
             <?= navItem(SITE_URL.'/admin/messages/index.php',   'envelope',  'Messages',       'messages',   $section, (int)$nb_messages) ?>
+            <?php if ($admin['role'] === 'admin'): ?>
             <?= navItem(SITE_URL.'/admin/newsletter/index.php', 'paper-plane','Newsletter',    'newsletter', $section) ?>
+            <?php endif; ?>
         </div>
 
-        <!-- Système -->
+        <?php if ($admin['role'] === 'admin'): ?>
+        <!-- Système (admin seulement) -->
         <div class="nav-group">
             <div class="nav-group-label">Système</div>
             <?= navItem(SITE_URL.'/admin/parametres/index.php', 'gear',       'Paramètres',    'parametres', $section) ?>
         </div>
+        <?php endif; ?>
 
     </nav>
 

@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__, 2) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/auth.php';
-requireAdmin();
+requireModerator();
 $rows = $pdo->query("SELECT nom,prenom,email,telephone,date_naissance,profession,disponibilites,competences,motivations,statut,notes_admin,date_candidature,date_traitement FROM candidatures_benevoles ORDER BY date_candidature DESC")->fetchAll();
 header('Content-Type: text/csv; charset=utf-8');
 header('Content-Disposition: attachment; filename="gscc-benevoles-'.date('Y-m-d').'.csv"');

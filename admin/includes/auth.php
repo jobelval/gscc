@@ -36,9 +36,20 @@ if (!function_exists('requireAdmin')) {
 if (!function_exists('requireModerator')) {
     function requireModerator(): void {
         if (!isset($_SESSION['admin_id']) || !in_array($_SESSION['admin_role'] ?? '', ['admin','moderateur'])) {
+            $uri = $_SERVER['REQUEST_URI'] ?? '';
+            if ($uri && strpos($uri, 'login') === false) {
+                $_SESSION['redirect_after_login'] = $uri;
+            }
             header('Location: ' . getAdminBase() . '/login.php');
             exit;
         }
+        if (isset($_SESSION['admin_ip']) && $_SESSION['admin_ip'] !== ($_SERVER['REMOTE_ADDR'] ?? '')) {
+            adminLogout();
+        }
+        if (isset($_SESSION['admin_last_activity']) && (time() - $_SESSION['admin_last_activity']) > 7200) {
+            adminLogout('Votre session a expiré. Veuillez vous reconnecter.');
+        }
+        $_SESSION['admin_last_activity'] = time();
     }
 }
 
