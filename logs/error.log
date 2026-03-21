@@ -1251,3 +1251,256 @@
 [2026-03-18 16:32:04] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
 [2026-03-18 16:33:09] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
 [2026-03-18 16:33:09] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-19 09:16:03] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-19 09:16:03] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-19 23:53:49] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-19 23:53:49] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-20 16:03:43] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-20 16:03:43] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-20 16:04:56] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-20 16:15:00] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-20 16:18:20] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-20 16:28:09] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-20 16:28:29] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-20 16:28:29] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-20 16:28:55] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-20 16:35:55] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-20 16:35:55] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-20 16:36:22] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-21 15:35:09] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-21 15:35:09] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-21 15:36:09] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-21 15:41:54] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-21 15:41:54] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-21 15:42:33] SMTP DEBUG: Connection: opening to ssl://smtp.mail.yahoo.com:465, timeout=300, options=array (
+  'ssl' => 
+  array (
+    'verify_peer' => false,
+    'verify_peer_name' => false,
+    'allow_self_signed' => true,
+  ),
+)
+[2026-03-21 15:42:33] SMTP DEBUG: Connection: opened
+[2026-03-21 15:42:33] SMTP DEBUG: SERVER -> CLIENT: 220 smtp.mail.yahoo.com ESMTP ready
+[2026-03-21 15:42:33] SMTP DEBUG: CLIENT -> SERVER: EHLO localhost
+[2026-03-21 15:42:34] SMTP DEBUG: SERVER -> CLIENT: 250-hermes--production-bf1-697f88457-nlvcm Hello localhost [200.113.253.225])
+250-PIPELINING
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-SIZE 41697280
+250 AUTH PLAIN LOGIN XOAUTH2 OAUTHBEARER
+[2026-03-21 15:42:34] SMTP DEBUG: CLIENT -> SERVER: AUTH LOGIN
+[2026-03-21 15:42:34] SMTP DEBUG: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+[2026-03-21 15:42:34] SMTP DEBUG: CLIENT -> SERVER: [credentials hidden]
+[2026-03-21 15:42:34] SMTP DEBUG: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+[2026-03-21 15:42:34] SMTP DEBUG: CLIENT -> SERVER: [credentials hidden]
+[2026-03-21 15:42:35] SMTP DEBUG: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+[2026-03-21 15:42:35] SMTP DEBUG: CLIENT -> SERVER: MAIL FROM:<gscchaiti@yahoo.fr>
+[2026-03-21 15:42:35] SMTP DEBUG: SERVER -> CLIENT: 250 2.1.0 Sender <gscchaiti@yahoo.fr> OK
+[2026-03-21 15:42:35] SMTP DEBUG: CLIENT -> SERVER: RCPT TO:<gscchaiti@yahoo.fr>
+[2026-03-21 15:42:36] SMTP DEBUG: SERVER -> CLIENT: 250 2.1.5 Recipient <gscchaiti@yahoo.fr> OK
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: DATA
+[2026-03-21 15:42:36] SMTP DEBUG: SERVER -> CLIENT: 354 Ok Send data ending with <CRLF>.<CRLF>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: Date: Sat, 21 Mar 2026 15:42:33 -0400
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: To: GSCC Admin <gscchaiti@yahoo.fr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: From: GSCC Site Web <gscchaiti@yahoo.fr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: Reply-To: Loucerie Jean <louceriejean@gmail.com>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: Subject: [GSCC Contact] Probleme
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: Message-ID: <Ny89kKYjE0VtrQ5gfdENhZJw7fJOHrvaoeYD6K44GXY@localhost>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: MIME-Version: 1.0
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: <!DOCTYPE html>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: <html lang="fr">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: <head><meta charset="UTF-8"></head>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: <body style="font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:20px;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:   <div style="max-width:600px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.1);">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:     <div style="background:linear-gradient(135deg,#003399,#D94F7A);padding:28px 32px;text-align:center;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       <h2 style="color:white;margin:0;font-size:1.4rem;">📬 Nouveau message de contact</h2>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       <p style="color:rgba(255,255,255,.85);margin:8px 0 0;font-size:0.9rem;">Reçu le 21/03/2026 à 15:42</p>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:     </div>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:     <div style="padding:32px;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       <table style="width:100%;border-collapse:collapse;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         <tr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;width:140px;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:             <strong style="color:#003399;">👤 Nom</strong>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;color:#1F2937;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:             Loucerie Jean
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         </tr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         <tr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:             <strong style="color:#003399;">✉️ Email</strong>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;color:#1F2937;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:             <a href="mailto:louceriejean@gmail.com" style="color:#D94F7A;">louceriejean@gmail.com</a>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         </tr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         <tr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:             <strong style="color:#003399;">📞 Téléphone</strong>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;color:#1F2937;">+50933647040</td>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         </tr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         <tr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:             <strong style="color:#003399;">📌 Sujet</strong>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;color:#1F2937;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:             Probleme
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         </tr>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       </table>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       <div style="margin-top:24px;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         <p style="color:#003399;font-weight:700;margin-bottom:10px;">💬 Message</p>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         <div style="background:#F9FAFB;border-left:4px solid #D94F7A;padding:16px 20px;border-radius:0 8px 8px 0;color:#374151;line-height:1.7;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           Haiti
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         </div>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       </div>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       <div style="margin-top:28px;text-align:center;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         <a href="mailto:louceriejean@gmail.com?subject=Re: Probleme"
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:            style="display:inline-block;background:#003399;color:white;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.95rem;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:           ↩ Répondre à Loucerie Jean
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:         </a>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       </div>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:     </div>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:     <div style="background:#F3F4F6;padding:16px 32px;text-align:center;font-size:12px;color:#6B7280;">
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:       © 2026 GSCC — Groupe de Support Contre le Cancer
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:     </div>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:   </div>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: </body>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: </html>
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: .
+[2026-03-21 15:42:36] SMTP DEBUG: SERVER -> CLIENT: 550 Request failed; Mailbox unavailable
+[2026-03-21 15:42:36] SMTP DEBUG: SMTP ERROR: DATA END command failed: 550 Request failed; Mailbox unavailable
+[2026-03-21 15:42:36] SMTP DEBUG: SMTP Error: data not accepted.
+[2026-03-21 15:42:36] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-21 15:42:36] SMTP DEBUG: CLIENT -> SERVER: QUIT
+[2026-03-21 15:42:36] SMTP DEBUG: SERVER -> CLIENT: 221 Service Closing transmission
+[2026-03-21 15:42:36] SMTP DEBUG: Connection: closed
+[2026-03-21 15:47:01] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-21 15:47:01] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-21 15:47:43] SMTP DEBUG: Connection: opening to ssl://smtp.mail.yahoo.fr:465, timeout=300, options=array (
+  'ssl' => 
+  array (
+    'verify_peer' => false,
+    'verify_peer_name' => false,
+    'allow_self_signed' => true,
+  ),
+)
+[2026-03-21 15:47:43] SMTP DEBUG: Connection: opened
+[2026-03-21 15:47:44] SMTP DEBUG: SERVER -> CLIENT: 220 smtp.mail.yahoo.com ESMTP ready
+[2026-03-21 15:47:44] SMTP DEBUG: CLIENT -> SERVER: EHLO localhost
+[2026-03-21 15:47:44] SMTP DEBUG: SERVER -> CLIENT: 250-hermes--production-bf1-697f88457-629ff Hello localhost [200.113.253.225])
+250-PIPELINING
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-SIZE 41697280
+250 AUTH PLAIN LOGIN XOAUTH2 OAUTHBEARER
+[2026-03-21 15:47:44] SMTP DEBUG: CLIENT -> SERVER: AUTH LOGIN
+[2026-03-21 15:47:44] SMTP DEBUG: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+[2026-03-21 15:47:44] SMTP DEBUG: CLIENT -> SERVER: [credentials hidden]
+[2026-03-21 15:47:44] SMTP DEBUG: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+[2026-03-21 15:47:44] SMTP DEBUG: CLIENT -> SERVER: [credentials hidden]
+[2026-03-21 15:47:45] SMTP DEBUG: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+[2026-03-21 15:47:45] SMTP DEBUG: CLIENT -> SERVER: MAIL FROM:<gscchaiti@yahoo.fr>
+[2026-03-21 15:47:46] SMTP DEBUG: SERVER -> CLIENT: 250 2.1.0 Sender <gscchaiti@yahoo.fr> OK
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: RCPT TO:<gscchaiti@yahoo.fr>
+[2026-03-21 15:47:46] SMTP DEBUG: SERVER -> CLIENT: 250 2.1.5 Recipient <gscchaiti@yahoo.fr> OK
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: DATA
+[2026-03-21 15:47:46] SMTP DEBUG: SERVER -> CLIENT: 354 Ok Send data ending with <CRLF>.<CRLF>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: Date: Sat, 21 Mar 2026 15:47:43 -0400
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: To: GSCC Admin <gscchaiti@yahoo.fr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: From: GSCC Site Web <gscchaiti@yahoo.fr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: Reply-To: Falandy JEAN <jeanfalandy@gmail.com>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: Subject: [GSCC Contact] Probleme
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: Message-ID: <n1FrWNblIInFxLMgAL4dyyyiKFHwLHG3kR7gUIwDE@localhost>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: MIME-Version: 1.0
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: <!DOCTYPE html>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: <html lang="fr">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: <head><meta charset="UTF-8"></head>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: <body style="font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:20px;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:   <div style="max-width:600px;margin:0 auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.1);">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:     <div style="background:linear-gradient(135deg,#003399,#D94F7A);padding:28px 32px;text-align:center;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       <h2 style="color:white;margin:0;font-size:1.4rem;">📬 Nouveau message de contact</h2>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       <p style="color:rgba(255,255,255,.85);margin:8px 0 0;font-size:0.9rem;">Reçu le 21/03/2026 à 15:47</p>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:     </div>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:     <div style="padding:32px;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       <table style="width:100%;border-collapse:collapse;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         <tr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;width:140px;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:             <strong style="color:#003399;">👤 Nom</strong>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;color:#1F2937;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:             Falandy JEAN
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         </tr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         <tr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:             <strong style="color:#003399;">✉️ Email</strong>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;color:#1F2937;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:             <a href="mailto:jeanfalandy@gmail.com" style="color:#D94F7A;">jeanfalandy@gmail.com</a>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         </tr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         <tr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:             <strong style="color:#003399;">📞 Téléphone</strong>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;color:#1F2937;">+50933647040</td>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         </tr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         <tr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:             <strong style="color:#003399;">📌 Sujet</strong>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           <td style="padding:10px 0;border-bottom:1px solid #E5E7EB;color:#1F2937;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:             Probleme
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           </td>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         </tr>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       </table>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       <div style="margin-top:24px;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         <p style="color:#003399;font-weight:700;margin-bottom:10px;">💬 Message</p>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         <div style="background:#F9FAFB;border-left:4px solid #D94F7A;padding:16px 20px;border-radius:0 8px 8px 0;color:#374151;line-height:1.7;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           Trader
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         </div>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       </div>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       <div style="margin-top:28px;text-align:center;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         <a href="mailto:jeanfalandy@gmail.com?subject=Re: Probleme"
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:            style="display:inline-block;background:#003399;color:white;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.95rem;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:           ↩ Répondre à Falandy JEAN
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:         </a>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       </div>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:     </div>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:     <div style="background:#F3F4F6;padding:16px 32px;text-align:center;font-size:12px;color:#6B7280;">
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:       © 2026 GSCC — Groupe de Support Contre le Cancer
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:     </div>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:   </div>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: </body>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: </html>
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER:
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: .
+[2026-03-21 15:47:46] SMTP DEBUG: SERVER -> CLIENT: 550 Request failed; Mailbox unavailable
+[2026-03-21 15:47:46] SMTP DEBUG: SMTP ERROR: DATA END command failed: 550 Request failed; Mailbox unavailable
+[2026-03-21 15:47:46] SMTP DEBUG: SMTP Error: data not accepted.
+[2026-03-21 15:47:46] PHPMailer erreur: SMTP Error: data not accepted.
+[2026-03-21 15:47:46] SMTP DEBUG: CLIENT -> SERVER: QUIT
+[2026-03-21 15:47:47] SMTP DEBUG: SERVER -> CLIENT: 221 Service Closing transmission
+[2026-03-21 15:47:47] SMTP DEBUG: Connection: closed
+[2026-03-21 16:30:47] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-21 16:30:47] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-03-21 16:33:51] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-03-21 16:33:51] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist

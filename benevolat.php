@@ -175,13 +175,13 @@ L'équipe $sname";
                     $mail->isSMTP();
                     $mail->Host       = 'smtp.gmail.com';
                     $mail->SMTPAuth   = true;
-                    $mail->Username   = 'belvaljohnsley@gmail.com';
+                    $mail->Username   = 'gscchaiti.contact@gmail.com';
                     $mail->Password   = GMAIL_APP_PASSWORD;
                     $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->Port       = 587;
                     $mail->CharSet    = 'UTF-8';
 
-                    $mail->setFrom('belvaljohnsley@gmail.com', 'GSCC Site Web');
+                    $mail->setFrom('gscchaiti.contact@gmail.com', 'GSCC Site Web');
                     $mail->addAddress(ADMIN_NOTIFY_EMAIL, 'GSCC Admin');
                     $mail->addReplyTo($email, $prenom . ' ' . $nom);
 

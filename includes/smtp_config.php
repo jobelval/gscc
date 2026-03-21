@@ -4,9 +4,9 @@
 // Remplacer la valeur ci-dessous par ton mot de passe d'application Gmail
 
 if (!defined('GMAIL_APP_PASSWORD')) {
-    define('GMAIL_APP_PASSWORD', 'okxq ddjb vpsg ofyd');
+    define('GMAIL_APP_PASSWORD', 'nqmb xtai ftsz fbbj');
 }
 
 if (!defined('ADMIN_NOTIFY_EMAIL')) {
-    define('ADMIN_NOTIFY_EMAIL', 'belvaljohnsley@gmail.com');
+    define('ADMIN_NOTIFY_EMAIL', 'gscchaiti.contact@gmail.com');
 }

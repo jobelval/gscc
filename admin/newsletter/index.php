@@ -58,45 +58,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
     }
 }
 
-/* ── Envoi individuel ── */
+/* ── Envoi individuel via PHPMailer SMTP ── */
 function nlSendOne(PDO $pdo, string $email, string $nom, string $subject, string $body): void {
-    $prenom   = $nom ? htmlspecialchars(ucwords(strtolower($nom))) : 'cher(e) abonné(e)';
-    $site     = defined('SITE_NAME') ? SITE_NAME : 'GSCC';
-    $url      = defined('SITE_URL')  ? rtrim(SITE_URL, '/') : '';
-    $from     = defined('SITE_EMAIL')? SITE_EMAIL : 'gscc@gscchaiti.com';
+    require_once dirname(__DIR__, 2) . '/includes/mailer.php';
+
+    $prenom = $nom ? htmlspecialchars(ucwords(strtolower($nom))) : 'cher(e) abonné(e)';
+    $site   = defined('SITE_NAME') ? SITE_NAME : 'GSCC';
+    $url    = defined('SITE_URL')  ? rtrim(SITE_URL, '/') : '';
 
     $stmt = $pdo->prepare("SELECT token_desabonnement FROM newsletter_abonnes WHERE email=? LIMIT 1");
     $stmt->execute([$email]); $row = $stmt->fetch();
     $token = $row['token_desabonnement'] ?? bin2hex(random_bytes(16));
-    $unsub = $url.'/newsletter-unsubscribe.php?token='.urlencode($token);
+    $unsub = $url . '/newsletter-unsubscribe.php?token=' . urlencode($token);
+    $year  = date('Y');
 
-    $html = "<!DOCTYPE html><html lang='fr'><head><meta charset='UTF-8'></head>
-    <body style='margin:0;padding:0;background:#F4F6FB;font-family:Arial,sans-serif;'>
-    <table width='100%' cellpadding='0' cellspacing='0' style='background:#F4F6FB;padding:36px 16px;'>
-    <tr><td align='center'>
-    <table width='600' cellpadding='0' cellspacing='0'
-      style='max-width:600px;width:100%;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 24px rgba(0,51,153,.10);'>
-      <tr><td style='background:linear-gradient(135deg,#003399,#1a56cc);padding:30px 36px;text-align:center;'>
-        <div style='font-size:30px;'>🎗️</div>
-        <div style='font-family:Georgia,serif;font-size:22px;font-weight:700;color:#fff;margin-top:8px;'>$site</div>
-      </td></tr>
-      <tr><td style='padding:36px 36px 28px;'>
-        <p style='color:#374151;font-size:15px;margin:0 0 8px;'>Bonjour, <strong>$prenom</strong> 👋</p>
-        <div style='color:#374151;font-size:14.5px;line-height:1.8;margin:16px 0;'>".nl2br(htmlspecialchars($body))."</div>
-        <div style='text-align:center;margin-top:28px;'>
-          <a href='$url' style='display:inline-block;background:linear-gradient(135deg,#003399,#1a56cc);color:#fff;padding:13px 32px;border-radius:30px;text-decoration:none;font-weight:700;font-size:14px;'>Visiter le site</a>
-        </div>
-      </td></tr>
-      <tr><td style='background:#F4F6FB;border-top:1px solid #E5E9F2;padding:16px 36px;text-align:center;'>
-        <p style='color:#9CA3AF;font-size:12px;margin:0;'>
-          <a href='$unsub' style='color:#D94F7A;text-decoration:none;'>Se désabonner</a> &nbsp;·&nbsp; © ".date('Y')." $site
-        </p>
-      </td></tr>
-    </table></td></tr></table></body></html>";
+    $html = <<<HTML
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#F4F6FB;font-family:Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F4F6FB;padding:36px 16px;">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0"
+  style="max-width:600px;width:100%;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 24px rgba(0,51,153,.10);">
+  <tr><td style="background:linear-gradient(135deg,#003399,#1a56cc);padding:30px 36px;text-align:center;">
+    <div style="font-size:30px;">&#127385;</div>
+    <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#fff;margin-top:8px;">{$site}</div>
+  </td></tr>
+  <tr><td style="padding:36px 36px 28px;">
+    <p style="color:#374151;font-size:15px;margin:0 0 8px;">Bonjour, <strong>{$prenom}</strong> &#128075;</p>
+    <div style="color:#374151;font-size:14.5px;line-height:1.8;margin:16px 0;">
+HTML;
+    $html .= nl2br(htmlspecialchars($body));
+    $html .= <<<HTML
+    </div>
+    <div style="text-align:center;margin-top:28px;">
+      <a href="{$url}" style="display:inline-block;background:linear-gradient(135deg,#003399,#1a56cc);color:#fff;padding:13px 32px;border-radius:30px;text-decoration:none;font-weight:700;font-size:14px;">Visiter le site</a>
+    </div>
+  </td></tr>
+  <tr><td style="background:#F4F6FB;border-top:1px solid #E5E9F2;padding:16px 36px;text-align:center;">
+    <p style="color:#9CA3AF;font-size:12px;margin:0;">
+      <a href="{$unsub}" style="color:#D94F7A;text-decoration:none;">Se d&#233;sabonner</a> &nbsp;&middot;&nbsp; &copy; {$year} {$site}
+    </p>
+  </td></tr>
+</table></td></tr></table>
+</body></html>
+HTML;
 
-    $hdr  = "MIME-Version: 1.0\r\nContent-Type: text/html; charset=UTF-8\r\n";
-    $hdr .= "From: $site <$from>\r\n";
-    @mail($email, '=?UTF-8?B?'.base64_encode($subject).'?=', $html, $hdr);
+    gsccMail($pdo, $email, $nom, $subject, $html);
 }
 
 /* ── Liste abonnés ── */

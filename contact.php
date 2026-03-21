@@ -9,9 +9,6 @@ $page_description = 'Prenez contact avec l\'équipe du GSCC pour toute question,
 $success = '';
 $error = '';
 
-// Email destinataire pour les notifications
-define('ADMIN_NOTIFY_EMAIL', 'belvaljohnsley@gmail.com');
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
         $error = 'Erreur de sécurité. Veuillez réessayer.';
@@ -118,13 +115,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $mail->isSMTP();
                     $mail->Host       = 'smtp.gmail.com';
                     $mail->SMTPAuth   = true;
-                    $mail->Username   = 'belvaljohnsley@gmail.com';
+                    $mail->Username   = 'gscchaiti.contact@gmail.com';
                     $mail->Password   = GMAIL_APP_PASSWORD;
                     $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->Port       = 587;
                     $mail->CharSet    = 'UTF-8';
 
-                    $mail->setFrom('belvaljohnsley@gmail.com', 'GSCC Site Web');
+                    $mail->setFrom('gscchaiti.contact@gmail.com', 'GSCC Site Web');
                     $mail->addAddress(ADMIN_NOTIFY_EMAIL, 'GSCC Admin');
                     $mail->addReplyTo($data['email'], $data['nom']);
 
