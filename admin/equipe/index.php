@@ -7,6 +7,11 @@ require_once dirname(__DIR__, 2) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/auth.php';
 requireAdmin();
 
+/* ── Migration : ajout colonne bio_complete si inexistante ── */
+try {
+    $pdo->exec("ALTER TABLE equipe ADD COLUMN bio_complete TEXT NULL AFTER bio");
+} catch (PDOException $e) { /* colonne déjà présente */ }
+
 $page_title   = 'Équipe';
 $page_section = 'equipe';
 $breadcrumb   = [['label' => 'Équipe GSCC']];
@@ -20,8 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
         $nom      = trim($_POST['nom'] ?? '');
         $prenom   = trim($_POST['prenom'] ?? '');
         $fonction = trim($_POST['fonction'] ?? '');
-        $bio      = trim($_POST['bio'] ?? '');
-        $email    = trim($_POST['email_eq'] ?? '');
+        $bio          = trim($_POST['bio'] ?? '');
+        $bio_complete = trim($_POST['bio_complete'] ?? '');
+        $email        = trim($_POST['email_eq'] ?? '');
         $tel      = trim($_POST['telephone'] ?? '');
         $ordre    = (int)($_POST['ordre'] ?? 0);
         $actif    = isset($_POST['est_actif']) ? 1 : 0;
@@ -49,12 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
 
         if ($nom && $prenom) {
             if ($eid) {
-                $pdo->prepare("UPDATE equipe SET nom=?,prenom=?,fonction=?,bio=?,photo=?,email=?,telephone=?,ordre=?,est_actif=?,reseaux_sociaux=? WHERE id=?")
-                    ->execute([$nom,$prenom,$fonction,$bio?:null,$photo?:null,$email?:null,$tel?:null,$ordre,$actif,$rs_json,$eid]);
+                $pdo->prepare("UPDATE equipe SET nom=?,prenom=?,fonction=?,bio=?,bio_complete=?,photo=?,email=?,telephone=?,ordre=?,est_actif=?,reseaux_sociaux=? WHERE id=?")
+                    ->execute([$nom,$prenom,$fonction,$bio?:null,$bio_complete?:null,$photo?:null,$email?:null,$tel?:null,$ordre,$actif,$rs_json,$eid]);
                 adminFlash('success', 'Membre mis à jour.');
             } else {
-                $pdo->prepare("INSERT INTO equipe (nom,prenom,fonction,bio,photo,email,telephone,ordre,est_actif,reseaux_sociaux,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,NOW())")
-                    ->execute([$nom,$prenom,$fonction,$bio?:null,$photo?:null,$email?:null,$tel?:null,$ordre,$actif,$rs_json]);
+                $pdo->prepare("INSERT INTO equipe (nom,prenom,fonction,bio,bio_complete,photo,email,telephone,ordre,est_actif,reseaux_sociaux,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,NOW())")
+                    ->execute([$nom,$prenom,$fonction,$bio?:null,$bio_complete?:null,$photo?:null,$email?:null,$tel?:null,$ordre,$actif,$rs_json]);
                 adminFlash('success', 'Membre ajouté !');
             }
         } else { adminFlash('error','Nom et prénom obligatoires.'); }
@@ -205,8 +211,12 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     <input type="text" name="fonction" id="mFonc" class="form-control" placeholder="Ex. Présidente Fondatrice…">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Biographie</label>
-                    <textarea name="bio" id="mBio" class="form-control" rows="3" placeholder="Courte biographie…"></textarea>
+                    <label class="form-label">Biographie courte <span style="font-size:.78rem;color:var(--text-muted);">(résumé affiché sur la carte)</span></label>
+                    <textarea name="bio" id="mBio" class="form-control" rows="2" placeholder="Courte biographie affichée sur la carte membre…"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Biographie complète <span style="font-size:.78rem;color:var(--text-muted);">(contenu du bouton «&nbsp;Lire la suite&nbsp;»)</span></label>
+                    <textarea name="bio_complete" id="mBioComplete" class="form-control" rows="3" placeholder="Biographie complète, parcours détaillé, rôle au sein du GSCC…"></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -268,8 +278,9 @@ function editMember(m) {
     document.getElementById('mPrenom').value = m.prenom;
     document.getElementById('mNom').value    = m.nom;
     document.getElementById('mFonc').value   = m.fonction || '';
-    document.getElementById('mBio').value    = m.bio || '';
-    document.getElementById('mEmail').value  = m.email || '';
+    document.getElementById('mBio').value         = m.bio || '';
+    document.getElementById('mBioComplete').value = m.bio_complete || '';
+    document.getElementById('mEmail').value       = m.email || '';
     document.getElementById('mTel').value    = m.telephone || '';
     document.getElementById('mOrdre').value  = m.ordre;
     document.getElementById('mActif').checked = m.est_actif == 1;

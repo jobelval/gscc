@@ -79,6 +79,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
             }
         }
 
+        if ($section === 'presentation') {
+            $presDir = ROOT_PATH . 'uploads/presentation/';
+            if (!is_dir($presDir)) mkdir($presDir, 0755, true);
+
+            // Suppression hero
+            if (isset($_POST['remove_hero_bg'])) {
+                $pdo->prepare("DELETE FROM parametres WHERE cle='hero_bg_image'")->execute();
+                adminFlash('success', 'Image du bandeau supprimée.');
+                $updated++;
+            } elseif (!empty($_FILES['hero_bg_image']['name'])) {
+                $up = uploadFile($_FILES['hero_bg_image'], $presDir, ['jpg','jpeg','png','webp']);
+                if ($up['success']) {
+                    $imgPath = 'uploads/presentation/' . $up['filename'];
+                    $pdo->prepare("INSERT INTO parametres (cle,valeur,date_modification) VALUES ('hero_bg_image',?,NOW()) ON DUPLICATE KEY UPDATE valeur=?,date_modification=NOW()")
+                        ->execute([$imgPath, $imgPath]);
+                    adminFlash('success', 'Image du bandeau enregistrée.');
+                    $updated++;
+                } else {
+                    adminFlash('error', 'Erreur upload : ' . ($up['error'] ?? 'inconnue'));
+                }
+            }
+
+            // Suppression stats
+            if (isset($_POST['remove_stats_bg'])) {
+                $pdo->prepare("DELETE FROM parametres WHERE cle='stats_bg_image'")->execute();
+                adminFlash('success', 'Image de fond statistiques supprimée.');
+                $updated++;
+            } elseif (!empty($_FILES['stats_bg_image']['name'])) {
+                $up = uploadFile($_FILES['stats_bg_image'], $presDir, ['jpg','jpeg','png','webp']);
+                if ($up['success']) {
+                    $imgPath = 'uploads/presentation/' . $up['filename'];
+                    $pdo->prepare("INSERT INTO parametres (cle,valeur,date_modification) VALUES ('stats_bg_image',?,NOW()) ON DUPLICATE KEY UPDATE valeur=?,date_modification=NOW()")
+                        ->execute([$imgPath, $imgPath]);
+                    adminFlash('success', 'Image statistiques enregistrée.');
+                    $updated++;
+                } else {
+                    adminFlash('error', 'Erreur upload : ' . ($up['error'] ?? 'inconnue'));
+                }
+            }
+        }
+
         if ($section === 'maintenance') {
             $mode = isset($_POST['maintenance_mode']) ? '1' : '0';
             $msg  = trim($_POST['maintenance_message'] ?? '');
@@ -137,8 +178,9 @@ require_once dirname(__DIR__) . '/includes/header.php';
         'reseaux'     => ['<i class="fas fa-share-alt"></i> Réseaux',  ''],
         'dons'        => ['<i class="fas fa-hand-holding-heart"></i> Dons', ''],
         'smtp'        => ['<i class="fas fa-envelope"></i> Email',     ''],
-        'maintenance' => ['<i class="fas fa-tools"></i> Maintenance',  ''],
-        'systeme'     => ['<i class="fas fa-server"></i> Système',     ''],
+        'maintenance'  => ['<i class="fas fa-tools"></i> Maintenance',       ''],
+        'presentation' => ['<i class="fas fa-image"></i> Présentation',    ''],
+        'systeme'      => ['<i class="fas fa-server"></i> Système',        ''],
     ];
     foreach ($tabs as $k => [$label, $extra]):
         $act = ($tab === $k);
@@ -395,6 +437,74 @@ require_once dirname(__DIR__) . '/includes/header.php';
         </a>
     </div>
 </div>
+<?php elseif ($tab === 'presentation'): ?>
+<!-- PRÉSENTATION -->
+
+<?php
+// Helper pour afficher une carte d'upload image
+function renderImgCard(string $label, string $desc, string $key, string $removeKey, array $all): void {
+    $siteUrl = defined('SITE_URL') ? SITE_URL : '';
+    $current = $all[$key] ?? '';
+    $csrf    = adminCsrfToken();
+?>
+<div class="card" style="margin-bottom:20px;">
+    <div class="card-header">
+        <div class="card-title"><i class="fas fa-image"></i> <?= htmlspecialchars($label) ?></div>
+    </div>
+    <div class="card-body">
+        <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:20px;"><?= $desc ?></p>
+
+        <?php if (!empty($current)): ?>
+        <div style="margin-bottom:20px;border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <img src="<?= $siteUrl ?>/<?= htmlspecialchars($current) ?>"
+                 style="width:100%;max-height:200px;object-fit:cover;display:block;"
+                 onerror="this.parentElement.querySelector('div').style.display='block';this.style.display='none'">
+            <div style="display:none;padding:12px;color:var(--warning);font-size:.82rem;">⚠ Image introuvable sur le serveur.</div>
+            <div style="padding:10px 14px;background:var(--body-bg);font-size:.8rem;color:var(--text-muted);display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    <i class="fas fa-file-image" style="margin-right:5px;color:var(--primary);"></i><?= htmlspecialchars($current) ?>
+                </span>
+                <form method="POST" style="flex-shrink:0;" onsubmit="return confirm('Supprimer cette image ?')">
+                    <input type="hidden" name="_csrf"           value="<?= $csrf ?>">
+                    <input type="hidden" name="section"         value="presentation">
+                    <input type="hidden" name="tab_after"       value="presentation">
+                    <input type="hidden" name="<?= htmlspecialchars($removeKey) ?>" value="1">
+                    <button type="submit" class="btn btn-xs btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+                </form>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf"     value="<?= $csrf ?>">
+            <input type="hidden" name="section"   value="presentation">
+            <input type="hidden" name="tab_after" value="presentation">
+            <div class="form-group" style="margin-bottom:14px;">
+                <label class="form-label"><?= empty($current) ? 'Choisir une image' : 'Remplacer par une nouvelle image' ?></label>
+                <input type="file" name="<?= htmlspecialchars($key) ?>" class="form-control" accept="image/jpeg,image/png,image/webp" style="font-size:.82rem;">
+                <div class="form-hint">Format JPG, PNG ou WebP — taille minimale recommandée : 1920 × 700 px</div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Enregistrer l'image</button>
+        </form>
+    </div>
+</div>
+<?php } ?>
+
+<?php renderImgCard(
+    'Bandeau principal — "Qui sommes-nous ?"',
+    'Cette image remplace le <strong>fond bleu du bandeau d\'accueil</strong> en haut de la page Présentation (section « À propos du GSCC »). Un voile sombre est appliqué automatiquement pour que le texte reste lisible.',
+    'hero_bg_image',
+    'remove_hero_bg',
+    $all
+); ?>
+
+<?php renderImgCard(
+    'Section chiffres-clés (statistiques)',
+    'Cette image remplace le <strong>fond bleu de la section statistiques</strong> (20+ ans, 500+ membres…). Un voile bleu semi-transparent est appliqué pour garder les chiffres lisibles.',
+    'stats_bg_image',
+    'remove_stats_bg',
+    $all
+); ?>
 <?php endif; ?>
 
 <?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>

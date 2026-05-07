@@ -29,7 +29,7 @@ require_once 'templates/header.php';
 
             <!-- Slide 1 -->
             <div class="swiper-slide"
-                style="background-image: linear-gradient(rgba(0,30,80,0.62), rgba(0,30,80,0.62)), url('images/image1.jpg');">
+                style="background-image: linear-gradient(rgba(0,30,80,0.62), rgba(0,30,80,0.62)), url('images/site/image1.jpg');">
                 <div class="container">
 
 
@@ -50,7 +50,7 @@ require_once 'templates/header.php';
 
             <!-- Slide 2 -->
             <div class="swiper-slide"
-                style="background-image:linear-gradient(rgba(0,30,80,0.62), rgba(0,30,80,0.62)), url('images/image7.jpg');">
+                style="background-image:linear-gradient(rgba(0,30,80,0.62), rgba(0,30,80,0.62)), url('images/site/image7.jpg');">
                 <div class="container">
                     <div class="slide-content">
                         <span class="slide-tag">Accompagnement personnalisé</span>
@@ -65,7 +65,7 @@ require_once 'templates/header.php';
 
             <!-- Slide 3 -->
             <div class="swiper-slide"
-                style="background-image:linear-gradient(rgba(0,30,80,0.62), rgba(0,30,80,0.62)), url('images/image3.jpg');">
+                style="background-image:linear-gradient(rgba(0,30,80,0.62), rgba(0,30,80,0.62)), url('images/site/image3.jpg');">
                 <div class="container">
                     <div class="slide-content">
                         <span class="slide-tag">Agissez maintenant</span>
@@ -207,13 +207,13 @@ require_once 'templates/header.php';
                 <div class="cta-icon-wrap"><i class="fas fa-id-card"></i></div>
                 <h3>Devenez membre</h3>
                 <p>Rejoignez notre communauté et semez l’espoir face au cancer.</p>
-                <a href="devenir-membre.php" class="btn btn-light">Je rejoins</a>
+                <a href="devenir-membre.php" class="btn btn-primary">Je rejoins</a>
             </div>
-            <div class="cta-card" data-aos="zoom-in" data-aos-delay="100">
+            <div class="cta-card featured-cta-blue" data-aos="zoom-in" data-aos-delay="100">
                 <div class="cta-icon-wrap"><i class="fas fa-users"></i></div>
                 <h3>Devenez bénévole</h3>
                 <p>Donnez de votre temps et de votre énergie pour soutenir notre cause noble.</p>
-                <a href="benevolat.php" class="btn btn-light">Je m'engage</a>
+                <a href="benevolat.php" class="btn-donate-white">Je m’engage</a>
             </div>
             <!-- BUG CORRIGÉ : btn-donate-white est maintenant un <a> avec href valide -->
             <div class="cta-card featured-cta" data-aos="zoom-in" data-aos-delay="200">
@@ -252,7 +252,7 @@ require_once 'templates/header.php';
                     'id'              => null,
                     'titre'           => "L'importance du dépistage précoce",
                     'resume'          => "Découvrez pourquoi le dépistage précoce peut sauver des vies et comment le GSCC vous accompagne dans cette démarche.",
-                    'image_couverture' => 'images/image3.jpg',
+                    'image_couverture' => 'images/site/image3.jpg',
                     'date_publication' => '2024-02-15 00:00:00',
                     'categorie_nom'   => 'Prévention',
                 ],
@@ -261,7 +261,7 @@ require_once 'templates/header.php';
                     'id'              => null,
                     'titre'           => "Grande marche contre le cancer",
                     'resume'          => "Rejoignez-nous pour notre marche annuelle de sensibilisation et de collecte de fonds pour les patients haïtiens.",
-                    'image_couverture' => 'images/image4.jpg',
+                    'image_couverture' => 'images/site/image4.jpg',
                     'date_publication' => '2024-03-10 00:00:00',
                     'categorie_nom'   => 'Événement',
                 ],
@@ -270,7 +270,7 @@ require_once 'templates/header.php';
                     'id'              => null,
                     'titre'           => "Nouveau programme d'accompagnement",
                     'resume'          => "Le GSCC lance un programme innovant de soutien psychologique pour les patients et leurs familles à travers Haïti.",
-                    'image_couverture' => 'images/image5.jpg',
+                    'image_couverture' => 'images/site/image5.jpg',
                     'date_publication' => '2024-04-05 00:00:00',
                     'categorie_nom'   => 'Projet',
                 ],
@@ -292,7 +292,7 @@ require_once 'templates/header.php';
                 // Image de couverture
                 $img = !empty($article['image_couverture'])
                     ? htmlspecialchars($article['image_couverture'])
-                    : 'images/image3.jpg';
+                    : 'images/site/image3.jpg';
 
                 // Date formatée
                 $date_fmt = !empty($article['date_publication'])
@@ -314,7 +314,7 @@ require_once 'templates/header.php';
                         <img src="<?= $img ?>"
                             alt="<?= htmlspecialchars($article['titre']) ?>"
                             loading="lazy"
-                            onerror="this.onerror=null;this.src='images/image3.jpg';">
+                            onerror="this.onerror=null;this.src='images/site/image3.jpg';">
                         <span class="blog-category"><?= $categorie ?></span>
                     </div>
                     <div class="blog-content">
@@ -374,9 +374,9 @@ require_once 'templates/header.php';
                             Se yon onè li ye pou mwen pou m fè pati yon enstitisyon tankou GSCC. Koz la nòb paske chak patisipasyon ou bay – ke se swa nan tan w oswa nan lajan w – li bay lavi ak yon konpatriyot.
                         </blockquote>
                         <div class="testimonial-author">
-                            <img src="images/temoignage/sister_M.jpg" alt="Marie C.">
+                            <img src="images/temoignage/sister_M.jpg" alt="Myria CHARLES">
                             <div>
-                                <strong>Marie C.</strong>
+                                <strong>Myria</strong>
                                 <span>Membre</span>
                             </div>
                         </div>
@@ -395,7 +395,7 @@ require_once 'templates/header.php';
                         <div class="testimonial-author">
                             <img src="images/temoignage/carel_pedre.jpg" alt="Carel Pedre">
                             <div>
-                                <strong>Carel Pedre</strong>
+                                <strong>Carel</strong>
                                 <span>Ambassadeur GSCC</span>
                             </div>
                         </div>
@@ -422,8 +422,8 @@ require_once 'templates/header.php';
                         <div class="testimonial-author">
                             <img src="images/temoignage/Faustin.jpg" alt="Faustin">
                             <div>
-                                <strong>Sophie L.</strong>
-                                <span>Combattante</span>
+                                <strong>Faustin</strong>
+                                <span>Combattant</span>
                             </div>
                         </div>
                     </div>
@@ -453,18 +453,46 @@ require_once 'templates/header.php';
      * Exemple : ['name'=>'OMS','type'=>'Organisation','icon'=>'globe','logo'=>'images/oms.png']
      */
     $faux_partenaires = [
-        ['name' => 'Ministère de la Santé', 'type' => 'Gouvernement',        'icon' => 'landmark'],
-        ['name' => 'OPS / OMS Haïti',       'type' => 'Organisation',        'icon' => 'globe'],
-        ['name' => 'UNAIDS',                 'type' => 'Organisation',        'icon' => 'ribbon'],
-        ['name' => 'Fondation Digicel',      'type' => 'Secteur privé',       'icon' => 'mobile-alt'],
-        ['name' => 'Croix-Rouge Haïti',      'type' => 'Humanitaire',         'icon' => 'first-aid'],
-        ['name' => 'HUEH',                   'type' => 'Hôpital',             'icon' => 'hospital'],
-        ['name' => 'Fondation FOKAL',        'type' => 'Éducation',           'icon' => 'book-open'],
-        ['name' => 'Unibank',               'type' => 'Secteur bancaire',    'icon' => 'university'],
-        ['name' => 'Panos Caraïbes',         'type' => 'Médias & Santé',      'icon' => 'broadcast-tower'],
-        ['name' => 'Partners in Health',     'type' => 'Santé communautaire', 'icon' => 'hand-holding-heart'],
-        ['name' => 'BID / IDB',              'type' => 'Développement',       'icon' => 'chart-line'],
-        ['name' => 'UNICEF Haïti',           'type' => 'Organisation',        'icon' => 'child'],
+        [
+            'name' => 'FHASE',
+            'type' => 'Santé & Humanitaire',
+            'icon' => 'heartbeat'          // Fédération Haïtienne d'Associations de Santé
+        ],
+        [
+            'name' => 'Sogebel',
+            'type' => 'Assurance & Finance',
+            'icon' => 'shield-alt'         // Compagnie d'assurance
+        ],
+        [
+            'name' => 'INASSA',
+            'type' => 'Assurance',
+            'icon' => 'file-contract'      // Institution d'assurance
+        ],
+        [
+            'name' => 'CARIMPEX',
+            'type' => 'Import & Distribution',
+            'icon' => 'boxes'              // Commerce / importation
+        ],
+        [
+            'name' => 'DEKA GROUP',
+            'type' => 'Groupe industriel',
+            'icon' => 'industry'           // Groupe industriel privé
+        ],
+        [
+            'name' => 'Fondation Sogebank',
+            'type' => 'Fondation bancaire',
+            'icon' => 'hand-holding-heart' // Fondation philanthropique de Sogebank
+        ],
+        [
+            'name' => 'PLASBAG S.A',
+            'type' => 'Industrie plastique',
+            'icon' => 'recycle'            // Fabrication sacs et emballages plastiques
+        ],
+         [
+            'name' => 'Église de Jésus-Christ des Saints des Derniers Jours',
+            'type' => 'Religieux & Humanitaire',
+            'icon' => 'church'            // Fabrication sacs et emballages plastiques
+        ],
     ];
     ?>
 

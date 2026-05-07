@@ -19,103 +19,142 @@ try {
 if (empty($partenaires)) {
     $partenaires = [
         /* ── 6 Partenaires Principaux ── */
-        ['id'=>1, 'nom'=>'Digicel Haïti',
-         'description'=>'Soutien financier majeur et mise à disposition de moyens de communication pour toutes nos campagnes de sensibilisation à travers le pays.',
-         'logo'=>'images/partenaires/Digicel-logo.png',
-         'site_web'=>'https://www.digicelhaiti.com', 'type'=>'principal', 'ordre'=>1],
+        [
+            'id' => 1,
+            'nom' => 'Plasbag SA',
+            'description' => 'Entreprise leader dans la fabrication de produits plastiques, Plasbag SA met son expertise industrielle au service de la communauté. Soucieuse de son impact social, l\'entreprise soutient activement les initiatives du Groupe de Support Contre le Cancer (GSCC) depuis 2022. Ce partenariat solide témoigne de leur volonté d\'accompagner durablement la lutte contre le cancer et de contribuer au bien-être de la population haïtienne.',
+            'logo' => 'images/partenaires/plasbag.png',
+            'site_web' => 'https://www.facebook.com/plasbaght/?locale=fr_FR',
+            'type' => 'principal',
+            'ordre' => 1
+        ],
 
-        ['id'=>2, 'nom'=>'Banque Nationale de Crédit',
-         'description'=>'Soutien financier institutionnel et mise à disposition de comptes dédiés pour la collecte de dons en faveur des patients.',
-         'logo'=>'images/partenaires/bnc1.png',
-         'site_web'=>'https://www.bnc.ht', 'type'=>'principal', 'ordre'=>2],
+        [
+            'id' => 2,
+            'nom' => 'Carimpex',
+            'description' => 'Fort de plus de 20 ans d\'expertise dans le secteur du transport de fret en Haïti, Carimpex est un acteur clé de la logistique facilitant les échanges entre le pays et l\'international. Partenaire engagé du Groupe de Support Contre le Cancer (GSCC) depuis 2020, l\'entreprise met son sérieux et son professionnalisme au profit de notre cause.',
+            'logo' => 'images/partenaires/carimpex.png',
+            'site_web' => '#',
+            'type' => 'principal',
+            'ordre' => 2
+        ],
 
-        ['id'=>3, 'nom'=>'Fondation Sogebank',
-         'description'=>'Financement de projets spécifiques, programme de micro-crédits pour les patients et soutien aux campagnes annuelles de dépistage.',
-         'logo'=>'images/partenaires/sogebank1.png',
-         'site_web'=>'https://www.sogebank.com', 'type'=>'principal', 'ordre'=>3],
+        [
+            'id' => 3,
+            'nom' => 'Fondation Sogebank',
+            'description' => 'Institution à but non lucratif reconnue d\'utilité publique, la Fondation Sogebank incarne l\'engagement social du Groupe Sogebank depuis sa création en 1993. Portée par la conviction que le secteur privé doit agir pour l\'amélioration durable de l\'environnement social, elle mobilise ses ressources pour soutenir les populations les plus vulnérables. En rejoignant les partenaires du Groupe de Support Contre le Cancer (GSCC) en 2025, la Fondation renforce son action en faveur de projets d\'intérêt collectif, contribuant ainsi de manière significative à la santé publique en Haïti.',
+            'logo' => 'images/partenaires/sogebank.png',
+            'site_web' => '#',
+            'type' => 'principal',
+            'ordre' => 3
+        ],
 
-        ['id'=>4, 'nom'=>'Unibank Haïti',
-         'description'=>'Partenaire financier stratégique accompagnant le GSCC dans la mobilisation de fonds et l\'organisation de ses événements caritatifs.',
-         'logo'=>'https://logo.clearbit.com/unibankhaiti.com',
-         'site_web'=>'https://www.unibankhaiti.com', 'type'=>'principal', 'ordre'=>4],
+        [
+            'id' => 4,
+            'nom' => 'Groupe Sogebank',
+            'description' => 'Filiale du Groupe Sogebank fondée en 1988, la Sogebel (Société Générale Haïtienne de Banque d\'Épargne et de Logement) est une institution financière de référence dédiée aux besoins immobiliers des particuliers et des institutions. Engagée dans le développement socio-économique du pays, elle soutient fidèlement le Groupe de Support Contre le Cancer (GSCC) depuis 2020.',
+            'logo' => 'images/partenaires/sogebel.png',
+            'site_web' => '#',
+            'type' => 'principal',
+            'ordre' => 4
+        ],
 
-        ['id'=>5, 'nom'=>'Natcom Haïti',
-         'description'=>'Partenaire télécom fournissant la connectivité et les outils numériques pour nos campagnes de sensibilisation en ligne et nos plateformes.',
-         'logo'=>'https://logo.clearbit.com/natcom.ht',
-         'site_web'=>'https://www.natcom.ht', 'type'=>'principal', 'ordre'=>5],
+        [
+            'id' => 5,
+            'nom' => 'Fondation Haïtienne de la Santé et de l\'Éducation (FHASE)',
+            'description' => 'Organisation dédiée au renforcement des piliers fondamentaux de la société, la FHASE œuvre quotidiennement pour l\'amélioration de l\'accès aux soins de santé et à une éducation de qualité en Haïti. Partenaire du Groupe de Support Contre le Cancer (GSCC) depuis 2023, la fondation apporte une dimension essentielle à nos actions grâce à sa vision intégrée du développement humain.',
+            'logo' => 'images/partenaires/fhase.png',
+            'site_web' => '#',
+            'type' => 'principal',
+            'ordre' => 5
+        ],
 
-        ['id'=>6, 'nom'=>'Heineken Haïti (Brasserie)',
-         'description'=>'Soutien aux événements de collecte de fonds et aux marches solidaires organisées par le GSCC à travers le pays.',
-         'logo'=>'https://logo.clearbit.com/heineken.com',
-         'site_web'=>'#', 'type'=>'principal', 'ordre'=>6],
+        [
+            'id' => 6,
+            'nom' => 'Église de Jésus-Christ des Saints des Derniers Jours',
+            'description' => 'Composée d\'une communauté mondiale unie par une foi commune, l\'Église de Jésus-Christ des Saints des Derniers Jours se donne pour mission de vivre l\'Évangile à travers des actions concrètes de solidarité. En mettant l\'accent sur le soin des personnes dans le besoin et l\'unité des familles, l\'organisation s\'est engagée aux côtés du Groupe de Support Contre le Cancer (GSCC) dès 2025. Ce partenariat témoigne de leur dévouement envers le bien-être d\'autrui et de leur soutien précieux aux initiatives de santé communautaire en Haïti.',
+            'logo' => 'images/partenaires/jesus-christ.png',
+            'site_web' => '#',
+            'type' => 'principal',
+            'ordre' => 6
+        ],
+
+        [
+            'id' => 7,
+            'nom' => 'Deka Group',
+            'description' => 'Fondée il y a environ 35 ans, Deka Group est une entreprise familiale de premier plan et l\'un des plus grands importateurs de produits de grande consommation (FMCG) en Haïti. Avec ses sept divisions spécialisées et son réseau de plus de 100 fournisseurs à travers le monde, le groupe gère des marques parmi les plus reconnues du marché national. Engagé à nos côtés depuis 2020, Deka Group mobilise sa force de présence et son expertise industrielle pour soutenir durablement les actions de santé publique portées par le Groupe de Support Contre le Cancer (GSCC).',
+            'logo' => 'images/partenaires/deka_group.png',
+            'site_web' => '#',
+            'type' => 'principal',
+            'ordre' => 7
+        ],
 
         /* ── 3 Partenaires Institutionnels ── */
-        ['id'=>7, 'nom'=>'Ministère de la Santé Publique',
-         'description'=>'Partenariat institutionnel pour la mise en place des campagnes nationales de dépistage et la coordination des soins oncologiques.',
-         'logo'=>'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Coat_of_arms_of_Haiti.svg/200px-Coat_of_arms_of_Haiti.svg.png',
-         'site_web'=>'https://mspp.gouv.ht', 'type'=>'institutionnel', 'ordre'=>7],
 
-        ['id'=>8, 'nom'=>'Croix Rouge Haïtienne',
-         'description'=>'Soutien logistique essentiel pour nos actions sur le terrain, formations aux premiers secours et mobilisation des bénévoles.',
-         'logo'=>'https://logo.clearbit.com/redcross.org',
-         'site_web'=>'#', 'type'=>'institutionnel', 'ordre'=>8],
 
-        ['id'=>9, 'nom'=>'OPS/OMS Haïti',
-         'description'=>'Appui technique et scientifique pour le développement de nos protocoles de prévention et nos programmes de formation médicale.',
-         'logo'=>'https://logo.clearbit.com/paho.org',
-         'site_web'=>'https://www.paho.org/fr/haiti', 'type'=>'institutionnel', 'ordre'=>9],
+        // ['id'=>8, 'nom'=>'Croix Rouge Haïtienne',
+        //  'description'=>'Soutien logistique essentiel pour nos actions sur le terrain, formations aux premiers secours et mobilisation des bénévoles.',
+        //  'logo'=>'https://logo.clearbit.com/redcross.org',
+        //  'site_web'=>'#', 'type'=>'institutionnel', 'ordre'=>8],
 
-        /* ── 3 Partenaires Techniques ── */
-        ['id'=>10, 'nom'=>'Médecins Sans Frontières',
-         'description'=>'Collaboration médicale, formation de nos équipes aux soins d\'urgence oncologiques et partage d\'expertise sur le terrain.',
-         'logo'=>'https://logo.clearbit.com/msf.org',
-         'site_web'=>'https://www.msf.org', 'type'=>'technique', 'ordre'=>10],
+        // ['id'=>9, 'nom'=>'OPS/OMS Haïti',
+        //  'description'=>'Appui technique et scientifique pour le développement de nos protocoles de prévention et nos programmes de formation médicale.',
+        //  'logo'=>'https://logo.clearbit.com/paho.org',
+        //  'site_web'=>'https://www.paho.org/fr/haiti', 'type'=>'institutionnel', 'ordre'=>9],
 
-        ['id'=>11, 'nom'=>'UNFPA Haïti',
-         'description'=>'Soutien technique pour les programmes de santé reproductive liés aux cancers gynécologiques et formations des agents de santé.',
-         'logo'=>'https://logo.clearbit.com/unfpa.org',
-         'site_web'=>'https://haiti.unfpa.org', 'type'=>'technique', 'ordre'=>11],
+        // /* ── 3 Partenaires Techniques ── */
+        // ['id'=>10, 'nom'=>'Médecins Sans Frontières',
+        //  'description'=>'Collaboration médicale, formation de nos équipes aux soins d\'urgence oncologiques et partage d\'expertise sur le terrain.',
+        //  'logo'=>'https://logo.clearbit.com/msf.org',
+        //  'site_web'=>'https://www.msf.org', 'type'=>'technique', 'ordre'=>10],
 
-        ['id'=>12, 'nom'=>'Institut Français d\'Haïti',
-         'description'=>'Appui culturel et logistique pour l\'organisation d\'événements de sensibilisation, conférences et expositions sur la lutte contre le cancer.',
-         'logo'=>'https://logo.clearbit.com/institutfrancais.com',
-         'site_web'=>'#', 'type'=>'technique', 'ordre'=>12],
+        // ['id'=>11, 'nom'=>'UNFPA Haïti',
+        //  'description'=>'Soutien technique pour les programmes de santé reproductive liés aux cancers gynécologiques et formations des agents de santé.',
+        //  'logo'=>'https://logo.clearbit.com/unfpa.org',
+        //  'site_web'=>'https://haiti.unfpa.org', 'type'=>'technique', 'ordre'=>11],
 
-        /* ── 3 Partenaires Médias ── */
-        ['id'=>13, 'nom'=>'Radio Télévision Caraïbes',
-         'description'=>'Diffusion régulière de nos messages de sensibilisation, couverture médiatique de nos événements et émissions dédiées à la santé.',
-         'logo'=>'images/partenaires/rtvc.png',
-         'site_web'=>'#', 'type'=>'media', 'ordre'=>13],
+        // ['id'=>12, 'nom'=>'Institut Français d\'Haïti',
+        //  'description'=>'Appui culturel et logistique pour l\'organisation d\'événements de sensibilisation, conférences et expositions sur la lutte contre le cancer.',
+        //  'logo'=>'https://logo.clearbit.com/institutfrancais.com',
+        //  'site_web'=>'#', 'type'=>'technique', 'ordre'=>12],
 
-        ['id'=>14, 'nom'=>'Le Nouvelliste',
-         'description'=>'Couverture médiatique de nos événements, publication d\'articles de sensibilisation et campagnes d\'affichage dans le journal.',
-         'logo'=>'images/partenaires/nouvelliste.png',
-         'site_web'=>'https://www.lenouvelliste.com', 'type'=>'media', 'ordre'=>14],
+        // /* ── 3 Partenaires Médias ── */
+        // ['id'=>13, 'nom'=>'Radio Télévision Caraïbes',
+        //  'description'=>'Diffusion régulière de nos messages de sensibilisation, couverture médiatique de nos événements et émissions dédiées à la santé.',
+        //  'logo'=>'images/partenaires/rtvc.png',
+        //  'site_web'=>'#', 'type'=>'media', 'ordre'=>13],
 
-        ['id'=>15, 'nom'=>'Signal FM Haïti',
-         'description'=>'Diffusion de spots radios, couverture en direct de nos marches et soutien médiatique à toutes nos campagnes nationales.',
-         'logo'=>'images/partenaires/signalfm.png',
-         'site_web'=>'#', 'type'=>'media', 'ordre'=>15],
+        // ['id'=>14, 'nom'=>'Le Nouvelliste',
+        //  'description'=>'Couverture médiatique de nos événements, publication d\'articles de sensibilisation et campagnes d\'affichage dans le journal.',
+        //  'logo'=>'images/partenaires/nouvelliste.png',
+        //  'site_web'=>'https://www.lenouvelliste.com', 'type'=>'media', 'ordre'=>14],
+
+        // ['id'=>15, 'nom'=>'Signal FM Haïti',
+        //  'description'=>'Diffusion de spots radios, couverture en direct de nos marches et soutien médiatique à toutes nos campagnes nationales.',
+        //  'logo'=>'images/partenaires/signalfm.png',
+        //  'site_web'=>'#', 'type'=>'media', 'ordre'=>15],
     ];
 }
 
 $types = [
-    'principal'      => ['label'=>'Partenaires Principaux',      'icon'=>'fa-star'],
-    'institutionnel' => ['label'=>'Partenaires Institutionnels',  'icon'=>'fa-landmark'],
-    'technique'      => ['label'=>'Partenaires Techniques',       'icon'=>'fa-cogs'],
-    'media'          => ['label'=>'Partenaires Médias',           'icon'=>'fa-satellite-dish'],
+    'principal'      => ['label' => 'Partenaires Principaux',      'icon' => 'fa-star'],
+    'institutionnel' => ['label' => 'Partenaires Institutionnels',  'icon' => 'fa-landmark'],
+    'technique'      => ['label' => 'Partenaires Techniques',       'icon' => 'fa-cogs'],
+    'media'          => ['label' => 'Partenaires Médias',           'icon' => 'fa-satellite-dish'],
 ];
 
 $par_type = [];
 foreach ($partenaires as $p) $par_type[$p['type']][] = $p;
 
-function initials(string $n): string {
+function initials(string $n): string
+{
     $w = array_filter(explode(' ', $n));
     return mb_strtoupper(mb_substr(array_shift($w) ?? '', 0, 1) . mb_substr(array_shift($w) ?? '', 0, 1));
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -127,427 +166,668 @@ function initials(string $n): string {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<style>
-/* =====================================================
+    <style>
+        /* =====================================================
    GSCC · Partenaires — Design professionnel
    Couleurs : #003399 · #4CAF50 · #FF69B4
    Pas de grille en background
 ===================================================== */
-:root {
-    --blue:       #003399;
-    --blue-2:     #002277;
-    --blue-lite:  #EBF0FF;
-    --green:      #4CAF50;
-    --green-lite: #E8F5E9;
-    --pink:       #FF69B4;
-    --pink-lite:  #FFF0F7;
-    --bg:         #F4F6FB;
-    --white:      #FFFFFF;
-    --text:       #1A1A2E;
-    --text-2:     #4A4A6A;
-    --text-3:     #9A9AB0;
-    --border:     #E2E6F0;
-    --r:          12px;
-    --sh:         0 1px 8px rgba(0,51,153,.06), 0 4px 16px rgba(0,51,153,.04);
-    --sh-hover:   0 8px 32px rgba(0,51,153,.13);
-    --ease:       cubic-bezier(.4,0,.2,1);
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-.container { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
-img { display: block; }
+        :root {
+            --blue: #003399;
+            --blue-2: #002277;
+            --blue-lite: #EBF0FF;
+            --green: #4CAF50;
+            --green-lite: #E8F5E9;
+            --pink: #FF69B4;
+            --pink-lite: #FFF0F7;
+            --bg: #F4F6FB;
+            --white: #FFFFFF;
+            --text: #1A1A2E;
+            --text-2: #4A4A6A;
+            --text-3: #9A9AB0;
+            --border: #E2E6F0;
+            --r: 12px;
+            --sh: 0 1px 8px rgba(0, 51, 153, .06), 0 4px 16px rgba(0, 51, 153, .04);
+            --sh-hover: 0 8px 32px rgba(0, 51, 153, .13);
+            --ease: cubic-bezier(.4, 0, .2, 1);
+        }
 
-/* ══ PAGE HEADER ═══════════════════════════════════ */
-.page-header {
-    background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
-    padding: 80px 0 64px;
-    text-align: center;
-    /* Pas de ::before avec grille */
-}
-.page-header h1 {
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 12px;
-    letter-spacing: -.5px;
-}
-.page-header p {
-    font-size: 1.05rem;
-    color: rgba(255,255,255,.78);
-    max-width: 460px;
-    margin: 0 auto;
-}
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-/* ══ BANDE STATISTIQUES ════════════════════════════ */
-.stats-band {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 1px 0 var(--border);
-}
-.stats-band .inner {
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 0 28px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-}
-.stat-cell {
-    padding: 30px 20px;
-    text-align: center;
-    border-right: 1px solid var(--border);
-    transition: background .2s var(--ease);
-}
-.stat-cell:last-child { border-right: none; }
-.stat-cell:hover      { background: var(--blue-lite); }
-.stat-ico  { font-size: 17px; color: var(--blue); margin-bottom: 8px; }
-.stat-n    { font-size: 2rem; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 4px; }
-.stat-l    { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
 
-/* ══ SECTION PRINCIPALE ════════════════════════════ */
-.main-section { padding: 64px 0 96px; }
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
 
-/* intro */
-.intro-block {
-    max-width: 720px;
-    margin: 0 auto 60px;
-    text-align: center;
-}
-.intro-block p {
-    font-size: 15.5px;
-    color: var(--text-2);
-    line-height: 1.85;
-}
+        img {
+            display: block;
+        }
 
-/* ══ CATÉGORIE ═════════════════════════════════════ */
-.category-block { margin-bottom: 64px; }
+        /* ══ PAGE HEADER ═══════════════════════════════════ */
+        .page-header {
+            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
+            padding: 80px 0 64px;
+            text-align: center;
+            /* Pas de ::before avec grille */
+        }
 
-.category-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 6px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid var(--border);
-}
-.cat-icon {
-    width: 38px; height: 38px;
-    border-radius: 9px;
-    background: var(--blue-lite);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--blue); font-size: 15px; flex-shrink: 0;
-}
-.cat-title {
-    font-size: 20px; font-weight: 700;
-    color: var(--blue); flex: 1;
-}
-.cat-pill {
-    font-size: 11.5px; font-weight: 600;
-    color: var(--text-3);
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 99px;
-    padding: 3px 13px;
-}
-.cat-accent {
-    display: block;
-    width: 48px; height: 3px;
-    border-radius: 99px;
-    background: linear-gradient(90deg, #003399, #1a7abf);
-    margin-bottom: 28px;
-}
+        .page-header h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: -.5px;
+        }
 
-/* ══ GRILLE CARTES ═════════════════════════════════ */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
+        .page-header p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, .78);
+            max-width: 460px;
+            margin: 0 auto;
+        }
 
-/* ══ CARTE PARTENAIRE ══════════════════════════════ */
-.p-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: var(--sh);
-    transition: transform .3s var(--ease), box-shadow .3s var(--ease);
-    position: relative;
-}
-/* fine barre bleue-rose en haut au hover */
-.p-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, #003399, #1a7abf);
-    opacity: 0;
-    transition: opacity .3s var(--ease);
-}
-.p-card:hover { transform: translateY(-5px); box-shadow: var(--sh-hover); }
-.p-card:hover::before { opacity: 1; }
+        /* ══ BANDE STATISTIQUES ════════════════════════════ */
+        .stats-band {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 0 var(--border);
+        }
 
-/* zone logo */
-.p-logo {
-    height: 130px;
-    background: #ffffff;
-    display: flex; align-items: center; justify-content: center;
-    padding: 28px 32px;
-    border-bottom: 1px solid var(--border);
-    transition: background .3s var(--ease);
-}
-.p-card:hover .p-logo { background: var(--blue-lite); }
-.p-logo img {
-    max-width: 100%; max-height: 80px; object-fit: contain;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,.08));
-    transition: transform .35s var(--ease), filter .35s var(--ease);
-}
-.p-card:hover .p-logo img { transform: scale(1.06); filter: drop-shadow(0 3px 8px rgba(0,51,153,.15)); }
+        .stats-band .inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 28px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
 
-/* avatar initiales */
-.p-initials {
-    width: 68px; height: 68px; border-radius: 50%;
-    background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 1.3rem; font-weight: 700; letter-spacing: .5px;
-    transition: transform .35s var(--ease);
-}
-.p-card:hover .p-initials { transform: scale(1.06); }
+        .stat-cell {
+            padding: 30px 20px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+            transition: background .2s var(--ease);
+        }
 
-/* contenu */
-.p-content { padding: 20px 22px 16px; flex: 1; display: flex; flex-direction: column; }
-.p-name {
-    font-size: 15.5px; font-weight: 700;
-    color: var(--text); margin-bottom: 7px; line-height: 1.3;
-}
-.p-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 3px 11px; border-radius: 99px;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: .6px; text-transform: uppercase;
-    margin-bottom: 11px; width: fit-content;
-}
-.badge-principal      { background: var(--blue-lite);  color: var(--blue);   }
-.badge-institutionnel { background: #EEF0FF;            color: #2233AA;       }
-.badge-technique      { background: var(--green-lite);  color: #2E7D32;       }
-.badge-media          { background: var(--pink-lite);   color: #CC1177;       }
+        .stat-cell:last-child {
+            border-right: none;
+        }
 
-.p-desc {
-    font-size: 13px; color: var(--text-2);
-    line-height: 1.7; flex: 1; margin-bottom: 16px;
-}
-.p-footer {
-    padding-top: 13px;
-    border-top: 1px solid var(--border);
-}
-.btn-site {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-size: 12.5px; font-weight: 600; color: var(--blue);
-    border: 1.5px solid var(--blue); border-radius: 99px;
-    padding: 6px 16px; text-decoration: none;
-    transition: all .25s var(--ease);
-}
-.btn-site:hover { background: var(--blue); color: #fff; }
-.btn-site i { font-size: 10px; transition: transform .25s; }
-.btn-site:hover i { transform: translate(3px, -3px); }
-.verified-tag {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 12px; color: var(--text-3);
-}
-.verified-tag i { color: var(--green); }
+        .stat-cell:hover {
+            background: var(--blue-lite);
+        }
 
-/* ══ BLOC CTA ══════════════════════════════════════ */
-.cta-block {
-    background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
-    border-radius: 16px;
-    padding: 64px 40px;
-    text-align: center;
-    margin-top: 12px;
-    /* Pas de grille ::before */
-}
-.cta-icon-wrap {
-    width: 60px; height: 60px; border-radius: 50%;
-    background: rgba(255,255,255,.18);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; color: #fff;
-    margin: 0 auto 20px;
-    transition: transform .4s var(--ease);
-}
-.cta-block:hover .cta-icon-wrap { transform: rotate(8deg) scale(1.08); }
-.cta-block h2 {
-    font-size: clamp(1.4rem, 2.5vw, 2rem);
-    font-weight: 700; color: #fff; margin-bottom: 12px;
-}
-.cta-block p {
-    font-size: 15px; color: rgba(255,255,255,.78);
-    line-height: 1.8; max-width: 560px;
-    margin: 0 auto 32px;
-}
-.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.btn-cta-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #fff; color: var(--blue);
-    padding: 13px 30px; border-radius: 99px;
-    text-decoration: none; font-weight: 700; font-size: 14px;
-    transition: all .3s var(--ease);
-    box-shadow: 0 4px 18px rgba(0,0,0,.14);
-}
-.btn-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(0,0,0,.2); }
-.btn-cta-secondary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: transparent; color: rgba(255,255,255,.82);
-    padding: 13px 26px; border-radius: 99px;
-    border: 1.5px solid rgba(255,255,255,.32);
-    text-decoration: none; font-weight: 500; font-size: 14px;
-    transition: all .3s var(--ease);
-}
-.btn-cta-secondary:hover { border-color: #fff; color: #fff; }
+        .stat-ico {
+            font-size: 17px;
+            color: var(--blue);
+            margin-bottom: 8px;
+        }
 
-/* ══ RESPONSIVE ════════════════════════════════════ */
-@media (max-width: 900px) {
-    .stats-band .inner { grid-template-columns: repeat(2, 1fr); }
-    .stat-cell:nth-child(2) { border-right: none; }
-    .stat-cell:nth-child(3) { border-top: 1px solid var(--border); }
-}
-@media (max-width: 580px) {
-    .page-header       { padding: 60px 0 48px; }
-    .cards-grid        { grid-template-columns: 1fr; }
-    .cta-block         { padding: 48px 24px; }
-    .cat-pill          { display: none; }
-    .stats-band .inner { grid-template-columns: repeat(2, 1fr); }
-}
-</style>
+        .stat-n {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--blue);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-l {
+            font-size: 11px;
+            color: var(--text-3);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 600;
+        }
+
+        /* ══ SECTION PRINCIPALE ════════════════════════════ */
+        .main-section {
+            padding: 64px 0 96px;
+        }
+
+        /* intro */
+        .intro-block {
+            max-width: 720px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+
+        .intro-block p {
+            font-size: 15.5px;
+            color: var(--text-2);
+            line-height: 1.85;
+        }
+
+        /* ══ CATÉGORIE ═════════════════════════════════════ */
+        .category-block {
+            margin-bottom: 64px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 6px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            background: var(--blue-lite);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue);
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .cat-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--blue);
+            flex: 1;
+        }
+
+        .cat-pill {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-3);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 3px 13px;
+        }
+
+        .cat-accent {
+            display: block;
+            width: 48px;
+            height: 3px;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #003399, #1a7abf);
+            margin-bottom: 28px;
+        }
+
+        /* ══ GRILLE CARTES ═════════════════════════════════ */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* ══ CARTE PARTENAIRE ══════════════════════════════ */
+        .p-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--sh);
+            transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+            position: relative;
+        }
+
+        /* fine barre bleue-rose en haut au hover */
+        .p-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #003399, #1a7abf);
+            opacity: 0;
+            transition: opacity .3s var(--ease);
+        }
+
+        .p-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--sh-hover);
+        }
+
+        .p-card:hover::before {
+            opacity: 1;
+        }
+
+        /* zone logo */
+        .p-logo {
+            height: 130px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 32px;
+            border-bottom: 1px solid var(--border);
+            transition: background .3s var(--ease);
+        }
+
+        .p-card:hover .p-logo {
+            background: var(--blue-lite);
+        }
+
+        .p-logo img {
+            max-width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .08));
+            transition: transform .35s var(--ease), filter .35s var(--ease);
+        }
+
+        .p-card:hover .p-logo img {
+            transform: scale(1.06);
+            filter: drop-shadow(0 3px 8px rgba(0, 51, 153, .15));
+        }
+
+        /* avatar initiales */
+        .p-initials {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: .5px;
+            transition: transform .35s var(--ease);
+        }
+
+        .p-card:hover .p-initials {
+            transform: scale(1.06);
+        }
+
+        /* contenu */
+        .p-content {
+            padding: 20px 22px 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        }
+
+        .p-name {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 7px;
+            line-height: 1.3;
+        }
+
+        .p-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 11px;
+            border-radius: 99px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            margin-bottom: 11px;
+            width: fit-content;
+        }
+
+        .badge-principal {
+            background: var(--blue-lite);
+            color: var(--blue);
+        }
+
+        .badge-institutionnel {
+            background: #EEF0FF;
+            color: #2233AA;
+        }
+
+        .badge-technique {
+            background: var(--green-lite);
+            color: #2E7D32;
+        }
+
+        .badge-media {
+            background: var(--pink-lite);
+            color: #CC1177;
+        }
+
+        .p-desc {
+            font-size: 13px;
+            color: var(--text-2);
+            line-height: 1.7;
+            flex: 1;
+            margin-bottom: 16px;
+        }
+
+        .p-footer {
+            padding-top: 13px;
+            border-top: 1px solid var(--border);
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-site {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--blue);
+            border: 1.5px solid var(--blue);
+            border-radius: 99px;
+            padding: 6px 16px;
+            text-decoration: none;
+            transition: all .25s var(--ease);
+        }
+
+        .btn-site:hover {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        .btn-site i {
+            font-size: 10px;
+            transition: transform .25s;
+        }
+
+        .btn-site:hover i {
+            transform: translate(3px, -3px);
+        }
+
+        .verified-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--text-3);
+        }
+
+        .verified-tag i {
+            color: var(--green);
+        }
+
+        /* ══ BLOC CTA ══════════════════════════════════════ */
+        .cta-block {
+            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
+            border-radius: 16px;
+            padding: 64px 40px;
+            text-align: center;
+            margin-top: 12px;
+            /* Pas de grille ::before */
+        }
+
+        .cta-icon-wrap {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            margin: 0 auto 20px;
+            transition: transform .4s var(--ease);
+        }
+
+        .cta-block:hover .cta-icon-wrap {
+            transform: rotate(8deg) scale(1.08);
+        }
+
+        .cta-block h2 {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .cta-block p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, .78);
+            line-height: 1.8;
+            max-width: 560px;
+            margin: 0 auto 32px;
+        }
+
+        .cta-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: var(--blue);
+            padding: 13px 30px;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all .3s var(--ease);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, .14);
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, .2);
+        }
+
+        .btn-cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: rgba(255, 255, 255, .82);
+            padding: 13px 26px;
+            border-radius: 99px;
+            border: 1.5px solid rgba(255, 255, 255, .32);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all .3s var(--ease);
+        }
+
+        .btn-cta-secondary:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        /* ══ RESPONSIVE ════════════════════════════════════ */
+        @media (max-width: 900px) {
+            .stats-band .inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-cell:nth-child(2) {
+                border-right: none;
+            }
+
+            .stat-cell:nth-child(3) {
+                border-top: 1px solid var(--border);
+            }
+        }
+
+        @media (max-width: 580px) {
+            .page-header {
+                padding: 60px 0 48px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-block {
+                padding: 48px 24px;
+            }
+
+            .cat-pill {
+                display: none;
+            }
+
+            .stats-band .inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
+
 <body>
-<?php require_once 'templates/header.php'; ?>
+    <?php require_once 'templates/header.php'; ?>
 
-<!-- ══ HEADER ══ -->
-<div class="page-header">
-    <div class="container">
-        <h1 data-aos="fade-up">Nos Partenaires</h1>
-        <p data-aos="fade-up" data-aos-delay="100">
-            Ils nous soutiennent dans notre mission contre le cancer
-        </p>
-    </div>
-</div>
-
-<!-- ══ STATS ══ -->
-<div class="stats-band">
-    <div class="inner">
-        <div class="stat-cell" data-aos="fade-up">
-            <div class="stat-ico"><i class="fas fa-handshake"></i></div>
-            <div class="stat-n">15</div>
-            <div class="stat-l">Partenaires actifs</div>
-        </div>
-        <div class="stat-cell" data-aos="fade-up" data-aos-delay="80">
-            <div class="stat-ico"><i class="fas fa-globe"></i></div>
-            <div class="stat-n">5</div>
-            <div class="stat-l">Internationaux</div>
-        </div>
-        <div class="stat-cell" data-aos="fade-up" data-aos-delay="160">
-            <div class="stat-ico"><i class="fas fa-coins"></i></div>
-            <div class="stat-n">$2M</div>
-            <div class="stat-l">Fonds collectés</div>
-        </div>
-        <div class="stat-cell" data-aos="fade-up" data-aos-delay="240">
-            <div class="stat-ico"><i class="fas fa-seedling"></i></div>
-            <div class="stat-n">10</div>
-            <div class="stat-l">Projets soutenus</div>
-        </div>
-    </div>
-</div>
-
-<!-- ══ CONTENU ══ -->
-<section class="main-section">
-    <div class="container">
-
-        <div class="intro-block" data-aos="fade-up">
-            <p>
-                Le GSCC ne pourrait pas mener à bien ses actions sans le soutien précieux de ses partenaires.
-                Entreprises, institutions, organisations internationales&nbsp;: leur engagement à nos côtés
-                nous permet d'étendre notre impact et d'aider toujours plus de personnes touchées par le cancer.
+    <!-- ══ HEADER ══ -->
+    <div class="page-header">
+        <div class="container">
+            <h1 data-aos="fade-up">Nos Partenaires</h1>
+            <p data-aos="fade-up" data-aos-delay="100">
+                Ils nous soutiennent dans notre mission contre le cancer
             </p>
         </div>
+    </div>
 
-        <?php foreach ($types as $key => $info):
-            if (empty($par_type[$key])) continue;
-            $cnt = count($par_type[$key]);
-        ?>
-        <div class="category-block" data-aos="fade-up">
-            <div class="category-header">
-                <div class="cat-icon"><i class="fas <?= htmlspecialchars($info['icon']) ?>"></i></div>
-                <h2 class="cat-title"><?= htmlspecialchars($info['label']) ?></h2>
-                <span class="cat-pill"><?= $cnt ?> partenaire<?= $cnt > 1 ? 's' : '' ?></span>
+    <!-- ══ STATS ══ -->
+    <div class="stats-band">
+        <div class="inner">
+            <div class="stat-cell" data-aos="fade-up">
+                <div class="stat-ico"><i class="fas fa-handshake"></i></div>
+                <div class="stat-n"><?= count($partenaires) ?></div>
+                <div class="stat-l">Partenaires actifs</div>
             </div>
-            <span class="cat-accent"></span>
+            <div class="stat-cell" data-aos="fade-up" data-aos-delay="80">
+                <div class="stat-ico"><i class="fas fa-globe"></i></div>
+                <div class="stat-n">0</div>
+                <div class="stat-l">Internationaux</div>
+            </div>
+            <div class="stat-cell" data-aos="fade-up" data-aos-delay="160">
+                <div class="stat-ico"><i class="fas fa-users"></i></div>
+                <div class="stat-n">200+</div>
+                <div class="stat-l">Membres actifs</div>
+            </div>
+            <div class="stat-cell" data-aos="fade-up" data-aos-delay="240">
+                <div class="stat-ico"><i class="fas fa-seedling"></i></div>
+                <div class="stat-n">50+</div>
+                <div class="stat-l">Projets soutenus</div>
+            </div>
+        </div>
+    </div>
 
-            <div class="cards-grid">
-                <?php foreach ($par_type[$key] as $i => $p): ?>
-                <div class="p-card" data-aos="fade-up" data-aos-delay="<?= ($i % 3) * 80 ?>">
+    <!-- ══ CONTENU ══ -->
+    <section class="main-section">
+        <div class="container">
 
-                    <div class="p-logo">
-                        <?php if (!empty($p['logo'])): ?>
-                            <img src="<?= htmlspecialchars($p['logo']) ?>"
-                                 alt="Logo <?= htmlspecialchars($p['nom']) ?>"
-                                 loading="lazy"
-                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                            <div class="p-initials" style="display:none"><?= htmlspecialchars(initials($p['nom'])) ?></div>
-                        <?php else: ?>
-                            <div class="p-initials"><?= htmlspecialchars(initials($p['nom'])) ?></div>
-                        <?php endif; ?>
+            <div class="intro-block" data-aos="fade-up">
+                <p>
+                    Le GSCC ne pourrait pas mener à bien ses actions sans le soutien précieux de ses partenaires et ses membres.
+                    Entreprises, institutions, personnalités locale &nbsp;: leur engagement à nos côtés
+                    nous permet d'étendre notre impact et d'aider toujours plus de personnes touchées par le cancer. Ensemble nous semons la vie et offrons l'espoir à des milliers de familles en Haïti.
+                </p>
+            </div>
+
+            <?php foreach ($types as $key => $info):
+                if (empty($par_type[$key])) continue;
+                $cnt = count($par_type[$key]);
+            ?>
+                <div class="category-block" data-aos="fade-up">
+                    <div class="category-header">
+                        <div class="cat-icon"><i class="fas <?= htmlspecialchars($info['icon']) ?>"></i></div>
+                        <h2 class="cat-title"><?= htmlspecialchars($info['label']) ?></h2>
+                        <span class="cat-pill"><?= $cnt ?> partenaire<?= $cnt > 1 ? 's' : '' ?></span>
                     </div>
+                    <span class="cat-accent"></span>
 
-                    <div class="p-content">
-                        <h3 class="p-name"><?= htmlspecialchars($p['nom']) ?></h3>
-                        <span class="p-badge badge-<?= htmlspecialchars($key) ?>">
-                            <i class="fas <?= htmlspecialchars($info['icon']) ?>"></i>
-                            <?= htmlspecialchars($info['label']) ?>
-                        </span>
-                        <p class="p-desc"><?= htmlspecialchars($p['description'] ?? '') ?></p>
+                    <div class="cards-grid">
+                        <?php foreach ($par_type[$key] as $i => $p): ?>
+                            <div class="p-card" data-aos="fade-up" data-aos-delay="<?= ($i % 3) * 80 ?>">
 
-                        <div class="p-footer">
-                            <?php if (!empty($p['site_web']) && $p['site_web'] !== '#'): ?>
-                                <a href="<?= htmlspecialchars($p['site_web']) ?>"
-                                   target="_blank" rel="noopener noreferrer"
-                                   class="btn-site">
-                                    Visiter le site <i class="fas fa-arrow-up-right-from-square"></i>
-                                </a>
-                            <?php else: ?>
-                                <span class="verified-tag">
-                                    <i class="fas fa-circle-check"></i> Partenaire certifié
-                                </span>
-                            <?php endif; ?>
-                        </div>
+                                <div class="p-logo">
+                                    <?php if (!empty($p['logo'])): ?>
+                                        <img src="<?= htmlspecialchars($p['logo']) ?>"
+                                            alt="Logo <?= htmlspecialchars($p['nom']) ?>"
+                                            loading="lazy"
+                                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                                        <div class="p-initials" style="display:none"><?= htmlspecialchars(initials($p['nom'])) ?></div>
+                                    <?php else: ?>
+                                        <div class="p-initials"><?= htmlspecialchars(initials($p['nom'])) ?></div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="p-content">
+                                    <h3 class="p-name"><?= htmlspecialchars($p['nom']) ?></h3>
+                                    <span class="p-badge badge-<?= htmlspecialchars($key) ?>">
+                                        <i class="fas <?= htmlspecialchars($info['icon']) ?>"></i>
+                                        <?= htmlspecialchars($info['label']) ?>
+                                    </span>
+                                    <p class="p-desc"><?= htmlspecialchars($p['description'] ?? '') ?></p>
+
+                                    <div class="p-footer">
+                                        <?php if (!empty($p['site_web']) && $p['site_web'] !== '#'): ?>
+                                            <a href="<?= htmlspecialchars($p['site_web']) ?>"
+                                                target="_blank" rel="noopener noreferrer"
+                                                class="btn-site">
+                                                Visiter le site <i class="fas fa-arrow-up-right-from-square"></i>
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="verified-tag">
+                                                <i class="fas fa-circle-check"></i> Partenaire certifié
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-                <?php endforeach; ?>
+            <?php endforeach; ?>
+
+            <!-- CTA -->
+            <div class="cta-block" data-aos="fade-up">
+                <div class="cta-icon-wrap"><i class="fas fa-handshake"></i></div>
+                <h2>Vous souhaitez devenir partenaire&nbsp;?</h2>
+                <p>
+                    Rejoignez notre réseau et contribuez à faire la différence dans la lutte contre le cancer en Haïti.
+                    Ensemble, construisons un avenir sans cancer.
+                </p>
+                <div class="cta-btns">
+                    <a href="https://h23xktcc.forms.app/gsccadhesion?objet=partenariat" target="_blank" class="btn-cta-primary">
+                        <i class="fas fa-envelope"></i> Nous contacter
+                    </a>
+                    <a href="presentation.php#mission" class="btn-cta-secondary">
+                        <i class="fas fa-arrow-right"></i> Notre mission
+                    </a>
+                </div>
             </div>
+
         </div>
-        <?php endforeach; ?>
+    </section>
 
-        <!-- CTA -->
-        <div class="cta-block" data-aos="fade-up">
-            <div class="cta-icon-wrap"><i class="fas fa-handshake"></i></div>
-            <h2>Vous souhaitez devenir partenaire&nbsp;?</h2>
-            <p>
-                Rejoignez notre réseau et contribuez à faire la différence dans la lutte contre le cancer en Haïti.
-                Ensemble, construisons un avenir meilleur pour les patients et leurs familles.
-            </p>
-            <div class="cta-btns">
-                <a href="contact.php?objet=partenariat" class="btn-cta-primary">
-                    <i class="fas fa-envelope"></i> Nous contacter
-                </a>
-                <a href="presentation.php#mission" class="btn-cta-secondary">
-                    <i class="fas fa-arrow-right"></i> Notre mission
-                </a>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<?php require_once 'templates/footer.php'; ?>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="assets/js/main.js"></script>
-<script>AOS.init({ duration: 600, once: true, offset: 50 });</script>
+    <?php require_once 'templates/footer.php'; ?>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        AOS.init({
+            duration: 600,
+            once: true,
+            offset: 50
+        });
+    </script>
 </body>
+
 </html>

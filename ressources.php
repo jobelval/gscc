@@ -161,7 +161,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
         .info-section { padding: 70px 0; }
         .info-section + .info-section { padding-top: 0; }
 
-        .section-header { margin-bottom: 48px; }
+        .section-header { margin-bottom: 48px; text-align: center; }
         .section-tag {
             display: inline-flex; align-items: center; gap: 7px;
             font-size: 11px; font-weight: 700; letter-spacing: 2px;
@@ -177,6 +177,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
         .section-header p {
             font-size: 16px; color: var(--muted);
             max-width: 680px; line-height: 1.8;
+            margin: 0 auto;
         }
 
         /* Diviseur section */
@@ -303,6 +304,36 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
         .type-card.teal   .type-ribbon { background: var(--teal-soft);   color: var(--teal); }
         .type-card.purple .type-ribbon { background: var(--purple-soft); color: var(--purple); }
 
+        /* Cancer du sein — Rose officiel */
+        /* (déjà géré par .rose) */
+
+        /* Cancer de la prostate — Bleu ciel */
+        .type-card.sky-blue::before { background: #5B9BD5; }
+        .type-card.sky-blue .type-icon   { background: #D6ECFA; color: #2F6FA3; }
+        .type-card.sky-blue .type-ribbon { background: #D6ECFA; color: #2F6FA3; }
+        .type-card.sky-blue .symptoms-list li::before { background: #5B9BD5; }
+
+        /* Cancer du poumon — Blanc / Perle */
+        .type-card.pearl::before { background: #9E9E9E; }
+        .type-card.pearl .type-icon   { background: #F5F5F5; color: #616161; }
+        .type-card.pearl .type-ribbon { background: #F5F5F5; color: #616161; }
+        .type-card.pearl .symptoms-list li::before { background: #9E9E9E; }
+
+        /* Cancer colorectal — Bleu marine */
+        .type-card.navy::before { background: #1B3F8A; }
+        .type-card.navy .type-icon   { background: #D3DEFF; color: #1B3F8A; }
+        .type-card.navy .type-ribbon { background: #D3DEFF; color: #1B3F8A; }
+        .type-card.navy .symptoms-list li::before { background: #1B3F8A; }
+
+        /* Cancer du col de l'utérus — Sarcelle */
+        /* (déjà géré par .teal) */
+
+        /* Cancers de la peau / Mélanome — Noir */
+        .type-card.charcoal::before { background: #333333; }
+        .type-card.charcoal .type-icon   { background: #E0E0E0; color: #333333; }
+        .type-card.charcoal .type-ribbon { background: #E0E0E0; color: #333333; }
+        .type-card.charcoal .symptoms-list li::before { background: #333333; }
+
         /* ══════════════════════════════════
            3. DÉPISTAGE
         ══════════════════════════════════ */
@@ -312,7 +343,6 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
             display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: start;
         }
 
-        .depistage-steps { }
         .dep-step {
             display: flex; gap: 20px; margin-bottom: 28px; align-items: flex-start;
         }
@@ -468,9 +498,15 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
         .mythes-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
         }
+        .mythes-col {
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            gap: 18px;
+        }
         .mythe-card {
             background: var(--white); border: 1px solid var(--border);
             border-radius: 14px; overflow: hidden;
+            display: flex; flex-direction: column;
         }
         .mythe-header {
             padding: 14px 20px;
@@ -484,7 +520,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
         .mythe-header span { font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
         .mythe-header.faux span { color: #DC2626; }
         .mythe-header.vrai span { color: #059669; }
-        .mythe-body { padding: 16px 20px; }
+        .mythe-body { padding: 16px 20px; flex: 1; }
         .mythe-body h4 { font-size: 14.5px; font-weight: 700; color: var(--dark); margin-bottom: 8px; line-height: 1.4; }
         .mythe-body p  { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
 
@@ -735,7 +771,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
 
                 <div class="type-card rose">
                     <div class="type-icon"><i class="fas fa-ribbon"></i></div>
-                    <span class="type-ribbon">Féminin</span>
+                    <span class="type-ribbon">Féminin (99%)  &  Masculin (1%)</span>
                     <h3>Cancer du sein</h3>
                     <p>Le cancer le plus fréquent chez la femme dans le monde et en Haïti. Souvent lié à des facteurs hormonaux, génétiques et environnementaux.</p>
                     <ul class="symptoms-list">
@@ -746,7 +782,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
                     </ul>
                 </div>
 
-                <div class="type-card blue">
+                <div class="type-card sky-blue">
                     <div class="type-icon"><i class="fas fa-male"></i></div>
                     <span class="type-ribbon">Masculin</span>
                     <h3>Cancer de la prostate</h3>
@@ -759,7 +795,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
                     </ul>
                 </div>
 
-                <div class="type-card green">
+                <div class="type-card pearl">
                     <div class="type-icon"><i class="fas fa-lungs"></i></div>
                     <span class="type-ribbon">Fréquent</span>
                     <h3>Cancer du poumon</h3>
@@ -772,7 +808,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
                     </ul>
                 </div>
 
-                <div class="type-card orange">
+                <div class="type-card navy">
                     <div class="type-icon"><i class="fas fa-procedures"></i></div>
                     <span class="type-ribbon">Digestif</span>
                     <h3>Cancer colorectal</h3>
@@ -798,16 +834,16 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
                     </ul>
                 </div>
 
-                <div class="type-card purple">
+                <div class="type-card charcoal">
                     <div class="type-icon"><i class="fas fa-child"></i></div>
-                    <span class="type-ribbon">Pédiatrique</span>
-                    <h3>Cancers pédiatriques</h3>
-                    <p>Les cancers chez l'enfant sont différents de ceux de l'adulte. La leucémie est la plus fréquente. Taux de guérison en hausse.</p>
+                    <span class="type-ribbon">Peau</span>
+                    <h3>Cancers de la peau</h3>
+                    <p>Le cancer de la peau est le résultat d’un développement anarchique de cellules anormales sur l’épiderme. Il est principalement causé par une exposition excessive aux rayons UV, qui dégradent l'ADN des cellules cutanées.</p>
                     <ul class="symptoms-list">
-                        <li>Pâleur, fatigue intense, fièvres fréquentes</li>
-                        <li>Ganglions enflés persistants</li>
-                        <li>Douleurs osseuses ou abdominales</li>
-                        <li>Perte de poids rapide et inexpliquée</li>
+                        <li>Changement d'un grain de beauté</li>
+                        <li>Nouvelle lésion persistante</li>
+                        <li>Plaie qui ne cicatrise pas</li>
+                        <li>Tache irrégulière (Règle ABCDE)</li>
                     </ul>
                 </div>
 
@@ -859,7 +895,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
                     </div>
                     <div class="alert-info">
                         <i class="fas fa-exclamation-triangle"></i>
-                        <strong>Signes d'alerte généraux :</strong> perte de poids inexpliquée, fatigue persistante, fièvre récurrente, douleur chronique, saignement anormal, masse palpable. Consultez si ces signes durent plus de 3 semaines.
+                        <strong>Nan zafè Kansè, Pi bonè se Granmaten. Al Kay doktè</strong> 
                     </div>
                 </div>
                 <div>
@@ -1104,62 +1140,71 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
                 <p>Les idées reçues sur le cancer peuvent retarder le diagnostic et nuire à la prise en charge. Faisons le point.</p>
             </div>
             <div class="mythes-grid">
-                <div class="mythe-card">
-                    <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
-                    <div class="mythe-body">
-                        <h4>«&nbsp;Le cancer est contagieux&nbsp;»</h4>
-                        <p>Le cancer ne se transmet pas d'une personne à une autre. On ne peut pas attraper un cancer en touchant, embrassant ou étant proche d'une personne malade. Certains virus oncogènes (HPV, hépatite) se transmettent, mais pas le cancer lui-même.</p>
+
+                <!-- Colonne gauche : Réalités -->
+                <div class="mythes-col">
+                    <div class="mythe-card">
+                        <div class="mythe-header vrai"><i class="fas fa-check"></i><span>Réalité</span></div>
+                        <div class="mythe-body">
+                            <h4>«&nbsp;Le cancer peut toucher tout le monde, même les jeunes&nbsp;»</h4>
+                            <p>Si le risque augmente avec l'âge, certains cancers touchent particulièrement les jeunes : leucémies, cancers testiculaires, cancer du col de l'utérus. Il n'y a pas d'âge minimum pour consulter en cas de symptôme persistant.</p>
+                        </div>
+                    </div>
+                    <div class="mythe-card">
+                        <div class="mythe-header vrai"><i class="fas fa-check"></i><span>Réalité</span></div>
+                        <div class="mythe-body">
+                            <h4>«&nbsp;Le stress peut favoriser l'apparition du cancer&nbsp;»</h4>
+                            <p>Un lien indirect existe : le stress chronique affaiblit le système immunitaire et peut pousser vers des comportements à risque (tabac, alcool, mauvaise alimentation). Bien gérer son stress fait partie de la prévention globale.</p>
+                        </div>
+                    </div>
+                    <div class="mythe-card">
+                        <div class="mythe-header vrai"><i class="fas fa-check"></i><span>Réalité</span></div>
+                        <div class="mythe-body">
+                            <h4>«&nbsp;L'alimentation joue un rôle dans la prévention du cancer&nbsp;»</h4>
+                            <p>Vrai. Une alimentation riche en fruits, légumes, fibres et pauvre en viandes transformées, sucre et alcool réduit le risque de plusieurs cancers. La nutrition est une composante clé de la prévention.</p>
+                        </div>
+                    </div>
+                    <div class="mythe-card">
+                        <div class="mythe-header vrai"><i class="fas fa-check"></i><span>Réalité</span></div>
+                        <div class="mythe-body">
+                            <h4>«&nbsp;Le dépistage précoce augmente considérablement les chances de guérison&nbsp;»</h4>
+                            <p>Vrai. Détecter un cancer au stade I permet de guérir dans 9 cas sur 10 pour de nombreux types. Plus le diagnostic est posé tôt, plus les traitements sont efficaces, moins invasifs et moins coûteux. Ne pas attendre les symptômes, c'est sauver des vies.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="mythe-card">
-                    <div class="mythe-header vrai"><i class="fas fa-check"></i><span>Réalité</span></div>
-                    <div class="mythe-body">
-                        <h4>«&nbsp;Le cancer peut toucher tout le monde, même les jeunes&nbsp;»</h4>
-                        <p>Si le risque augmente avec l'âge, certains cancers touchent particulièrement les jeunes : leucémies, cancers testiculaires, cancer du col de l'utérus. Il n'y a pas d'âge minimum pour consulter en cas de symptôme persistant.</p>
+
+                <!-- Colonne droite : Mythes -->
+                <div class="mythes-col">
+                    <div class="mythe-card">
+                        <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
+                        <div class="mythe-body">
+                            <h4>«&nbsp;Le cancer est contagieux&nbsp;»</h4>
+                            <p>Le cancer ne se transmet pas d'une personne à une autre. On ne peut pas attraper un cancer en touchant, embrassant ou étant proche d'une personne malade. Certains virus oncogènes (HPV, hépatite) se transmettent, mais pas le cancer lui-même.</p>
+                        </div>
+                    </div>
+                    <div class="mythe-card">
+                        <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
+                        <div class="mythe-body">
+                            <h4>«&nbsp;Un diagnostic de cancer est une sentence de mort&nbsp;»</h4>
+                            <p>Faux. Grâce aux progrès de la médecine, de nombreux cancers sont aujourd'hui guérissables, surtout s'ils sont détectés tôt. Le taux de survie à 5 ans du cancer du sein dépasse 90% dans les pays avec accès aux soins. L'espoir est réel.</p>
+                        </div>
+                    </div>
+                    <div class="mythe-card">
+                        <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
+                        <div class="mythe-body">
+                            <h4>«&nbsp;Si personne dans ma famille n'a eu le cancer, je suis protégé&nbsp;»</h4>
+                            <p>Seulement 5 à 10% des cancers sont héréditaires. La grande majorité surviennent sans antécédents familiaux. L'exposition environnementale, le tabac, l'alimentation et d'autres facteurs jouent un rôle tout aussi important.</p>
+                        </div>
+                    </div>
+                    <div class="mythe-card">
+                        <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
+                        <div class="mythe-body">
+                            <h4>«&nbsp;Les plantes ou remèdes naturels guérissent le cancer&nbsp;»</h4>
+                            <p>Aucun remède traditionnel n'a fait la preuve scientifique de sa capacité à guérir un cancer. Retarder un traitement médical en favorisant des remèdes non prouvés peut être fatal. Les médecines complémentaires peuvent accompagner, mais pas remplacer.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="mythe-card">
-                    <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
-                    <div class="mythe-body">
-                        <h4>«&nbsp;Un diagnostic de cancer est une sentence de mort&nbsp;»</h4>
-                        <p>Faux. Grâce aux progrès de la médecine, de nombreux cancers sont aujourd'hui guérissables, surtout s'ils sont détectés tôt. Le taux de survie à 5 ans du cancer du sein dépasse 90% dans les pays avec accès aux soins. L'espoir est réel.</p>
-                    </div>
-                </div>
-                <div class="mythe-card">
-                    <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
-                    <div class="mythe-body">
-                        <h4>«&nbsp;Les médicaments du cancer font plus de mal que de bien&nbsp;»</h4>
-                        <p>La chimiothérapie a des effets secondaires, mais ils sont gérables et temporaires. Ne pas se traiter est bien plus dangereux. Les médecins équilibrent soigneusement bénéfices et risques pour chaque patient.</p>
-                    </div>
-                </div>
-                <div class="mythe-card">
-                    <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
-                    <div class="mythe-body">
-                        <h4>«&nbsp;Si personne dans ma famille n'a eu le cancer, je suis protégé&nbsp;»</h4>
-                        <p>Seulement 5 à 10% des cancers sont héréditaires. La grande majorité surviennent sans antécédents familiaux. L'exposition environnementale, le tabac, l'alimentation et d'autres facteurs jouent un rôle tout aussi important.</p>
-                    </div>
-                </div>
-                <div class="mythe-card">
-                    <div class="mythe-header vrai"><i class="fas fa-check"></i><span>Réalité</span></div>
-                    <div class="mythe-body">
-                        <h4>«&nbsp;Le stress peut favoriser l'apparition du cancer&nbsp;»</h4>
-                        <p>Un lien indirect existe : le stress chronique affaiblit le système immunitaire et peut pousser vers des comportements à risque (tabac, alcool, mauvaise alimentation). Bien gérer son stress fait partie de la prévention globale.</p>
-                    </div>
-                </div>
-                <div class="mythe-card">
-                    <div class="mythe-header faux"><i class="fas fa-times"></i><span>Mythe</span></div>
-                    <div class="mythe-body">
-                        <h4>«&nbsp;Les plantes ou remèdes naturels guérissent le cancer&nbsp;»</h4>
-                        <p>Aucun remède traditionnel n'a fait la preuve scientifique de sa capacité à guérir un cancer. Retarder un traitement médical en favorisant des remèdes non prouvés peut être fatal. Les médecines complémentaires peuvent accompagner, mais pas remplacer.</p>
-                    </div>
-                </div>
-                <div class="mythe-card">
-                    <div class="mythe-header vrai"><i class="fas fa-check"></i><span>Réalité</span></div>
-                    <div class="mythe-body">
-                        <h4>«&nbsp;L'alimentation joue un rôle dans la prévention du cancer&nbsp;»</h4>
-                        <p>Vrai. Une alimentation riche en fruits, légumes, fibres et pauvre en viandes transformées, sucre et alcool réduit le risque de plusieurs cancers. La nutrition est une composante clé de la prévention.</p>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -1250,7 +1295,12 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
                     </ul>
                 </div>
             </div>
+            
+            <p style="text-align:center; margin-top:40px; font-size:17px; font-style:italic; color:var(--blue-dark);">
+                <strong>Le Cancer n’est pas toute l’histoire, ce n’est qu’un chapitre.</strong>
+            </p>
         </div>
+        
     </section>
 
     <div class="section-divider"></div>

@@ -8,13 +8,11 @@
             <!-- Colonne 1: Logo et description -->
             <div class="footer-col footer-col--brand">
                 <div class="footer-logo">
-                    <img src="images/image2.png" alt="Logo GSCC" class="footer-logo-img">
+                    <img src="images/site/image2.png" alt="Logo GSCC" class="footer-logo-img">
                     <h4>GSCC</h4>
                 </div>
                 <p>
-                    Groupe de Support Contre le Cancer : Ensemble, nous sommes plus forts
-                    dans la lutte contre le cancer en Haïti. Depuis 1999, nous accompagnons
-                    les patients et leurs familles.
+                    Groupe de Support Contre le Cancer : Plus de 25 ans de lutte pour des soins oncologiques, accessibles et équitables. <br> <br> Ansanm nou pi fò pase kansè !!!
                 </p>
                 <div class="social-links">
                     <a href="https://web.facebook.com/GSCCHAITI" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
@@ -89,6 +87,7 @@
                 <!-- Newsletter -->
                 <form class="footer-newsletter" id="footer-nl-form" novalidate>
                     <label>Newsletter</label>
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(generateCSRFToken(), ENT_QUOTES, 'UTF-8') ?>">
                     <div class="newsletter-row">
                         <input type="email" name="email" id="footer-nl-email"
                             placeholder="Votre adresse email" required autocomplete="email">
@@ -224,7 +223,7 @@
 
     /* "GSCC" en sombre sur fond blanc */
     .footer-logo h4 {
-        font-family: 'Playfair Display', serif;
+        font-family: 'Montserrat', sans-serif;
         font-size: 22px;
         font-weight: 700;
         color: #1E2A35;
@@ -387,7 +386,7 @@
         border: none;
         color: #1E2A35;           /* texte sombre lisible */
         font-size: 13px;
-        font-family: 'DM Sans', sans-serif;
+        font-family: 'Montserrat', sans-serif;
         outline: none;
     }
 
@@ -446,7 +445,7 @@
 
     /* Slogan — rose vif bien lisible sur fond clair */
     .footer-slogan {
-        font-family: 'Playfair Display', serif;
+        font-family: 'Montserrat', sans-serif;
         font-style: italic;
         color: #C8375F !important;
         font-size: 13px !important;

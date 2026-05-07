@@ -193,6 +193,18 @@ if (!function_exists('statusBadge')) {
     }
 }
 
+if (!function_exists('typeMembreBadge')) {
+    function typeMembreBadge(string $type): string {
+        $map = [
+            'actif'       => ['Actif',       'success'],
+            'bienfaiteur' => ['Bienfaiteur',  'warning'],
+            'honoraire'   => ['Honoraire',    'rose'],
+        ];
+        [$label, $cls] = $map[$type] ?? [ucfirst($type), 'secondary'];
+        return "<span class=\"badge badge-{$cls}\">{$label}</span>";
+    }
+}
+
 if (!function_exists('uploadFile')) {
     function uploadFile(array $file, string $destination, array $allowedTypes = ['jpg','jpeg','png','gif','pdf']): array {
         if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -201,6 +213,25 @@ if (!function_exists('uploadFile')) {
         $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         if (!in_array($ext, $allowedTypes)) {
             return ['success' => false, 'error' => 'Type non autorisé : .' . $ext];
+        }
+        // Validation du MIME type réel (pas seulement l'extension)
+        $allowedMimes = [
+            'jpg'  => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png'  => 'image/png',
+            'gif'  => 'image/gif',
+            'webp' => 'image/webp',
+            'pdf'  => 'application/pdf',
+            'doc'  => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ];
+        if (isset($allowedMimes[$ext])) {
+            $finfo    = finfo_open(FILEINFO_MIME_TYPE);
+            $realMime = finfo_file($finfo, $file['tmp_name']);
+            finfo_close($finfo);
+            if ($realMime !== $allowedMimes[$ext]) {
+                return ['success' => false, 'error' => 'Le contenu du fichier ne correspond pas à son extension.'];
+            }
         }
         $maxSize = defined('MAX_FILE_SIZE') ? MAX_FILE_SIZE : 5 * 1024 * 1024;
         if ($file['size'] > $maxSize) {

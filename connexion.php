@@ -58,13 +58,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // ── Construction de l'URL Google OAuth ──────────────────────
 $google_auth_url = '';
 if (defined('GOOGLE_CLIENT_ID') && defined('GOOGLE_REDIRECT_URI')) {
-    $_SESSION['oauth_state'] = bin2hex(random_bytes(16)); // protection CSRF
+    $oauth_state = bin2hex(random_bytes(16));
+    $_SESSION['oauth_state'] = $oauth_state;
+    // Cookie dédié SameSite=Lax — fiable même si la session est perdue au retour de Google
+    setcookie('gscc_oauth_state', $oauth_state, [
+        'expires'  => time() + 300,
+        'path'     => '/',
+        'secure'   => false,
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
     $params = http_build_query([
         'client_id'     => GOOGLE_CLIENT_ID,
         'redirect_uri'  => GOOGLE_REDIRECT_URI,
         'response_type' => 'code',
         'scope'         => 'openid email profile',
-        'state'         => $_SESSION['oauth_state'],
+        'state'         => $oauth_state,
         'prompt'        => 'select_account',
     ]);
     $google_auth_url = 'https://accounts.google.com/o/oauth2/v2/auth?' . $params;

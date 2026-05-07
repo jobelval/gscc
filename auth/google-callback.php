@@ -14,11 +14,14 @@ require_once '../includes/functions.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 // ── 1. Vérification du state CSRF ───────────────────────────
-$state = $_GET['state'] ?? '';
-if (empty($state) || $state !== ($_SESSION['oauth_state'] ?? '')) {
+$state    = $_GET['state'] ?? '';
+$expected = $_COOKIE['gscc_oauth_state'] ?? ($_SESSION['oauth_state'] ?? '');
+
+if (empty($state) || empty($expected) || !hash_equals($expected, $state)) {
     die('Erreur de sécurité : state invalide.');
 }
 unset($_SESSION['oauth_state']);
+setcookie('gscc_oauth_state', '', ['expires' => time() - 3600, 'path' => '/']);
 
 // ── 2. Vérification du code retourné par Google ─────────────
 $code = $_GET['code'] ?? '';

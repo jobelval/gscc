@@ -14,7 +14,7 @@
     <meta property="og:title" content="<?= isset($page_title) ? e($page_title) : SITE_NAME ?>">
     <meta property="og:description" content="<?= isset($page_description) ? e($page_description) : 'Ensemble contre le cancer en Haïti' ?>">
     <meta property="og:image" content="<?= IMAGES_URL ?>og-image.jpg">
-    <meta property="og:url" content="<?= SITE_URL . $_SERVER['REQUEST_URI'] ?>">
+    <meta property="og:url" content="<?= htmlspecialchars(SITE_URL . $_SERVER['REQUEST_URI'], ENT_QUOTES, 'UTF-8') ?>">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -963,7 +963,7 @@
                     <a href="index.php" aria-label="Retour à l'accueil GSCC">
 
                         <div class="logo-icon">
-                            <img src="images/image2.png" alt="Logo GSCC" class="logo-img">
+                            <img src="images/site/image2.png" alt="Logo GSCC" class="logo-img">
                         </div>
 
                         <div class="logo-text">
@@ -982,7 +982,7 @@
                             <a href="#"> Présentation<i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="presentation.php#propos">À propos du GSCC</a></li>
-                                <li><a href="presentation.php#mission">Mission & Vision</a></li>
+                                <li><a href="presentation.php#mission">Mission & Impact</a></li>
                                 <!-- <li><a href="presentation.php#vision">Vision</a></li> -->
                                 <li><a href="presentation.php#historique">Historique</a></li>
                                 <li><a href="presentation.php#equipe">Équipe</a></li>
@@ -1005,7 +1005,6 @@
                             <ul class="dropdown-menu">
                                 <li><a href="survivants.php">Nos survivants</a></li>
                                 <li><a href="ressources.php">S'informer et comprendre</a></li>
-                                <li><a href="demande-aide.php">Accompagnement personnalisé</a></li>
                             </ul>
                         </li>
 
@@ -1013,10 +1012,9 @@
                             <a href="#">Activité <i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="sensibilisation.php">Sensibilisation</a></li>
-                                <li><a href="levees-fonds.php">Levées de Fonds</a></li>
-                                <li><a href="unir-agir.php">Unir et agir</a></li>
                                 <li><a href="foire-annuelle.php">Grande Foire Annuelle</a></li>
                                 <li><a href="marche-contre-cancer.php">Marche Contre le Cancer</a></li>
+                                <li><a href="football-rose.php">Football Rose</a></li>
                             </ul>
                         </li>
 

@@ -13,19 +13,40 @@ if (session_status() === PHP_SESSION_ACTIVE) {
 }
 
 // =============================================
-// 2. CONFIGURATION DES SESSIONS (MAINTENANT POSSIBLE)
+// 2. CHARGEMENT DU FICHIER .env
 // =============================================
-define('GOOGLE_CLIENT_ID',     'XXXXXXX.apps.googleusercontent.com');
-define('GOOGLE_CLIENT_SECRET', 'XXXXXXX');
-define('GOOGLE_REDIRECT_URI',  'https://tonsite.com/auth/google-callback.php');
+(function () {
+    $envFile = dirname(__DIR__) . '/.env';
+    if (!file_exists($envFile)) return;
+    $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '' || $line[0] === '#') continue;
+        if (!str_contains($line, '=')) continue;
+        [$key, $value] = explode('=', $line, 2);
+        $key   = trim($key);
+        $value = trim($value);
+        if ($key !== '' && !getenv($key)) {
+            putenv("$key=$value");
+            $_ENV[$key] = $value;
+        }
+    }
+})();
+
+// =============================================
+// 3. CONFIGURATION DES SESSIONS (MAINTENANT POSSIBLE)
+// =============================================
+define('GOOGLE_CLIENT_ID',     getenv('GOOGLE_CLIENT_ID')    ?: '');
+define('GOOGLE_CLIENT_SECRET', getenv('GOOGLE_CLIENT_SECRET') ?: '');
+define('GOOGLE_REDIRECT_URI',  getenv('GOOGLE_REDIRECT_URI')  ?: 'http://localhost/gscc/auth/google-callback.php');
 
 
 // Supprimer les warnings en vérifiant si les paramètres peuvent être modifiés
 if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_httponly', 1);
     ini_set('session.use_only_cookies', 1);
-    ini_set('session.cookie_secure', 0); // Mettre à 1 en production avec HTTPS
-    ini_set('session.cookie_samesite', 'Strict');
+    ini_set('session.cookie_secure', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 1 : 0);
+    ini_set('session.cookie_samesite', 'Lax');
     ini_set('session.gc_maxlifetime', 7200); // 2 heures
     ini_set('session.cookie_lifetime', 0); // Jusqu'à la fermeture du navigateur
     ini_set('session.use_strict_mode', 1);
@@ -47,14 +68,14 @@ if (session_status() === PHP_SESSION_NONE) {
 // =============================================
 
 // Base de données
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'gscc');
-define('DB_USER', 'root'); // À modifier en production
-define('DB_PASS', ''); // À modifier en production
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_NAME', getenv('DB_NAME') ?: 'gscc');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
 
 // Site
 define('SITE_NAME', 'GSCC - Groupe de Support Contre le Cancer');
-define('SITE_URL', 'http://localhost/gscc'); // À modifier en production
+define('SITE_URL', getenv('SITE_URL') ?: 'http://localhost/gscc');
 define('SITE_EMAIL', 'gscc@gscchaiti.com');
 
 // Chemins absolus

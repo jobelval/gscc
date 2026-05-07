@@ -45,7 +45,6 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
 
     <style>
         :root {
@@ -88,6 +87,7 @@ try {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2.2rem, 5vw, 3.4rem);
             font-weight: 700; margin-bottom: 14px; letter-spacing: -0.5px;
+            color: white;
         }
         .page-header p {
             font-size: 1.05rem; color: rgba(255,255,255,0.82);
@@ -413,8 +413,8 @@ try {
                         ?>
                         <a href="<?= $url_full ?>"
                            class="gallery-item"
-                           data-lightbox="gallery"
-                           data-title="<?= $titre ?>"
+                           target="_blank"
+                           rel="noopener noreferrer"
                            data-aos="fade-up"
                            data-aos-delay="<?= ($i % 3) * 70 ?>">
                             <div class="gallery-image">
@@ -442,16 +442,8 @@ try {
     <?php include 'templates/footer.php'; ?>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
         AOS.init({ duration: 600, once: true, offset: 50 });
-        lightbox.option({
-            resizeDuration:    200,
-            wrapAround:        true,
-            albumLabel:        'Image %1 sur %2',
-            fadeDuration:      300,
-            imageFadeDuration: 300
-        });
     </script>
 </body>
 </html>

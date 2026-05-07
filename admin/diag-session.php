@@ -2,6 +2,9 @@
 require_once dirname(__DIR__) . '/includes/config.php';
 require_once __DIR__ . '/includes/auth.php';
 
+// Accès réservé aux administrateurs authentifiés
+requireAdmin();
+
 header('Content-Type: text/plain; charset=UTF-8');
 
 echo "=== SESSION DUMP ===\n";

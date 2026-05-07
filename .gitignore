@@ -1,0 +1,23 @@
+# Secrets — ne jamais committer
+.env
+
+# Uploads utilisateurs
+assets/uploads/
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+*.cache
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

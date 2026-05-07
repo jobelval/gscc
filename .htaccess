@@ -1,0 +1,42 @@
+# ============================================================
+# GSCC — Configuration Apache / Sécurité
+# ============================================================
+
+# ── Bloquer l'accès aux fichiers sensibles ──────────────────
+<FilesMatch "^(\.env|\.env\.example|\.gitignore|composer\.json|composer\.lock|package\.json|package-lock\.json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ── Bloquer l'accès aux dossiers système ────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Interdire l'accès direct aux includes
+    RewriteRule ^includes/ - [F,L]
+    RewriteRule ^lang/ - [F,L]
+</IfModule>
+
+# ── En-têtes de sécurité HTTP ───────────────────────────────
+<IfModule mod_headers.c>
+    # Anti-clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Bloquer le sniffing de MIME type
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Protection XSS navigateurs anciens
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Ne pas envoyer le Referer sur les liens externes
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Cacher la version PHP
+    Header always unset X-Powered-By
+</IfModule>
+
+# ── Désactiver le listage des dossiers ──────────────────────
+Options -Indexes
+
+# ── Cacher la signature du serveur ─────────────────────────
+ServerSignature Off

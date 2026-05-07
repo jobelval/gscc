@@ -591,7 +591,7 @@ $rest = array_slice($temoignages, 1);
             </div>
             <h1 data-aos="fade-up" data-aos-delay="80">Témoignages</h1>
             <p data-aos="fade-up" data-aos-delay="150">
-                Patients, familles, bénévoles — ils partagent leur expérience avec le GSCC.
+                Patients, familles, bénévoles - ils partagent leur expérience avec le GSCC.
             </p>
         </div>
     </header>
@@ -600,7 +600,7 @@ $rest = array_slice($temoignages, 1);
     <div class="stats-row">
         <div class="container">
             <div class="stat-cell" data-aos="fade-up">
-                <div class="stat-n">150+</div>
+                <div class="stat-n">300+</div>
                 <div class="stat-l">Patients accompagnés</div>
             </div>
             <div class="stat-cell" data-aos="fade-up" data-aos-delay="80">
@@ -608,7 +608,7 @@ $rest = array_slice($temoignages, 1);
                 <div class="stat-l">Bénévoles actifs</div>
             </div>
             <div class="stat-cell" data-aos="fade-up" data-aos-delay="160">
-                <div class="stat-n">100%</div>
+                <div class="stat-n">99,9%</div>
                 <div class="stat-l">Satisfaction</div>
             </div>
         </div>
@@ -649,8 +649,8 @@ $rest = array_slice($temoignages, 1);
                     <div class="featured-aside">
                         <p class="featured-label">En chiffres</p>
                         <div class="featured-stat-item">
-                            <strong>150+</strong>
-                            <span>Personnes accompagnées depuis 2014</span>
+                            <strong>300+</strong>
+                            <span>Personnes accompagnées depuis 25 ans </span>
                         </div>
                         <div class="featured-stat-item">
                             <strong><?= count($temoignages) ?></strong>

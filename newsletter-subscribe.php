@@ -39,7 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-/* CSRF géré par le serveur web */
+/* ── Vérification CSRF ── */
+$csrfToken = $_POST['csrf_token'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? '');
+$sessionToken = $_SESSION[CSRF_TOKEN_NAME] ?? '';
+if ($sessionToken === '' || !hash_equals($sessionToken, $csrfToken)) {
+    nlRespond(false, 'Requête invalide. Veuillez recharger la page et réessayer.');
+}
 
 /* ── Rate-limiting : 5 requêtes / heure par IP ── */
 $ip  = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
@@ -128,85 +133,129 @@ function nlSendWelcome(string $email, string $nom, string $token, bool $reabo): 
         : "Merci de rejoindre la communauté de <strong>$site</strong>. Ensemble, faisons la différence dans la lutte contre le cancer en Haïti !";
 
     $html = <<<HTML
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="fr">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>{$subject}</title></head>
-<body style="margin:0;padding:0;background:#F4F6FB;font-family:Arial,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#F4F6FB;padding:36px 16px;">
-<tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0"
-  style="max-width:600px;width:100%;background:#fff;border-radius:18px;overflow:hidden;
-         box-shadow:0 4px 24px rgba(0,51,153,.10);">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{$subject}</title>
+<!--[if mso]>
+<xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml>
+<![endif]-->
+<style>
+  body,table,td{margin:0;padding:0;}
+  img{display:block;border:0;}
+  table{border-collapse:collapse;}
+  @media only screen and (max-width:620px){
+    .wrap{width:100%!important;}
+    .body-pad{padding:28px 20px!important;}
+    .head-pad{padding:32px 20px 24px!important;}
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#FFF0F7;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 
-  <!-- Header -->
-  <tr><td style="background:linear-gradient(135deg,#003399 0%,#1a56cc 60%,#1a7abf 100%);
-                 padding:36px 40px;text-align:center;">
-    <div style="font-size:36px;">🎗️</div>
-    <div style="font-family:Georgia,serif;font-size:26px;font-weight:700;
-                color:#fff;margin-top:8px;">{$site}</div>
-    <div style="color:rgba(255,255,255,.78);font-size:12px;margin-top:5px;
-                letter-spacing:.5px;text-transform:uppercase;">
-      Groupe de Support Contre le Cancer — Haïti
-    </div>
-  </td></tr>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFF0F7" style="background:#FFF0F7;">
+<tr><td align="center" style="padding:36px 16px;">
 
-  <!-- Body -->
-  <tr><td style="padding:40px 40px 28px;">
-    <h1 style="font-family:Georgia,serif;color:#1A2240;font-size:22px;margin:0 0 16px;">
-      Bonjour, {$prenom} ! 👋
-    </h1>
-    <p style="color:#374151;font-size:15px;line-height:1.8;margin:0 0 26px;">{$intro}</p>
+  <!-- Carte principale -->
+  <table class="wrap" width="600" cellpadding="0" cellspacing="0" border="0"
+    style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(217,79,122,.12);">
 
-    <!-- Ce que vous recevrez -->
-    <div style="background:#F4F6FB;border-radius:12px;padding:22px 24px;
-                margin:0 0 28px;border-left:4px solid #003399;">
-      <p style="color:#003399;font-size:11px;font-weight:700;letter-spacing:2px;
-                text-transform:uppercase;margin:0 0 14px;">📬 Ce que vous recevrez</p>
-      <p style="color:#374151;font-size:14px;line-height:2;margin:0;">
-        ✅ &nbsp;Actualités et articles sur la lutte contre le cancer<br>
-        ✅ &nbsp;Dates de nos événements et campagnes<br>
-        ✅ &nbsp;Conseils de prévention et de dépistage<br>
-        ✅ &nbsp;Témoignages inspirants de notre communauté
-      </p>
-    </div>
+    <!-- HEADER : bgcolor pour Outlook, gradient pour les autres -->
+    <tr>
+      <td class="head-pad" align="center" bgcolor="#D94F7A"
+        style="background:linear-gradient(135deg,#D94F7A 0%,#FF69B4 100%);padding:40px 40px 32px;">
+        <p style="font-size:36px;line-height:1;margin:0;padding:0;">🎗️</p>
+        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:700;
+                   color:#ffffff;margin:10px 0 6px;padding:0;">
+          {$site} — Groupe de Support Contre le Cancer
+        </h1>
+        <p style="color:rgba(255,255,255,.85);font-size:12px;margin:0;padding:0;
+                  letter-spacing:.8px;text-transform:uppercase;">Haïti</p>
+      </td>
+    </tr>
 
-    <!-- CTA -->
-    <div style="text-align:center;margin:0 0 28px;">
-      <a href="{$url}" style="display:inline-block;
-         background:linear-gradient(135deg,#003399,#1a56cc);
-         color:#fff;padding:14px 38px;border-radius:30px;
-         text-decoration:none;font-weight:700;font-size:15px;
-         box-shadow:0 4px 16px rgba(0,51,153,.28);">
-        Visiter notre site
-      </a>
-    </div>
+    <!-- BODY -->
+    <tr>
+      <td class="body-pad" style="padding:40px 40px 32px;">
+        <h2 style="font-family:Georgia,'Times New Roman',serif;color:#1A1A2E;font-size:20px;
+                   font-weight:700;margin:0 0 16px;padding:0;">
+          Bonjour, {$prenom} ! 👋
+        </h2>
+        <p style="color:#374151;font-size:15px;line-height:1.8;margin:0 0 26px;padding:0;">
+          {$intro}
+        </p>
 
-    <p style="color:#6B7280;font-size:13.5px;line-height:1.7;margin:0;
-              border-top:1px solid #E5E9F2;padding-top:20px;">
-      Merci de votre confiance et de votre soutien.<br>
-      Toute l'équipe du <strong>{$site}</strong>
-    </p>
-  </td></tr>
+        <!-- Encadré "Ce que vous recevrez" -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td bgcolor="#FFF0F7"
+              style="background:#FFF0F7;border-radius:10px;padding:20px 22px;border-left:4px solid #D94F7A;">
+              <p style="color:#D94F7A;font-size:11px;font-weight:700;letter-spacing:2px;
+                        text-transform:uppercase;margin:0 0 12px;padding:0;">📬 Ce que vous recevrez</p>
+              <p style="color:#374151;font-size:14px;line-height:2;margin:0;padding:0;">
+                ✅ &nbsp;Actualités et articles sur la lutte contre le cancer<br>
+                ✅ &nbsp;Dates de nos événements et campagnes<br>
+                ✅ &nbsp;Conseils de prévention et de dépistage<br>
+                ✅ &nbsp;Témoignages inspirants de notre communauté
+              </p>
+            </td>
+          </tr>
+        </table>
 
-  <!-- Footer -->
-  <tr><td style="background:#F4F6FB;border-top:1px solid #E5E9F2;
-                 padding:18px 40px;text-align:center;">
-    <p style="color:#9CA3AF;font-size:12px;margin:0 0 6px;">
-      Vous recevez cet email car vous vous êtes abonné(e) sur <strong>{$site}</strong>.
-    </p>
-    <p style="color:#9CA3AF;font-size:12px;margin:0;">
-      <a href="{$unsub}" style="color:#D94F7A;text-decoration:none;font-weight:600;">
-        Se désabonner
-      </a>
-      &nbsp;·&nbsp;
-      <a href="{$url}" style="color:#003399;text-decoration:none;">{$url}</a>
-    </p>
-    <p style="color:#D1D5DB;font-size:11px;margin:8px 0 0;">
-      © {$year} {$site} — Port-au-Prince, Haïti
-    </p>
-  </td></tr>
+        <!-- Bouton CTA : VML pour Outlook, <a> pour les autres -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td align="center" style="padding:28px 0 0;">
+              <!--[if mso]>
+              <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{$url}"
+                style="height:46px;v-text-anchor:middle;width:200px;"
+                arcsize="50%" stroke="f" fillcolor="#D94F7A">
+                <w:anchorlock/>
+                <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:700;">
+                  Visiter notre site
+                </center>
+              </v:roundrect>
+              <![endif]-->
+              <!--[if !mso]><!-->
+              <a href="{$url}"
+                style="display:inline-block;background:#D94F7A;color:#ffffff;padding:14px 38px;
+                       border-radius:30px;text-decoration:none;font-weight:700;font-size:15px;
+                       font-family:Arial,Helvetica,sans-serif;">
+                Visiter notre site
+              </a>
+              <!--<![endif]-->
+            </td>
+          </tr>
+        </table>
 
-</table></td></tr></table>
+        <!-- Signature -->
+        <p style="color:#6B7280;font-size:13.5px;line-height:1.7;margin:28px 0 0;padding-top:20px;border-top:1px solid #F3E5EB;">
+          Merci de votre confiance et de votre soutien.<br>
+          Toute l'équipe du <strong>{$site}</strong>
+        </p>
+      </td>
+    </tr>
+
+    <!-- FOOTER -->
+    <tr>
+      <td bgcolor="#FFF0F7" align="center"
+        style="background:#FFF0F7;border-top:1px solid #F3E5EB;padding:18px 40px;">
+        <p style="color:#9CA3AF;font-size:12px;margin:0 0 6px;padding:0;">
+          Vous recevez cet email car vous vous êtes abonné(e) sur <strong>{$site}</strong>.
+        </p>
+        <p style="color:#9CA3AF;font-size:12px;margin:0;padding:0;">
+          <a href="{$unsub}" style="color:#D94F7A;text-decoration:none;font-weight:600;">Se désabonner</a>
+          &nbsp;·&nbsp; © {$year} {$site} — Port-au-Prince, Haïti
+        </p>
+      </td>
+    </tr>
+
+  </table>
+
+</td></tr></table>
 </body></html>
 HTML;
 

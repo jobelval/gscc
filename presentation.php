@@ -28,6 +28,13 @@ try {
     $valeurs = [];
 }
 
+$stats_bg_image = '';
+try {
+    $stmt = $pdo->prepare("SELECT valeur FROM parametres WHERE cle = 'stats_bg_image'");
+    $stmt->execute();
+    $stats_bg_image = $stmt->fetchColumn() ?: '';
+} catch (Exception $e) { /* paramètre absent, fond bleu par défaut */ }
+
 require_once 'templates/header.php';
 ?>
 
@@ -44,7 +51,9 @@ require_once 'templates/header.php';
 
     /* ── Hero ────────────────────────────────────────────────────── */
     .page-hero {
-        background: linear-gradient(135deg, #003399 0%, #001a66 60%, #1a1a2e 100%);
+        background:
+            linear-gradient(135deg, rgba(0, 10, 40, 0.86) 0%, rgba(0, 26, 102, 0.80) 55%, rgba(26, 26, 46, 0.74) 100%),
+            url('images/site/image6.jpg') center / cover no-repeat;
         color: white;
         padding: 80px 0 70px;
         text-align: center;
@@ -55,11 +64,10 @@ require_once 'templates/header.php';
     .page-hero::before {
         content: '';
         position: absolute;
-        top: -40%;
-        right: -10%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(217,79,122,0.18), transparent 70%);
+        inset: 0;
+        background:
+            radial-gradient(ellipse 55% 55% at 85% 40%, rgba(217, 79, 122, 0.18), transparent),
+            radial-gradient(ellipse 40% 40% at 10% 70%, rgba(255, 255, 255, 0.04), transparent);
         pointer-events: none;
     }
 
@@ -70,8 +78,8 @@ require_once 'templates/header.php';
 
     .page-hero-tag {
         display: inline-block;
-        background: rgba(255,255,255,0.12);
-        border: 1px solid rgba(255,255,255,0.25);
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
         color: #ffffff;
         font-size: 0.78rem;
         font-weight: 700;
@@ -93,7 +101,7 @@ require_once 'templates/header.php';
 
     .page-hero-desc {
         font-size: 1.05rem;
-        color: rgba(255,255,255,0.88);
+        color: rgba(255, 255, 255, 0.88);
         max-width: 640px;
         margin: 0 auto 32px;
         line-height: 1.8;
@@ -108,14 +116,14 @@ require_once 'templates/header.php';
     }
 
     .anchor-nav a {
-        background: rgba(255,255,255,0.12);
+        background: rgba(255, 255, 255, 0.12);
         color: #ffffff;
         padding: 7px 20px;
         border-radius: 30px;
         font-size: 0.9rem;
         font-weight: 500;
         text-decoration: none;
-        border: 1px solid rgba(255,255,255,0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         transition: all 0.2s;
         font-family: 'DM Sans', 'Inter', sans-serif;
     }
@@ -191,11 +199,16 @@ require_once 'templates/header.php';
 
     .mv-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
 
-    .mv-card.mission { border-bottom-color: #003399; }
-    .mv-card.vision  { border-bottom-color: #4CAF50; }
+    .mv-card.mission {
+        border-bottom-color: #003399;
+    }
+
+    .mv-card.vision {
+        border-bottom-color: #003399;
+    }
 
     .mv-icon {
         width: 80px;
@@ -204,19 +217,29 @@ require_once 'templates/header.php';
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 25px;
+        margin: 0 auto 25px;
     }
 
-    .mv-card.mission .mv-icon { background: rgba(0,51,153,0.08);  color: #003399; }
-    .mv-card.vision  .mv-icon { background: rgba(76,175,80,0.08); color: #4CAF50; }
+    .mv-card.mission .mv-icon {
+        background: rgba(0, 51, 153, 0.08);
+        color: #003399;
+    }
 
-    .mv-icon i { font-size: 38px; }
+    .mv-card.vision .mv-icon {
+        background: rgba(0, 51, 153, 0.08);
+        color: #003399;
+    }
+
+    .mv-icon i {
+        font-size: 38px;
+    }
 
     .mv-card h3 {
         font-family: 'Playfair Display', serif;
         font-size: 1.8rem;
         margin-bottom: 18px;
         color: #1E2A35;
+        text-align: center;
     }
 
     .mv-card p {
@@ -251,10 +274,12 @@ require_once 'templates/header.php';
 
     .stat-item {
         padding: 20px;
-        border-right: 1px solid rgba(255,255,255,0.1);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .stat-item:last-child { border-right: none; }
+    .stat-item:last-child {
+        border-right: none;
+    }
 
     .stat-number {
         font-family: 'Playfair Display', serif;
@@ -266,7 +291,7 @@ require_once 'templates/header.php';
 
     .stat-label {
         font-size: 0.95rem;
-        color: rgba(255,255,255,0.88);
+        color: rgba(255, 255, 255, 0.88);
     }
 
     /* ── Timeline ────────────────────────────────────────────────── */
@@ -312,13 +337,13 @@ require_once 'templates/header.php';
         padding: 30px;
         background: white;
         border-radius: 16px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         position: relative;
         transition: box-shadow 0.3s;
     }
 
     .timeline-content:hover {
-        box-shadow: 0 10px 32px rgba(0,0,0,0.13);
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.13);
     }
 
     /* odd = droite : margin-right crée l'espace entre la boite et la barre */
@@ -395,7 +420,7 @@ require_once 'templates/header.php';
 
     .valeur-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
         background: white;
         border-color: #E8ECF0;
     }
@@ -441,13 +466,13 @@ require_once 'templates/header.php';
         background: white;
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         transition: all 0.3s ease;
     }
 
     .team-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.13);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.13);
     }
 
     .team-image {
@@ -534,7 +559,7 @@ require_once 'templates/header.php';
 
         .stat-item {
             border-right: none;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .timeline::before {
@@ -571,6 +596,71 @@ require_once 'templates/header.php';
             padding: 60px 0 50px;
         }
     }
+
+    /* ── Bouton Lire la suite ────────────────────────────────────── */
+    .btn-lire-suite {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: none; border: 1.5px solid #003399;
+        color: #003399; font-size: 0.82rem; font-weight: 600;
+        padding: 6px 18px; border-radius: 20px; cursor: pointer;
+        transition: all 0.22s; margin-top: 4px; margin-bottom: 14px;
+        font-family: 'DM Sans', 'Inter', sans-serif;
+    }
+    .btn-lire-suite:hover {
+        background: #003399; color: white; transform: translateY(-2px);
+    }
+
+    /* ── Modal biographie ────────────────────────────────────────── */
+    .bio-modal-overlay {
+        display: none; position: fixed; inset: 0; z-index: 9000;
+        background: rgba(10, 20, 50, 0.62);
+        backdrop-filter: blur(4px);
+        align-items: center; justify-content: center; padding: 20px;
+    }
+    .bio-modal-overlay.active { display: flex; }
+    .bio-modal {
+        background: white; border-radius: 20px;
+        max-width: 580px; width: 100%; padding: 44px 40px;
+        position: relative; box-shadow: 0 28px 70px rgba(0,0,0,0.22);
+        max-height: 85vh; overflow-y: auto;
+        animation: modalIn .25s ease;
+    }
+    @keyframes modalIn {
+        from { opacity: 0; transform: translateY(20px) scale(.97); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .bio-modal-close {
+        position: absolute; top: 16px; right: 16px;
+        width: 36px; height: 36px; border-radius: 50%;
+        border: none; background: #f3f4f6; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 15px; color: #6B7280; transition: background .2s;
+    }
+    .bio-modal-close:hover { background: #e5e7eb; color: #1f2937; }
+    .bio-modal-avatar {
+        width: 72px; height: 72px; border-radius: 50%;
+        object-fit: cover; border: 3px solid #EEF2FF;
+        margin-bottom: 16px;
+    }
+    .bio-modal-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.45rem; color: #1E2A35; margin-bottom: 4px;
+    }
+    .bio-modal-fonction {
+        color: #003399; font-weight: 600; font-size: 0.82rem;
+        text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 22px;
+    }
+    .bio-modal-divider {
+        height: 3px; width: 50px; border-radius: 2px;
+        background: linear-gradient(90deg, #003399, #D94F7A);
+        margin-bottom: 20px;
+    }
+    .bio-modal-text {
+        color: #374151; line-height: 1.85; font-size: 0.96rem;
+    }
+    @media (max-width: 600px) {
+        .bio-modal { padding: 32px 22px; }
+    }
 </style>
 
 <!-- ══ HERO — id="propos" ══════════════════════════════════════ -->
@@ -582,7 +672,7 @@ require_once 'templates/header.php';
             <p class="page-hero-desc">Le Groupe de Support Contre le Cancer (GSCC) est une organisation à but non lucratif fondée en 1999 par un groupe de dames, qui, ayant vécu le cancer personnellement ou à travers un proche, ont décidé de donner gracieusement de leur temps et de partager leurs expériences avec les personnes atteintes du cancer. Reconnu par le Ministère des Affaires Sociales et du Travail, le GSCC travaille depuis sa fondation à l'amélioration du sort des personnes atteintes de cancer, et à la sensibilisation de la population sur la maladie du cancer, sa prévention et son dépistage.</p>
             <nav class="anchor-nav" aria-label="Navigation rapide">
                 <a href="#mission">Mission</a>
-                <a href="#vision">Vision</a>
+                <a href="#vision">Impact</a>
                 <a href="#historique">Historique</a>
                 <a href="#equipe">Équipe</a>
                 <a href="#valeurs">Valeurs</a>
@@ -599,14 +689,26 @@ require_once 'templates/header.php';
             <div class="mv-card mission" data-aos="fade-right">
                 <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
                 <h3>Notre Mission</h3>
-                <p>Offrir un soutien global aux personnes atteintes de cancer et à leurs familles, en leur fournissant une assistance financière, un accompagnement psychologique et des informations fiables pour améliorer leur qualité de vie et leurs chances de guérison.</p>
+                <p>Réduire la mortalité par cancer en Haïti en:</p>
+                <ul>
+                    <li>Informant et sensibilisant la population sur le cancer.</li>
+                    <li>Éduquant sur la maladie.</li>
+                    <li>Dépistant précocement la maladie.</li>
+                    <li>Accompagnant les patients atteints de cancer en Haïti.</li>
+                    <li>Formant des professionnels engagés dans la lutte contre le cancer.</li>
+                </ul>
                 <blockquote class="mv-quote">"Vivre pour Aimer, Vivre pour Aider, Vivre pour Partager, Vivre Intensément"</blockquote>
             </div>
 
             <div id="vision" class="mv-card vision" data-aos="fade-left">
-                <div class="mv-icon"><i class="fas fa-eye"></i></div>
-                <h3>Notre Vision</h3>
-                <p>Un Haïti où chaque personne atteinte de cancer a accès à des soins de qualité, à un soutien adapté et à l'espoir d'une guérison. Nous travaillons pour un avenir où le cancer ne sera plus un obstacle à la vie, mais un combat que nous pouvons gagner ensemble.</p>
+                <div class="mv-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Notre Impact</h3>
+                <p>Depuis 25 ans, le GSCC agit chaque jour pour sauver des vies, informer la population et accompagner les patients les plus vulnérables à travers tout le pays.</p>
+                <ul>
+                    <li>Plus de 250 000 personnes sensibilisées à la prévention et au dépistage du cancer</li>
+                    <li>Plus de 2 500 patients accompagnés depuis la création du GSCC</li>
+                </ul>
+                <blockquote class="mv-quote">"Grâce à vous, nous continuons à agir. Grâce à vous, nous continuons à sauver."</blockquote>
             </div>
 
         </div>
@@ -614,7 +716,10 @@ require_once 'templates/header.php';
 </section>
 
 <!-- ══ STATISTIQUES ════════════════════════════════════════════ -->
-<section class="stats-section">
+<section class="stats-section"<?php if ($stats_bg_image):
+    $bg_url = htmlspecialchars(rtrim(SITE_URL, '/') . '/' . ltrim($stats_bg_image, '/'));
+    echo ' style="background-image:linear-gradient(rgba(0,26,102,0.76),rgba(0,51,153,0.80)),url(\''.$bg_url.'\');background-size:cover;background-position:center;background-attachment:fixed;"';
+endif; ?>>
     <div class="container">
         <div class="stats-grid">
             <div class="stat-item" data-aos="zoom-in" data-aos-delay="0">
@@ -748,7 +853,7 @@ require_once 'templates/header.php';
                     <div class="team-card" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
                         <div class="team-image">
                             <img src="https://picsum.photos/400/500?random=<?= $m['rand'] ?>"
-                                 alt="<?= htmlspecialchars($m['nom']) ?>">
+                                alt="<?= htmlspecialchars($m['nom']) ?>">
                         </div>
                         <div class="team-info">
                             <h3><?= htmlspecialchars($m['nom']) ?></h3>
@@ -778,14 +883,19 @@ require_once 'templates/header.php';
                                 . '&size=400&background=D94F7A&color=fff&font-size=0.33';
                             ?>
                             <img src="<?= htmlspecialchars($photo_src) ?>"
-                                 alt="<?= htmlspecialchars($membre['prenom'] . ' ' . $membre['nom']) ?>"
-                                 onerror="this.onerror=null;this.src='<?= htmlspecialchars($fallback) ?>';">
+                                alt="<?= htmlspecialchars($membre['prenom'] . ' ' . $membre['nom']) ?>"
+                                onerror="this.onerror=null;this.src='<?= htmlspecialchars($fallback) ?>';">
                         </div>
                         <div class="team-info">
                             <h3><?= e($membre['prenom'] . ' ' . $membre['nom']) ?></h3>
                             <div class="fonction"><?= e($membre['fonction']) ?></div>
                             <?php if (!empty($membre['bio'])): ?>
-                                <p class="bio"><?= e($membre['bio']) ?></p>
+                                <p class="bio"><?= e(mb_substr($membre['bio'], 0, 140)) ?><?= mb_strlen($membre['bio']) > 140 ? '…' : '' ?></p>
+                            <?php endif; ?>
+                            <?php if (!empty($membre['bio_complete'] ?? '')): ?>
+                                <button class="btn-lire-suite" onclick="openBioModal(<?= $i ?>)">
+                                    Lire la suite <i class="fas fa-arrow-right" style="font-size:.75rem;"></i>
+                                </button>
                             <?php endif; ?>
                             <div class="team-social">
                                 <?php if (!empty($membre['email'])): ?>
@@ -800,9 +910,25 @@ require_once 'templates/header.php';
                                         ? $membre['reseaux_sociaux']
                                         : json_decode($membre['reseaux_sociaux'], true) ?? [];
                                 }
-                                if (!empty($reseaux['linkedin'])): ?>
+                                ?>
+                                <?php if (!empty($reseaux['facebook'])): ?>
+                                    <a href="<?= e($reseaux['facebook']) ?>" target="_blank" rel="noopener" aria-label="Facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (!empty($reseaux['linkedin'])): ?>
                                     <a href="<?= e($reseaux['linkedin']) ?>" target="_blank" rel="noopener" aria-label="LinkedIn">
                                         <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (!empty($reseaux['twitter'])): ?>
+                                    <a href="<?= e($reseaux['twitter']) ?>" target="_blank" rel="noopener" aria-label="Twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (!empty($reseaux['instagram'])): ?>
+                                    <a href="<?= e($reseaux['instagram']) ?>" target="_blank" rel="noopener" aria-label="Instagram">
+                                        <i class="fab fa-instagram"></i>
                                     </a>
                                 <?php endif; ?>
                             </div>
@@ -813,5 +939,54 @@ require_once 'templates/header.php';
         </div>
     </div>
 </section>
+
+<!-- ══ MODAL BIOGRAPHIE ═══════════════════════════════════════ -->
+<div class="bio-modal-overlay" id="bioModal" onclick="if(event.target===this)closeBioModal()">
+    <div class="bio-modal" role="dialog" aria-modal="true">
+        <button class="bio-modal-close" onclick="closeBioModal()" aria-label="Fermer">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="bioModalAvatar" class="bio-modal-avatar" src="" alt="">
+        <div class="bio-modal-name"     id="bioModalName"></div>
+        <div class="bio-modal-fonction" id="bioModalFonction"></div>
+        <div class="bio-modal-divider"></div>
+        <div class="bio-modal-text"     id="bioModalText"></div>
+    </div>
+</div>
+
+<?php if (!empty($equipe)): ?>
+<script>
+const bioData = <?= json_encode(array_values(array_map(function($m) {
+    $photo = !empty($m['photo'])
+        ? rtrim(SITE_URL, '/') . '/' . ltrim($m['photo'], '/')
+        : 'https://ui-avatars.com/api/?name=' . urlencode(($m['prenom'] ?? '') . '+' . ($m['nom'] ?? '')) . '&size=200&background=D94F7A&color=fff&font-size=0.33';
+    return [
+        'nom'          => ($m['prenom'] ?? '') . ' ' . ($m['nom'] ?? ''),
+        'fonction'     => $m['fonction'] ?? '',
+        'photo'        => $photo,
+        'bio_complete' => $m['bio_complete'] ?? '',
+    ];
+}, $equipe)), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+
+function openBioModal(i) {
+    const d = bioData[i];
+    document.getElementById('bioModalName').textContent     = d.nom;
+    document.getElementById('bioModalFonction').textContent = d.fonction;
+    document.getElementById('bioModalAvatar').src           = d.photo;
+    document.getElementById('bioModalAvatar').alt           = d.nom;
+    document.getElementById('bioModalText').innerHTML       =
+        d.bio_complete.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+    document.getElementById('bioModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeBioModal() {
+    document.getElementById('bioModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeBioModal();
+});
+</script>
+<?php endif; ?>
 
 <?php require_once 'templates/footer.php'; ?>

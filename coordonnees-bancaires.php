@@ -325,7 +325,7 @@ table.bank-table td.is-email {
             </p>
             <div class="bank-images-grid">
                 <div class="bank-image-card">
-                    <img src="images/comptes-gourdes.jpg"
+                    <img src="images/site/comptes-gourdes.jpg"
                          alt="Comptes bancaires en Gourdes — GSCC"
                          class="bank-image">
                     <div class="bank-image-caption">
@@ -334,7 +334,7 @@ table.bank-table td.is-email {
                     </div>
                 </div>
                 <div class="bank-image-card">
-                    <img src="images/comptes-dollars.jpg"
+                    <img src="images/site/comptes-dollars.jpg"
                          alt="Comptes bancaires en Dollars US — GSCC"
                          class="bank-image">
                     <div class="bank-image-caption">

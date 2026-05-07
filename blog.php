@@ -179,6 +179,7 @@ try {
             font-weight: 700;
             margin-bottom: 14px;
             letter-spacing: -0.5px;
+            color: white;
         }
 
         .page-header p {

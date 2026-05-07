@@ -475,6 +475,16 @@ section { padding: var(--sp-xl) 0; }
 }
 .featured-cta:hover { background: var(--rose-dark); border-color: var(--rose-dark); transform: scale(1.04) translateY(-6px); }
 
+.featured-cta-blue {
+    background: var(--blue);
+    border-color: var(--blue);
+    transform: scale(1.04);
+}
+.featured-cta-blue:hover { background: var(--blue-dark); border-color: var(--blue-dark); transform: scale(1.04) translateY(-6px); box-shadow: 0 12px 32px rgba(0,51,153,0.25); }
+.cta-card.featured-cta-blue h3 { color: white; }
+.cta-card.featured-cta-blue p { color: rgba(255,255,255,0.92); }
+.featured-cta-blue .cta-icon-wrap { background: rgba(255,255,255,0.22); color: white; }
+
 .cta-icon-wrap {
     width: 64px; height: 64px;
     background: #FCE8EF;
