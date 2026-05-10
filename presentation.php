@@ -17,9 +17,9 @@ try {
     if (empty($valeurs)) {
         $valeurs = [
             ['titre' => 'Confiance',       'description' => 'Nous construisons des relations basées sur la transparence et l\'intégrité avec nos bénéficiaires, partenaires et donateurs.', 'icone' => 'fa-heart',              'couleur' => '#003399'],
-            ['titre' => 'Espoir',          'description' => 'Nous apportons de l\'espoir à travers des programmes de soutien et d\'accompagnement personnalisés.',                          'icone' => 'fa-dove',               'couleur' => '#D94F7A'],
-            ['titre' => 'Solidarité',      'description' => 'Ensemble, nous sommes plus forts. La solidarité est au cœur de notre action et de notre engagement.',                          'icone' => 'fa-hand-holding-heart', 'couleur' => '#4CAF50'],
-            ['titre' => 'Vie et guérison', 'description' => 'Nous œuvrons sans relâche pour offrir une meilleure qualité de vie et favoriser la guérison.',                                 'icone' => 'fa-leaf',               'couleur' => '#C9933A'],
+            ['titre' => 'Espoir',          'description' => 'Nous apportons de l\'espoir à travers des programmes de soutien et d\'accompagnement personnalisés.',                          'icone' => 'fa-dove',               'couleur' => '#C8375A'],
+            ['titre' => 'Solidarité',      'description' => 'Ensemble, nous sommes plus forts. La solidarité est au cœur de notre action et de notre engagement.',                          'icone' => 'fa-hand-holding-heart', 'couleur' => '#2E7D32'],
+            ['titre' => 'Vie et guérison', 'description' => 'Nous œuvrons sans relâche pour offrir une meilleure qualité de vie et favoriser la guérison.',                                 'icone' => 'fa-leaf',               'couleur' => '#E8A020'],
         ];
     }
 } catch (PDOException $e) {
@@ -33,655 +33,607 @@ try {
     $stmt = $pdo->prepare("SELECT valeur FROM parametres WHERE cle = 'stats_bg_image'");
     $stmt->execute();
     $stats_bg_image = $stmt->fetchColumn() ?: '';
-} catch (Exception $e) { /* paramètre absent, fond bleu par défaut */ }
+} catch (Exception $e) {}
 
 require_once 'templates/header.php';
 ?>
 
 <style>
-    /* ── Offset ancres : compense header fixe + top-bar ─────────── */
-    #propos,
-    #mission,
-    #vision,
-    #historique,
-    #valeurs,
-    #equipe {
-        scroll-margin-top: 180px;
+    :root {
+        --blue:      #003399;
+        --blue-dark: #001f6b;
+        --blue-mid:  #1a56cc;
+        --blue-lite: #EBF0FF;
+        --rose:      #C8375A;
+        --rose-lite: #FDF0F3;
+        --gold:      #E8A020;
+        --sage:      #2E7D32;
+        --text:      #0D1117;
+        --text-2:    #1F2937;
+        --muted:     #6B7280;
+        --border:    #E5E7EB;
+        --bg:        #F8FAFF;
+        --white:     #FFFFFF;
     }
 
-    /* ── Hero ────────────────────────────────────────────────────── */
+    /* ── Offset ancres ── */
+    #propos, #mission, #vision, #historique, #valeurs, #equipe {
+        scroll-margin-top: 100px;
+    }
+
+    /* ── HERO ── */
     .page-hero {
         background:
-            linear-gradient(135deg, rgba(0, 10, 40, 0.86) 0%, rgba(0, 26, 102, 0.80) 55%, rgba(26, 26, 46, 0.74) 100%),
+            linear-gradient(140deg, rgba(0,10,40,.88) 0%, rgba(0,26,102,.82) 55%, rgba(21,101,192,.76) 100%),
             url('images/site/image6.jpg') center / cover no-repeat;
-        color: white;
-        padding: 80px 0 70px;
+        padding: 90px 0 130px;
         text-align: center;
         position: relative;
         overflow: hidden;
     }
-
     .page-hero::before {
         content: '';
-        position: absolute;
-        inset: 0;
-        background:
-            radial-gradient(ellipse 55% 55% at 85% 40%, rgba(217, 79, 122, 0.18), transparent),
-            radial-gradient(ellipse 40% 40% at 10% 70%, rgba(255, 255, 255, 0.04), transparent);
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse 55% 60% at 85% 40%, rgba(200,55,90,.15), transparent);
         pointer-events: none;
     }
+    .page-hero .container { position: relative; z-index: 2; }
 
-    .page-hero-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .page-hero-tag {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        color: #ffffff;
-        font-size: 0.78rem;
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,.15);
+        border: 1px solid rgba(255,255,255,.25);
+        color: #fff;
+        font-size: 12px;
         font-weight: 700;
-        letter-spacing: 2px;
+        letter-spacing: 1.2px;
         text-transform: uppercase;
-        padding: 5px 16px;
-        border-radius: 30px;
-        margin-bottom: 18px;
-        font-family: 'DM Sans', 'Inter', sans-serif;
+        padding: 7px 20px;
+        border-radius: 100px;
+        margin-bottom: 24px;
         text-decoration: none;
     }
-
     .page-hero h1 {
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(2rem, 5vw, 3.2rem);
-        color: #ffffff;
-        margin-bottom: 16px;
+        font-size: clamp(2.4rem, 5vw, 3.8rem);
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.1;
+        margin-bottom: 18px;
     }
-
-    .page-hero-desc {
-        font-size: 1.05rem;
-        color: rgba(255, 255, 255, 0.88);
-        max-width: 640px;
-        margin: 0 auto 32px;
-        line-height: 1.8;
+    .page-hero h1 span { color: #F9A8C4; }
+    .hero-desc {
+        font-size: 1.02rem;
+        color: rgba(255,255,255,.88);
+        max-width: 660px;
+        margin: 0 auto 36px;
+        line-height: 1.85;
     }
-
-    /* ── Navigation ancres dans le hero ─────────────────────────── */
     .anchor-nav {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 10px;
     }
-
     .anchor-nav a {
-        background: rgba(255, 255, 255, 0.12);
-        color: #ffffff;
-        padding: 7px 20px;
-        border-radius: 30px;
-        font-size: 0.9rem;
-        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255,255,255,.12);
+        color: rgba(255,255,255,.92);
+        padding: 8px 20px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 600;
         text-decoration: none;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.2s;
-        font-family: 'DM Sans', 'Inter', sans-serif;
+        border: 1px solid rgba(255,255,255,.2);
+        transition: background .2s, transform .2s, border-color .2s;
     }
-
     .anchor-nav a:hover {
-        background: #D94F7A;
-        border-color: #D94F7A;
-        color: #ffffff;
+        background: var(--rose);
+        border-color: var(--rose);
+        color: #fff;
         transform: translateY(-2px);
     }
-
-    /* ── En-têtes de section ─────────────────────────────────────── */
-    .pres-section-header {
-        text-align: center;
-        margin-bottom: 60px;
+    .hero-wave {
+        position: absolute;
+        bottom: -1px; left: 0;
+        width: 100%; line-height: 0; z-index: 1;
     }
 
-    .pres-section-tag {
-        display: inline-block;
-        background: #EEF2FF;
-        color: #003399;
-        font-size: 0.75rem;
+    /* ── SECTION HEADER ── */
+    .sec-header {
+        text-align: center;
+        margin-bottom: 56px;
+    }
+    .sec-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--blue-lite);
+        color: var(--blue);
+        font-size: 11px;
         font-weight: 700;
-        letter-spacing: 2px;
+        letter-spacing: 1.8px;
         text-transform: uppercase;
         padding: 5px 14px;
-        border-radius: 30px;
+        border-radius: 100px;
         margin-bottom: 12px;
-        font-family: 'DM Sans', 'Inter', sans-serif;
     }
-
-    .pres-section-header h2 {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.2rem;
-        color: #003399;
-        margin-bottom: 14px;
+    .sec-header h2 {
+        font-size: clamp(1.7rem, 3vw, 2.4rem);
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 10px;
     }
-
-    .pres-divider {
-        width: 60px;
-        height: 4px;
-        background: linear-gradient(90deg, #003399, #D94F7A);
-        border-radius: 2px;
+    .sec-divider {
+        width: 52px; height: 4px;
+        background: linear-gradient(90deg, var(--rose), var(--blue-mid));
+        border-radius: 4px;
         margin: 0 auto 16px;
     }
-
-    .pres-section-sub {
-        color: #4B5563;
-        font-size: 1.05rem;
-        max-width: 500px;
+    .sec-sub {
+        font-size: 1rem;
+        color: var(--muted);
+        max-width: 480px;
         margin: 0 auto;
+        line-height: 1.7;
     }
 
-    /* ── Mission & Vision ────────────────────────────────────────── */
+    /* ── MISSION & VISION ── */
     .mission-vision {
-        background: white;
+        background: var(--white);
         padding: 80px 0;
     }
-
     .mv-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 40px;
+        gap: 28px;
     }
-
     .mv-card {
-        padding: 40px;
-        border-radius: 20px;
-        background: #f8f9fa;
-        transition: all 0.3s ease;
-        border-bottom: 4px solid transparent;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 44px 40px;
+        transition: transform .3s, box-shadow .3s;
+        position: relative;
+        overflow: hidden;
     }
-
+    .mv-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; bottom: 0;
+        width: 5px;
+        border-radius: 22px 0 0 22px;
+    }
+    .mv-card.mission::before { background: var(--blue); }
+    .mv-card.vision::before  { background: var(--rose); }
     .mv-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        transform: translateY(-6px);
+        box-shadow: 0 16px 48px rgba(0,0,0,.09);
+        background: var(--white);
     }
-
-    .mv-card.mission {
-        border-bottom-color: #003399;
-    }
-
-    .mv-card.vision {
-        border-bottom-color: #003399;
-    }
-
     .mv-icon {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 25px;
+        width: 68px; height: 68px;
+        border-radius: 18px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 28px;
+        margin-bottom: 24px;
     }
-
-    .mv-card.mission .mv-icon {
-        background: rgba(0, 51, 153, 0.08);
-        color: #003399;
-    }
-
-    .mv-card.vision .mv-icon {
-        background: rgba(0, 51, 153, 0.08);
-        color: #003399;
-    }
-
-    .mv-icon i {
-        font-size: 38px;
-    }
-
+    .mv-card.mission .mv-icon { background: var(--blue-lite); color: var(--blue); }
+    .mv-card.vision  .mv-icon { background: var(--rose-lite); color: var(--rose); }
     .mv-card h3 {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.8rem;
-        margin-bottom: 18px;
-        color: #1E2A35;
-        text-align: center;
-    }
-
-    .mv-card p {
-        color: #374151;
-        line-height: 1.8;
-        font-size: 1rem;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--text);
         margin-bottom: 16px;
     }
-
+    .mv-card p, .mv-card li {
+        color: var(--text-2);
+        line-height: 1.8;
+        font-size: .97rem;
+        margin-bottom: 10px;
+    }
+    .mv-card ul { padding-left: 20px; margin-bottom: 16px; }
+    .mv-card li { margin-bottom: 6px; }
     .mv-quote {
         font-style: italic;
-        color: #003399;
-        font-size: 1rem;
-        border-left: 3px solid #003399;
+        color: var(--blue);
+        font-size: .96rem;
+        border-left: 3px solid var(--blue-lite);
         padding-left: 14px;
-        margin: 16px 0 0;
+        margin-top: 16px;
+        line-height: 1.7;
     }
+    .mv-card.vision .mv-quote { color: var(--rose); border-left-color: var(--rose-lite); }
 
-    /* ── Statistiques ────────────────────────────────────────────── */
+    /* ── STATS ── */
     .stats-section {
-        background: linear-gradient(135deg, #003399 0%, #001a66 100%);
-        padding: 60px 0;
-        color: white;
+        background: linear-gradient(140deg, var(--blue-dark) 0%, var(--blue) 55%, #1565C0 100%);
+        padding: 70px 0;
+        position: relative;
+        overflow: hidden;
     }
-
+    .stats-section::before, .stats-section::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,.05);
+        pointer-events: none;
+    }
+    .stats-section::before { width: 400px; height: 400px; top: -150px; right: -80px; }
+    .stats-section::after  { width: 280px; height: 280px; bottom: -100px; left: -60px; }
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        text-align: center;
+        gap: 0;
+        position: relative; z-index: 2;
     }
-
     .stat-item {
-        padding: 20px;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 28px 20px;
+        text-align: center;
+        border-right: 1px solid rgba(255,255,255,.12);
     }
-
-    .stat-item:last-child {
-        border-right: none;
-    }
-
+    .stat-item:last-child { border-right: none; }
     .stat-number {
-        font-family: 'Playfair Display', serif;
         font-size: 3rem;
-        font-weight: 700;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1;
         margin-bottom: 8px;
-        color: white;
     }
-
     .stat-label {
-        font-size: 0.95rem;
-        color: rgba(255, 255, 255, 0.88);
+        font-size: 13px;
+        color: rgba(255,255,255,.78);
+        font-weight: 500;
     }
 
-    /* ── Timeline ────────────────────────────────────────────────── */
+    /* ── TIMELINE ── */
     .historique {
         padding: 80px 0;
-        background: #f8f9fa;
+        background: var(--bg);
     }
-
     .timeline {
         position: relative;
-        max-width: 1000px;
+        max-width: 960px;
         margin: 0 auto;
-        padding: 20px 0;
+        padding: 10px 0;
     }
-
-    /* Barre verticale centrale */
     .timeline::before {
         content: '';
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        width: 4px;
+        width: 3px;
         height: 100%;
-        background: linear-gradient(180deg, #003399, #D94F7A, #4CAF50);
-        border-radius: 2px;
+        background: linear-gradient(180deg, var(--blue), var(--rose), var(--sage));
+        border-radius: 3px;
     }
-
     .timeline-item {
         position: relative;
-        margin-bottom: 50px;
+        margin-bottom: 48px;
         width: 100%;
         display: flex;
         justify-content: flex-end;
     }
+    .timeline-item:nth-child(even) { justify-content: flex-start; }
 
-    .timeline-item:nth-child(even) {
-        justify-content: flex-start;
-    }
-
-    /* Boites : width 38% + marges pour laisser espace autour de la barre */
     .timeline-content {
-        width: 38%;
-        padding: 30px;
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        width: 40%;
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px 30px;
+        box-shadow: 0 2px 12px rgba(0,0,0,.06);
+        transition: transform .3s, box-shadow .3s;
         position: relative;
-        transition: box-shadow 0.3s;
     }
-
+    .timeline-item:nth-child(odd)  .timeline-content { margin-right: 7%; }
+    .timeline-item:nth-child(even) .timeline-content { margin-left: 7%; }
     .timeline-content:hover {
-        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.13);
-    }
-
-    /* odd = droite : margin-right crée l'espace entre la boite et la barre */
-    .timeline-item:nth-child(odd) .timeline-content {
-        margin-right: 7%;
-    }
-
-    /* even = gauche : margin-left crée l'espace entre la barre et la boite */
-    .timeline-item:nth-child(even) .timeline-content {
-        margin-left: 7%;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0,0,0,.1);
     }
 
     .timeline-dot {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        width: 20px;
-        height: 20px;
-        background: white;
-        border: 4px solid #003399;
+        width: 18px; height: 18px;
+        background: var(--white);
+        border: 4px solid var(--blue);
         border-radius: 50%;
-        top: 30px;
+        top: 28px;
         z-index: 1;
+        transition: transform .3s, border-color .3s;
     }
+    .timeline-item:nth-child(even) .timeline-dot { border-color: var(--rose); }
+    .timeline-item:hover .timeline-dot { transform: translateX(-50%) scale(1.3); }
 
     .timeline-year {
-        position: absolute;
-        top: -14px;
-        left: 24px;
-        background: #003399;
-        color: white;
-        padding: 4px 18px;
-        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        background: var(--blue);
+        color: #fff;
+        font-size: 12px;
         font-weight: 700;
-        font-size: 13px;
-        font-family: 'DM Sans', 'Inter', sans-serif;
+        padding: 4px 16px;
+        border-radius: 100px;
+        margin-bottom: 12px;
     }
+    .timeline-item:nth-child(even) .timeline-year { background: var(--rose); }
 
     .timeline-content h3 {
-        font-family: 'Playfair Display', serif;
-        margin-top: 18px;
-        margin-bottom: 10px;
-        color: #1E2A35;
-        font-size: 1.15rem;
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 8px;
     }
-
     .timeline-content p {
-        color: #374151;
+        color: var(--muted);
         line-height: 1.7;
-        font-size: 0.95rem;
+        font-size: .93rem;
         margin: 0;
     }
 
-    /* ── Valeurs ─────────────────────────────────────────────────── */
+    /* ── VALEURS ── */
     .valeurs {
         padding: 80px 0;
-        background: white;
+        background: var(--white);
     }
-
     .valeurs-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 28px;
+        gap: 24px;
     }
-
     .valeur-card {
-        background: #f8f9fa;
-        padding: 40px 28px;
-        border-radius: 16px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 38px 28px;
         text-align: center;
-        transition: all 0.3s ease;
-        border: 1px solid transparent;
+        transition: transform .3s, box-shadow .3s, background .3s;
+        position: relative;
+        overflow: hidden;
     }
-
+    .valeur-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 4px;
+        opacity: 0;
+        transition: opacity .3s;
+        border-radius: 0 0 20px 20px;
+    }
     .valeur-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
-        background: white;
-        border-color: #E8ECF0;
+        box-shadow: 0 16px 40px rgba(0,0,0,.09);
+        background: var(--white);
     }
-
+    .valeur-card:hover::after { opacity: 1; }
     .valeur-icon {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 22px;
-        font-size: 2rem;
+        width: 72px; height: 72px;
+        border-radius: 20px;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 28px;
+        transition: transform .3s;
     }
-
+    .valeur-card:hover .valeur-icon { transform: scale(1.1); }
     .valeur-card h3 {
-        font-family: 'Playfair Display', serif;
-        color: #1E2A35;
-        margin-bottom: 12px;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 10px;
     }
-
     .valeur-card p {
-        color: #374151;
+        color: var(--muted);
         line-height: 1.7;
-        margin: 0;
-        font-size: 0.95rem;
+        font-size: .93rem;
     }
 
-    /* ── Équipe ──────────────────────────────────────────────────── */
+    /* ── ÉQUIPE ── */
     .equipe {
         padding: 80px 0;
-        background: #f8f9fa;
+        background: var(--bg);
     }
-
     .team-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 28px;
+        gap: 24px;
     }
-
     .team-card {
-        background: white;
-        border-radius: 16px;
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 22px;
         overflow: hidden;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
+        transition: transform .3s, box-shadow .3s;
     }
-
     .team-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.13);
+        box-shadow: 0 20px 48px rgba(0,0,0,.11);
     }
-
     .team-image {
-        height: 300px;
+        height: 280px;
         overflow: hidden;
+        background: var(--bg);
     }
-
     .team-image img {
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: transform .5s;
     }
-
-    .team-card:hover .team-image img {
-        transform: scale(1.07);
-    }
-
-    .team-info {
-        padding: 24px;
-        text-align: center;
-    }
-
+    .team-card:hover .team-image img { transform: scale(1.07); }
+    .team-info { padding: 24px 24px 22px; }
     .team-info h3 {
-        font-family: 'Playfair Display', serif;
-        color: #1E2A35;
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--text);
         margin-bottom: 4px;
-        font-size: 1.15rem;
     }
-
-    .team-info .fonction {
-        color: #003399;
-        font-weight: 600;
-        margin-bottom: 12px;
-        font-size: 0.85rem;
+    .team-role {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--blue);
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: .8px;
+        margin-bottom: 12px;
     }
-
-    .team-info .bio {
-        color: #374151;
-        font-size: 0.92rem;
-        line-height: 1.6;
-        margin-bottom: 18px;
+    .team-bio {
+        font-size: .9rem;
+        color: var(--muted);
+        line-height: 1.65;
+        margin-bottom: 16px;
     }
-
     .team-social {
         display: flex;
-        justify-content: center;
-        gap: 10px;
+        gap: 8px;
     }
-
     .team-social a {
-        width: 36px;
-        height: 36px;
+        width: 34px; height: 34px;
         border-radius: 50%;
-        background: #EEF2FF;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #003399;
-        font-size: 0.85rem;
+        background: var(--blue-lite);
+        display: flex; align-items: center; justify-content: center;
+        color: var(--blue);
+        font-size: 13px;
         text-decoration: none;
-        transition: all 0.25s;
+        transition: background .25s, color .25s, transform .25s;
     }
-
     .team-social a:hover {
-        background: #003399;
-        color: white;
+        background: var(--blue);
+        color: #fff;
         transform: translateY(-3px);
     }
 
-    /* ── Responsive ──────────────────────────────────────────────── */
-    @media (max-width: 900px) {
-        .mv-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .stat-item {
-            border-right: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .timeline::before {
-            left: 28px;
-        }
-
-        .timeline-item,
-        .timeline-item:nth-child(even) {
-            justify-content: flex-end;
-        }
-
-        .timeline-content {
-            width: 85%;
-            margin-left: 55px !important;
-            margin-right: 0 !important;
-        }
-
-        .timeline-dot {
-            left: 28px;
-        }
-
-        .anchor-nav a {
-            font-size: 0.82rem;
-            padding: 6px 14px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .page-hero {
-            padding: 60px 0 50px;
-        }
-    }
-
-    /* ── Bouton Lire la suite ────────────────────────────────────── */
+    /* ── BOUTON LIRE LA SUITE ── */
     .btn-lire-suite {
         display: inline-flex; align-items: center; gap: 6px;
-        background: none; border: 1.5px solid #003399;
-        color: #003399; font-size: 0.82rem; font-weight: 600;
-        padding: 6px 18px; border-radius: 20px; cursor: pointer;
-        transition: all 0.22s; margin-top: 4px; margin-bottom: 14px;
-        font-family: 'DM Sans', 'Inter', sans-serif;
+        background: none;
+        border: 1.5px solid var(--blue);
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 100px;
+        cursor: pointer;
+        transition: background .2s, color .2s, transform .2s;
+        margin-top: 4px; margin-bottom: 14px;
+        font-family: 'Inter', sans-serif;
     }
     .btn-lire-suite:hover {
-        background: #003399; color: white; transform: translateY(-2px);
+        background: var(--blue); color: #fff; transform: translateY(-2px);
     }
 
-    /* ── Modal biographie ────────────────────────────────────────── */
+    /* ── MODAL BIOGRAPHIE ── */
     .bio-modal-overlay {
         display: none; position: fixed; inset: 0; z-index: 9000;
-        background: rgba(10, 20, 50, 0.62);
+        background: rgba(0,20,60,.6);
         backdrop-filter: blur(4px);
         align-items: center; justify-content: center; padding: 20px;
     }
     .bio-modal-overlay.active { display: flex; }
     .bio-modal {
-        background: white; border-radius: 20px;
-        max-width: 580px; width: 100%; padding: 44px 40px;
-        position: relative; box-shadow: 0 28px 70px rgba(0,0,0,0.22);
+        background: var(--white);
+        border-radius: 24px;
+        max-width: 560px; width: 100%;
+        padding: 44px 40px;
+        position: relative;
+        box-shadow: 0 28px 70px rgba(0,0,0,.22);
         max-height: 85vh; overflow-y: auto;
         animation: modalIn .25s ease;
     }
     @keyframes modalIn {
-        from { opacity: 0; transform: translateY(20px) scale(.97); }
+        from { opacity: 0; transform: translateY(16px) scale(.97); }
         to   { opacity: 1; transform: translateY(0) scale(1); }
     }
     .bio-modal-close {
         position: absolute; top: 16px; right: 16px;
         width: 36px; height: 36px; border-radius: 50%;
-        border: none; background: #f3f4f6; cursor: pointer;
+        border: none; background: var(--bg); cursor: pointer;
         display: flex; align-items: center; justify-content: center;
-        font-size: 15px; color: #6B7280; transition: background .2s;
+        font-size: 14px; color: var(--muted); transition: background .2s;
     }
-    .bio-modal-close:hover { background: #e5e7eb; color: #1f2937; }
+    .bio-modal-close:hover { background: var(--border); color: var(--text); }
     .bio-modal-avatar {
-        width: 72px; height: 72px; border-radius: 50%;
-        object-fit: cover; border: 3px solid #EEF2FF;
-        margin-bottom: 16px;
+        width: 70px; height: 70px; border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--blue-lite);
+        margin-bottom: 14px;
     }
     .bio-modal-name {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.45rem; color: #1E2A35; margin-bottom: 4px;
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 3px;
     }
     .bio-modal-fonction {
-        color: #003399; font-weight: 600; font-size: 0.82rem;
-        text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 22px;
+        color: var(--blue);
+        font-weight: 700;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .8px;
+        margin-bottom: 18px;
     }
     .bio-modal-divider {
-        height: 3px; width: 50px; border-radius: 2px;
-        background: linear-gradient(90deg, #003399, #D94F7A);
-        margin-bottom: 20px;
+        height: 4px; width: 48px; border-radius: 4px;
+        background: linear-gradient(90deg, var(--rose), var(--blue-mid));
+        margin-bottom: 18px;
     }
-    .bio-modal-text {
-        color: #374151; line-height: 1.85; font-size: 0.96rem;
+    .bio-modal-text { color: var(--text-2); line-height: 1.85; font-size: .96rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+        .mv-grid    { grid-template-columns: 1fr; }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .stat-item  { border-right: none; border-bottom: 1px solid rgba(255,255,255,.12); }
+        .stat-item:nth-child(2n) { border-bottom: none; }
     }
-    @media (max-width: 600px) {
-        .bio-modal { padding: 32px 22px; }
+    @media (max-width: 768px) {
+        .timeline::before { left: 24px; }
+        .timeline-item,
+        .timeline-item:nth-child(even) { justify-content: flex-end; }
+        .timeline-content {
+            width: 82%;
+            margin-left: 52px !important;
+            margin-right: 0 !important;
+        }
+        .timeline-dot { left: 24px; }
+    }
+    @media (max-width: 560px) {
+        .stats-grid { grid-template-columns: 1fr 1fr; }
+        .bio-modal  { padding: 32px 20px; }
     }
 </style>
 
-<!-- ══ HERO — id="propos" ══════════════════════════════════════ -->
-<div class="page-hero" id="propos">
+<!-- ── HERO ── -->
+<section class="page-hero" id="propos">
     <div class="container">
-        <div class="page-hero-content" data-aos="fade-up">
-            <a href="#propos" class="page-hero-tag">À propos du GSCC</a>
-            <h1>Qui sommes-nous&nbsp;?</h1>
-            <p class="page-hero-desc">Le Groupe de Support Contre le Cancer (GSCC) est une organisation à but non lucratif fondée en 1999 par un groupe de dames, qui, ayant vécu le cancer personnellement ou à travers un proche, ont décidé de donner gracieusement de leur temps et de partager leurs expériences avec les personnes atteintes du cancer. Reconnu par le Ministère des Affaires Sociales et du Travail, le GSCC travaille depuis sa fondation à l'amélioration du sort des personnes atteintes de cancer, et à la sensibilisation de la population sur la maladie du cancer, sa prévention et son dépistage.</p>
+        <div data-aos="fade-up">
+            <a href="#propos" class="hero-badge">
+                <i class="fas fa-info-circle"></i> À propos du GSCC
+            </a>
+            <h1>Qui sommes-<span>nous</span>&nbsp;?</h1>
+            <p class="hero-desc">
+                Le Groupe de Support Contre le Cancer (GSCC) est une organisation à but non lucratif fondée en 1999 par un groupe de dames, qui, ayant vécu le cancer personnellement ou à travers un proche, ont décidé de donner gracieusement de leur temps et de partager leurs expériences. Reconnu par le Ministère des Affaires Sociales et du Travail, le GSCC travaille depuis sa fondation à l'amélioration du sort des personnes atteintes de cancer, à la sensibilisation de la population, à sa prévention et à son dépistage.
+            </p>
             <nav class="anchor-nav" aria-label="Navigation rapide">
-                <a href="#mission">Mission</a>
-                <a href="#vision">Impact</a>
-                <a href="#historique">Historique</a>
-                <a href="#equipe">Équipe</a>
-                <a href="#valeurs">Valeurs</a>
+                <a href="#mission"><i class="fas fa-bullseye"></i> Mission</a>
+                <a href="#vision"><i class="fas fa-chart-line"></i> Impact</a>
+                <a href="#historique"><i class="fas fa-clock-rotate-left"></i> Historique</a>
+                <a href="#equipe"><i class="fas fa-users"></i> Équipe</a>
+                <a href="#valeurs"><i class="fas fa-heart"></i> Valeurs</a>
             </nav>
         </div>
     </div>
-</div>
+    <div class="hero-wave">
+        <svg viewBox="0 0 1440 64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,32 C360,64 1080,0 1440,32 L1440,64 L0,64 Z" fill="#FFFFFF"/>
+        </svg>
+    </div>
+</section>
 
-<!-- ══ MISSION — id="mission" ══════════════════════════════════ -->
+<!-- ── MISSION & VISION ── -->
 <section id="mission" class="mission-vision">
     <div class="container">
         <div class="mv-grid">
@@ -689,7 +641,7 @@ require_once 'templates/header.php';
             <div class="mv-card mission" data-aos="fade-right">
                 <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
                 <h3>Notre Mission</h3>
-                <p>Réduire la mortalité par cancer en Haïti en:</p>
+                <p>Réduire la mortalité par cancer en Haïti en :</p>
                 <ul>
                     <li>Informant et sensibilisant la population sur le cancer.</li>
                     <li>Éduquant sur la maladie.</li>
@@ -700,7 +652,7 @@ require_once 'templates/header.php';
                 <blockquote class="mv-quote">"Vivre pour Aimer, Vivre pour Aider, Vivre pour Partager, Vivre Intensément"</blockquote>
             </div>
 
-            <div id="vision" class="mv-card vision" data-aos="fade-left">
+            <div id="vision" class="mv-card vision" data-aos="fade-left" data-aos-delay="80">
                 <div class="mv-icon"><i class="fas fa-chart-line"></i></div>
                 <h3>Notre Impact</h3>
                 <p>Depuis 25 ans, le GSCC agit chaque jour pour sauver des vies, informer la population et accompagner les patients les plus vulnérables à travers tout le pays.</p>
@@ -715,41 +667,42 @@ require_once 'templates/header.php';
     </div>
 </section>
 
-<!-- ══ STATISTIQUES ════════════════════════════════════════════ -->
+<!-- ── STATISTIQUES ── -->
 <section class="stats-section"<?php if ($stats_bg_image):
     $bg_url = htmlspecialchars(rtrim(SITE_URL, '/') . '/' . ltrim($stats_bg_image, '/'));
-    echo ' style="background-image:linear-gradient(rgba(0,26,102,0.76),rgba(0,51,153,0.80)),url(\''.$bg_url.'\');background-size:cover;background-position:center;background-attachment:fixed;"';
+    echo ' style="background-image:linear-gradient(rgba(0,20,80,.80),rgba(0,51,153,.82)),url(\''.$bg_url.'\');background-size:cover;background-position:center;background-attachment:fixed;"';
 endif; ?>>
     <div class="container">
         <div class="stats-grid">
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="0">
-                <div class="stat-number">20+</div>
+            <div class="stat-item" data-aos="fade-up">
+                <div class="stat-number">25+</div>
                 <div class="stat-label">Années d'engagement</div>
             </div>
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="80">
                 <div class="stat-number">500+</div>
                 <div class="stat-label">Membres actifs</div>
             </div>
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
-                <div class="stat-number">25+</div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="160">
+                <div class="stat-number">50+</div>
                 <div class="stat-label">Projets réalisés</div>
             </div>
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
-                <div class="stat-number">1 500+</div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="240">
+                <div class="stat-number">2 500+</div>
                 <div class="stat-label">Personnes aidées</div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ══ HISTORIQUE — id="historique" ═══════════════════════════ -->
+<!-- ── HISTORIQUE ── -->
 <section id="historique" class="historique">
     <div class="container">
-        <div class="pres-section-header" data-aos="fade-up">
-            <span class="pres-section-tag">Notre parcours</span>
+        <div class="sec-header" data-aos="fade-up">
+            <div class="sec-tag"><i class="fas fa-clock-rotate-left"></i> Notre parcours</div>
             <h2>Notre Histoire</h2>
-            <div class="pres-divider"></div>
+            <div class="sec-divider"></div>
         </div>
+
         <div class="timeline">
             <div class="timeline-item" data-aos="fade-right">
                 <div class="timeline-dot"></div>
@@ -795,152 +748,141 @@ endif; ?>>
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <span class="timeline-year">2024</span>
-                    <h3>Plus de 1 500 personnes aidées</h3>
-                    <p>Aujourd'hui, le GSCC a accompagné plus de 1 500 personnes dans leur combat contre le cancer et continue d'étendre ses actions à travers tout le pays.</p>
+                    <h3>Plus de 2 500 personnes aidées</h3>
+                    <p>Aujourd'hui, le GSCC a accompagné plus de 2 500 personnes dans leur combat contre le cancer et continue d'étendre ses actions à travers tout le pays.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ══ VALEURS — id="valeurs" ═════════════════════════════════ -->
+<!-- ── VALEURS ── -->
 <section id="valeurs" class="valeurs">
     <div class="container">
-        <div class="pres-section-header" data-aos="fade-up">
-            <span class="pres-section-tag">Ce qui nous guide</span>
+        <div class="sec-header" data-aos="fade-up">
+            <div class="sec-tag"><i class="fas fa-heart"></i> Ce qui nous guide</div>
             <h2>Nos Valeurs &amp; Engagements</h2>
-            <div class="pres-divider"></div>
+            <div class="sec-divider"></div>
         </div>
         <div class="valeurs-grid">
             <?php
-            $couleurs_defaut = ['#003399', '#D94F7A', '#4CAF50', '#C9933A'];
+            $couleurs_defaut = ['#003399','#C8375A','#2E7D32','#E8A020'];
             foreach ($valeurs as $index => $valeur):
                 $couleur = htmlspecialchars($valeur['couleur'] ?? $couleurs_defaut[$index % 4]);
                 $icone   = htmlspecialchars($valeur['icone']   ?? 'fa-heart');
             ?>
-                <div class="valeur-card" data-aos="fade-up" data-aos-delay="<?= $index * 100 ?>">
-                    <div class="valeur-icon" style="background:<?= $couleur ?>18; color:<?= $couleur ?>;">
-                        <i class="fas <?= $icone ?>"></i>
-                    </div>
-                    <h3><?= e($valeur['titre']) ?></h3>
-                    <p><?= e($valeur['description']) ?></p>
+            <div class="valeur-card" data-aos="fade-up" data-aos-delay="<?= $index * 80 ?>"
+                 style="--vc:<?= $couleur ?>">
+                <style>.valeur-card:nth-child(<?= $index+1 ?>)::after{ background:<?= $couleur ?>; }</style>
+                <div class="valeur-icon" style="background:<?= $couleur ?>1A; color:<?= $couleur ?>;">
+                    <i class="fas <?= $icone ?>"></i>
                 </div>
+                <h3><?= e($valeur['titre']) ?></h3>
+                <p><?= e($valeur['description']) ?></p>
+            </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
 
-<!-- ══ ÉQUIPE — id="equipe" ═══════════════════════════════════ -->
+<!-- ── ÉQUIPE ── -->
 <section id="equipe" class="equipe">
     <div class="container">
-        <div class="pres-section-header" data-aos="fade-up">
-            <span class="pres-section-tag">Les visages du GSCC</span>
+        <div class="sec-header" data-aos="fade-up">
+            <div class="sec-tag"><i class="fas fa-users"></i> Les visages du GSCC</div>
             <h2>Notre Équipe</h2>
-            <div class="pres-divider"></div>
-            <p class="pres-section-sub">Des professionnels dévoués et passionnés à votre service</p>
+            <div class="sec-divider"></div>
+            <p class="sec-sub">Des professionnels dévoués et passionnés à votre service</p>
         </div>
+
         <div class="team-grid">
-            <?php if (empty($equipe)): ?>
-                <?php
+            <?php if (empty($equipe)):
                 $membres_defaut = [
-                    ['nom' => 'Dr. Marie Jean-Baptiste',  'fonction' => 'Présidente Fondatrice',       'bio' => 'Oncologue avec plus de 20 ans d\'expérience, dédiée à la lutte contre le cancer en Haïti.', 'rand' => 10],
-                    ['nom' => 'Pierre Richard Alexandre', 'fonction' => 'Coordinateur des Programmes',  'bio' => 'Expert en gestion de projets humanitaires, coordonne les actions sur le terrain.',          'rand' => 11],
-                    ['nom' => 'Rose-Merline Charles',     'fonction' => 'Psychologue Clinicienne',      'bio' => 'Spécialiste en accompagnement psychologique des patients et familles.',                    'rand' => 12],
-                    ['nom' => 'Jean-Claude Michel',       'fonction' => 'Responsable Administratif',    'bio' => 'Gère les aspects administratifs et financiers de l\'organisation.',                        'rand' => 13],
+                    ['nom' => 'Dr. Marie Jean-Baptiste',  'fonction' => 'Présidente Fondatrice',      'bio' => 'Oncologue avec plus de 20 ans d\'expérience, dédiée à la lutte contre le cancer en Haïti.', 'rand' => 10],
+                    ['nom' => 'Pierre Richard Alexandre', 'fonction' => 'Coordinateur des Programmes', 'bio' => 'Expert en gestion de projets humanitaires, coordonne les actions sur le terrain.',         'rand' => 11],
+                    ['nom' => 'Rose-Merline Charles',     'fonction' => 'Psychologue Clinicienne',     'bio' => 'Spécialiste en accompagnement psychologique des patients et familles.',                   'rand' => 12],
+                    ['nom' => 'Jean-Claude Michel',       'fonction' => 'Responsable Administratif',   'bio' => 'Gère les aspects administratifs et financiers de l\'organisation.',                       'rand' => 13],
                 ];
-                foreach ($membres_defaut as $i => $m):
+                foreach ($membres_defaut as $i => $m): ?>
+                <div class="team-card" data-aos="fade-up" data-aos-delay="<?= $i * 80 ?>">
+                    <div class="team-image">
+                        <img src="https://picsum.photos/400/500?random=<?= $m['rand'] ?>" alt="<?= htmlspecialchars($m['nom']) ?>">
+                    </div>
+                    <div class="team-info">
+                        <h3><?= htmlspecialchars($m['nom']) ?></h3>
+                        <div class="team-role"><?= htmlspecialchars($m['fonction']) ?></div>
+                        <p class="team-bio"><?= htmlspecialchars($m['bio']) ?></p>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach;
+            else:
+                foreach ($equipe as $i => $membre):
+                    if (!empty($membre['photo'])) {
+                        $photo_src = rtrim(SITE_URL, '/') . '/' . ltrim($membre['photo'], '/');
+                    } else {
+                        $photo_src = 'https://ui-avatars.com/api/?name='
+                            . urlencode(($membre['prenom'] ?? '') . '+' . ($membre['nom'] ?? ''))
+                            . '&size=400&background=003399&color=fff&font-size=0.33';
+                    }
+                    $fallback = 'https://ui-avatars.com/api/?name='
+                        . urlencode(($membre['prenom'] ?? '') . '+' . ($membre['nom'] ?? ''))
+                        . '&size=400&background=003399&color=fff&font-size=0.33';
                 ?>
-                    <div class="team-card" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
-                        <div class="team-image">
-                            <img src="https://picsum.photos/400/500?random=<?= $m['rand'] ?>"
-                                alt="<?= htmlspecialchars($m['nom']) ?>">
-                        </div>
-                        <div class="team-info">
-                            <h3><?= htmlspecialchars($m['nom']) ?></h3>
-                            <div class="fonction"><?= htmlspecialchars($m['fonction']) ?></div>
-                            <p class="bio"><?= htmlspecialchars($m['bio']) ?></p>
-                            <div class="team-social">
-                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                            </div>
-                        </div>
+                <div class="team-card" data-aos="fade-up" data-aos-delay="<?= $i * 80 ?>">
+                    <div class="team-image">
+                        <img src="<?= htmlspecialchars($photo_src) ?>"
+                             alt="<?= htmlspecialchars(($membre['prenom'] ?? '') . ' ' . ($membre['nom'] ?? '')) ?>"
+                             onerror="this.onerror=null;this.src='<?= htmlspecialchars($fallback) ?>';">
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <?php foreach ($equipe as $i => $membre): ?>
-                    <div class="team-card" data-aos="fade-up" data-aos-delay="<?= $i * 100 ?>">
-                        <div class="team-image">
+                    <div class="team-info">
+                        <h3><?= e(($membre['prenom'] ?? '') . ' ' . ($membre['nom'] ?? '')) ?></h3>
+                        <div class="team-role"><?= e($membre['fonction'] ?? '') ?></div>
+                        <?php if (!empty($membre['bio'])): ?>
+                        <p class="team-bio"><?= e(mb_substr($membre['bio'], 0, 130)) ?><?= mb_strlen($membre['bio']) > 130 ? '…' : '' ?></p>
+                        <?php endif; ?>
+                        <?php if (!empty($membre['bio_complete'] ?? '')): ?>
+                        <button class="btn-lire-suite" onclick="openBioModal(<?= $i ?>)">
+                            Lire la suite <i class="fas fa-arrow-right" style="font-size:.7rem;"></i>
+                        </button>
+                        <?php endif; ?>
+                        <div class="team-social">
+                            <?php if (!empty($membre['email'])): ?>
+                                <a href="mailto:<?= e($membre['email']) ?>" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                            <?php endif; ?>
                             <?php
-                            if (!empty($membre['photo'])) {
-                                $photo_src = rtrim(SITE_URL, '/') . '/' . ltrim($membre['photo'], '/');
-                            } else {
-                                $photo_src = 'https://ui-avatars.com/api/?name='
-                                    . urlencode($membre['prenom'] . '+' . $membre['nom'])
-                                    . '&size=400&background=D94F7A&color=fff&font-size=0.33';
+                            $reseaux = [];
+                            if (!empty($membre['reseaux_sociaux'])) {
+                                $reseaux = is_array($membre['reseaux_sociaux'])
+                                    ? $membre['reseaux_sociaux']
+                                    : json_decode($membre['reseaux_sociaux'], true) ?? [];
                             }
-                            $fallback = 'https://ui-avatars.com/api/?name='
-                                . urlencode($membre['prenom'] . '+' . $membre['nom'])
-                                . '&size=400&background=D94F7A&color=fff&font-size=0.33';
                             ?>
-                            <img src="<?= htmlspecialchars($photo_src) ?>"
-                                alt="<?= htmlspecialchars($membre['prenom'] . ' ' . $membre['nom']) ?>"
-                                onerror="this.onerror=null;this.src='<?= htmlspecialchars($fallback) ?>';">
-                        </div>
-                        <div class="team-info">
-                            <h3><?= e($membre['prenom'] . ' ' . $membre['nom']) ?></h3>
-                            <div class="fonction"><?= e($membre['fonction']) ?></div>
-                            <?php if (!empty($membre['bio'])): ?>
-                                <p class="bio"><?= e(mb_substr($membre['bio'], 0, 140)) ?><?= mb_strlen($membre['bio']) > 140 ? '…' : '' ?></p>
+                            <?php if (!empty($reseaux['facebook'])): ?>
+                                <a href="<?= e($reseaux['facebook']) ?>" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                             <?php endif; ?>
-                            <?php if (!empty($membre['bio_complete'] ?? '')): ?>
-                                <button class="btn-lire-suite" onclick="openBioModal(<?= $i ?>)">
-                                    Lire la suite <i class="fas fa-arrow-right" style="font-size:.75rem;"></i>
-                                </button>
+                            <?php if (!empty($reseaux['linkedin'])): ?>
+                                <a href="<?= e($reseaux['linkedin']) ?>" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                             <?php endif; ?>
-                            <div class="team-social">
-                                <?php if (!empty($membre['email'])): ?>
-                                    <a href="mailto:<?= e($membre['email']) ?>" aria-label="Email">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                <?php endif; ?>
-                                <?php
-                                $reseaux = [];
-                                if (!empty($membre['reseaux_sociaux'])) {
-                                    $reseaux = is_array($membre['reseaux_sociaux'])
-                                        ? $membre['reseaux_sociaux']
-                                        : json_decode($membre['reseaux_sociaux'], true) ?? [];
-                                }
-                                ?>
-                                <?php if (!empty($reseaux['facebook'])): ?>
-                                    <a href="<?= e($reseaux['facebook']) ?>" target="_blank" rel="noopener" aria-label="Facebook">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                <?php endif; ?>
-                                <?php if (!empty($reseaux['linkedin'])): ?>
-                                    <a href="<?= e($reseaux['linkedin']) ?>" target="_blank" rel="noopener" aria-label="LinkedIn">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                <?php endif; ?>
-                                <?php if (!empty($reseaux['twitter'])): ?>
-                                    <a href="<?= e($reseaux['twitter']) ?>" target="_blank" rel="noopener" aria-label="Twitter">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                <?php endif; ?>
-                                <?php if (!empty($reseaux['instagram'])): ?>
-                                    <a href="<?= e($reseaux['instagram']) ?>" target="_blank" rel="noopener" aria-label="Instagram">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
+                            <?php if (!empty($reseaux['twitter'])): ?>
+                                <a href="<?= e($reseaux['twitter']) ?>" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <?php endif; ?>
+                            <?php if (!empty($reseaux['instagram'])): ?>
+                                <a href="<?= e($reseaux['instagram']) ?>" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <?php endif; ?>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+                </div>
+                <?php endforeach;
+            endif; ?>
         </div>
     </div>
 </section>
 
-<!-- ══ MODAL BIOGRAPHIE ═══════════════════════════════════════ -->
+<!-- ── MODAL BIOGRAPHIE ── -->
 <div class="bio-modal-overlay" id="bioModal" onclick="if(event.target===this)closeBioModal()">
     <div class="bio-modal" role="dialog" aria-modal="true">
         <button class="bio-modal-close" onclick="closeBioModal()" aria-label="Fermer">
@@ -959,9 +901,9 @@ endif; ?>>
 const bioData = <?= json_encode(array_values(array_map(function($m) {
     $photo = !empty($m['photo'])
         ? rtrim(SITE_URL, '/') . '/' . ltrim($m['photo'], '/')
-        : 'https://ui-avatars.com/api/?name=' . urlencode(($m['prenom'] ?? '') . '+' . ($m['nom'] ?? '')) . '&size=200&background=D94F7A&color=fff&font-size=0.33';
+        : 'https://ui-avatars.com/api/?name=' . urlencode(($m['prenom'] ?? '') . '+' . ($m['nom'] ?? '')) . '&size=200&background=003399&color=fff&font-size=0.33';
     return [
-        'nom'          => ($m['prenom'] ?? '') . ' ' . ($m['nom'] ?? ''),
+        'nom'          => (($m['prenom'] ?? '') . ' ' . ($m['nom'] ?? '')),
         'fonction'     => $m['fonction'] ?? '',
         'photo'        => $photo,
         'bio_complete' => $m['bio_complete'] ?? '',
@@ -983,9 +925,7 @@ function closeBioModal() {
     document.getElementById('bioModal').classList.remove('active');
     document.body.style.overflow = '';
 }
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeBioModal();
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBioModal(); });
 </script>
 <?php endif; ?>
 
