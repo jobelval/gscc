@@ -95,7 +95,7 @@ $reference = 'DON-' . date('Ymd') . '-' . str_pad($don_id, 4, '0', STR_PAD_LEFT)
 
         /* ── PAGE HEADER ── */
         .page-header {
-            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             color: white;
             padding: 60px 0 80px;
             text-align: center;
@@ -186,7 +186,7 @@ $reference = 'DON-' . date('Ymd') . '-' . str_pad($don_id, 4, '0', STR_PAD_LEFT)
 
         .confirm-header p {
             font-size: 1rem;
-            color: #E8F0FE;
+            color: rgba(255,255,255,0.88);
             opacity: 1;
             line-height: 1.6;
         }

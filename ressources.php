@@ -60,7 +60,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
            HERO
         ══════════════════════════════════ */
         .hero {
-            background: linear-gradient(135deg, #001a66 0%, #003399 45%, #1a56cc 80%, #1a7abf 100%);
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             padding: 80px 0 100px;
             position: relative;
             overflow: hidden;
@@ -81,7 +81,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
             display: inline-flex; align-items: center; gap: 8px;
             background: rgba(255,255,255,0.12);
             border: 1px solid rgba(255,255,255,0.2);
-            color: #E8F0FE; font-size: 11px; font-weight: 600;
+            color: rgba(255,255,255,0.88); font-size: 11px; font-weight: 600;
             letter-spacing: 2px; text-transform: uppercase;
             padding: 6px 16px; border-radius: 20px; margin-bottom: 22px;
         }
@@ -91,9 +91,9 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
             font-weight: 700; color: #FFFFFF;
             line-height: 1.2; margin-bottom: 20px;
         }
-        .hero h1 em { color: #93B4FF; font-style: italic; }
+        .hero h1 em { color: #FFB3CC; font-style: italic; }
         .hero-desc {
-            font-size: 16px; color: #C5D5F5;
+            font-size: 16px; color: rgba(255,255,255,0.88);
             line-height: 1.8; margin-bottom: 32px; font-weight: 400;
         }
         .hero-stats {
@@ -104,7 +104,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
             font-family: 'Lora', serif;
             font-size: 2rem; font-weight: 700; color: #FFFFFF; line-height: 1;
         }
-        .hero-stat-label { font-size: 12px; color: #93B4FF; font-weight: 500; margin-top: 4px; }
+        .hero-stat-label { font-size: 12px; color: #FFB3CC; font-weight: 500; margin-top: 4px; }
 
         /* Illustration côté droit */
         .hero-visual {
@@ -123,7 +123,7 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
             font-size: 22px; margin-bottom: 10px;
         }
         .hero-card h4 { font-size: 13px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px; }
-        .hero-card p  { font-size: 12px; color: #C5D5F5; line-height: 1.6; }
+        .hero-card p  { font-size: 12px; color: rgba(255,255,255,0.82); line-height: 1.6; }
 
         /* Wave bas */
         .hero-wave { line-height: 0; }

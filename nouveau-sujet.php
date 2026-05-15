@@ -94,7 +94,7 @@ $page_title = 'Nouveau sujet';
 
         /* ── Page header ── */
         .page-header {
-            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             color: white;
             padding: 52px 0 72px;
             text-align: center;

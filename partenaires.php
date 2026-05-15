@@ -76,7 +76,7 @@ function initials(string $n): string {
 
         /* ── HERO ── */
         .pt-hero {
-            background: linear-gradient(140deg, var(--blue-dark) 0%, var(--blue) 55%, #1565C0 100%);
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             padding: 90px 0 130px;
             position: relative;
             overflow: hidden;
@@ -118,7 +118,7 @@ function initials(string $n): string {
         .pt-hero h1 span { color: #F9A8C4; }
         .pt-hero > .container > p {
             font-size: 1.05rem;
-            color: #C7D9FF;
+            color: rgba(255,255,255,0.88);
             max-width: 520px;
             margin: 0 auto;
             line-height: 1.8;

@@ -23,7 +23,7 @@ $date_maj = '15 janvier 2025';
 
     <style>
         .page-header {
-            background: linear-gradient(135deg, var(--rose), var(--teal));
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             color: white;
             padding: 60px 0;
             text-align: center;

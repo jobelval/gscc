@@ -71,20 +71,18 @@ require_once 'templates/header.php';
 
 /* ══ HERO ══════════════════════════════════════════════ */
 .fa-hero {
-    background: linear-gradient(135deg, #003399 0%, #001a66 55%, #1a1a2e 100%);
+    background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
     padding: 110px 0 90px;
     position: relative; overflow: hidden; text-align: center;
     color: white;
 }
-/* Étoiles animées */
+/* Motif de points en background */
 .fa-hero::before {
     content: '';
     position: absolute; inset: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="white" opacity=".06" d="M50 15 L61 35 L85 40 L67 55 L70 80 L50 70 L30 80 L33 55 L15 40 L39 35 Z"/></svg>') center / 100px repeat;
-    animation: faStars 55s linear infinite;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2.5' fill='white' fill-opacity='0.09'/%3E%3C/svg%3E") center / 40px repeat;
     pointer-events: none;
 }
-@keyframes faStars { to { transform: rotate(360deg) scale(1.12); } }
 /* Orbe rose en bas à droite */
 .fa-hero::after {
     content: '';

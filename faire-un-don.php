@@ -145,7 +145,7 @@ $campagne = htmlspecialchars($_GET['campagne'] ?? '');
 
         /* ── Page header ──────────────────── */
         .page-header {
-            background: linear-gradient(135deg, var(--rose), var(--teal));
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             color: white;
             padding: 60px 0;
             text-align: center;
@@ -161,7 +161,7 @@ $campagne = htmlspecialchars($_GET['campagne'] ?? '');
 
         .page-header p {
             font-size: 1.05rem;
-            color: #E8F0FE;
+            color: rgba(255,255,255,0.88);
             opacity: 1;
         }
 

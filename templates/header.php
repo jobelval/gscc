@@ -16,6 +16,12 @@
     <meta property="og:image" content="<?= IMAGES_URL ?>og-image.jpg">
     <meta property="og:url" content="<?= htmlspecialchars(SITE_URL . $_SERVER['REQUEST_URI'], ENT_QUOTES, 'UTF-8') ?>">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -786,7 +792,7 @@
                 var html = node.textContent
                     .replace(/(Groupe de Support Contre le Cancer)/g,
                         '<span class="notranslate" translate="no">$1</span>')
-                    .replace(/GSCC/g,
+                    .replace(/GSCC/g,
                         '<span class="notranslate" translate="no">GSCC</span>');
                 if (html !== node.textContent) {
                     var span = document.createElement('span');
@@ -933,9 +939,6 @@
                     </button>
                     <div class="user-dropdown">
                         <a href="mon-compte.php"><i class="fas fa-user-circle"></i> Mon profil</a>
-                        <!-- <a href="mes-dons.php"><i class="fas fa-heart"></i> Mes dons</a>
-                        <a href="mes-demandes.php"><i class="fas fa-hand-holding-heart"></i> Mes demandes</a>
-                        <a href="mes-inscriptions.php"><i class="fas fa-calendar-check"></i> Mes événements</a> -->
                         <?php if (isAdmin() || isModerator()): ?>
                             <a href="admin/index.php"><i class="fas fa-tachometer-alt"></i> Administration</a>
                         <?php endif; ?>
@@ -983,7 +986,6 @@
                             <ul class="dropdown-menu">
                                 <li><a href="presentation.php#propos">À propos du GSCC</a></li>
                                 <li><a href="presentation.php#mission">Mission & Impact</a></li>
-                                <!-- <li><a href="presentation.php#vision">Vision</a></li> -->
                                 <li><a href="presentation.php#historique">Historique</a></li>
                                 <li><a href="presentation.php#equipe">Équipe</a></li>
                                 <li><a href="presentation.php#valeurs">Valeurs & engagements</a></li>
@@ -1116,7 +1118,6 @@
                 var closeBtn = document.getElementById('mobCloseBtn');
 
                 function openMob() {
-                    /* Panneau principal */
                     nav.style.cssText = [
                         'display:block',
                         'position:fixed',
@@ -1129,7 +1130,6 @@
                         'box-sizing:border-box'
                     ].join(';');
 
-                    /* Liste des items */
                     var menu = nav.querySelector('.nav-menu');
                     menu.style.cssText = [
                         'display:flex', 'flex-direction:column',
@@ -1138,7 +1138,6 @@
                         'list-style:none', 'gap:4px'
                     ].join(';');
 
-                    /* Style de chaque item principal (mobile uniquement) */
                     nav.querySelectorAll('.menu-item > a').forEach(function(a) {
                         a.style.cssText = [
                             'display:flex', 'justify-content:space-between',
@@ -1157,7 +1156,6 @@
                 }
 
                 function closeMob() {
-                    /* Effacer TOUS les styles inline ajoutés par openMob */
                     nav.removeAttribute('style');
                     var menu = nav.querySelector('.nav-menu');
                     if (menu) menu.removeAttribute('style');
@@ -1183,13 +1181,11 @@
                     nav.style.display === 'block' ? closeMob() : openMob();
                 });
 
-                /* Clic sur item avec dropdown → accordéon */
                 nav.querySelectorAll('.menu-item > a').forEach(function(link) {
                     link.addEventListener('click', function(e) {
                         if (nav.style.display !== 'block') return;
                         var item = this.closest('.menu-item');
 
-                        /* Lien sans dropdown → naviguer et fermer */
                         if (!item.classList.contains('has-dropdown')) {
                             closeMob();
                             return;
@@ -1199,7 +1195,6 @@
                         var dd = item.querySelector('.dropdown-menu');
                         var isOpen = dd.style.display === 'block';
 
-                        /* Fermer tous les autres sous-menus */
                         nav.querySelectorAll('.dropdown-menu').forEach(function(d) {
                             d.style.cssText = 'display:none;position:static;';
                         });
@@ -1209,7 +1204,6 @@
                         });
 
                         if (!isOpen) {
-                            /* Ouvrir ce sous-menu */
                             dd.style.cssText = [
                                 'display:block',
                                 'position:static',
@@ -1224,7 +1218,6 @@
                                 'list-style:none'
                             ].join(';');
 
-                            /* Styler les liens du sous-menu */
                             dd.querySelectorAll('a').forEach(function(a) {
                                 a.style.cssText = [
                                     'display:block',
@@ -1244,7 +1237,6 @@
                     });
                 });
 
-                /* Hover sur liens du sous-menu */
                 nav.querySelectorAll('.dropdown-menu a').forEach(function(a) {
                     a.addEventListener('mouseenter', function() {
                         if (nav.style.display === 'block') {
@@ -1260,12 +1252,10 @@
                     });
                 });
 
-                /* Clic sur lien final → fermer */
                 nav.querySelectorAll('.dropdown-menu a').forEach(function(a) {
                     a.addEventListener('click', closeMob);
                 });
 
-                /* Bouton X */
                 if (closeBtn) {
                     closeBtn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -1273,7 +1263,6 @@
                     });
                 }
 
-                /* Escape */
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') closeMob();
                 });
@@ -1288,16 +1277,13 @@
             });
 
             /* ── Ancre avec offset header fixe ── */
-            /* Quand la page se charge avec un #hash, le scroll natif
-               ne tient pas compte du header fixe (121px).
-               On repositionne après chargement complet. */
             if (window.location.hash) {
                 window.addEventListener('load', function() {
                     var id = window.location.hash.substring(1);
                     var el = document.getElementById(id);
                     if (!el) return;
                     setTimeout(function() {
-                        var offset = 160; /* hauteur header + marge */
+                        var offset = 160;
                         var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
                         window.scrollTo({
                             top: top,

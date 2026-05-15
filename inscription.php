@@ -147,8 +147,8 @@ $val_tel    = htmlspecialchars($_POST['telephone'] ?? '');
             display: flex; align-items: center; justify-content: center;
             padding: 52px 20px;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(0,51,153,.07) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(76,175,80,.06) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 50%, rgba(200,55,95,.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(217,79,122,.05) 0%, transparent 55%),
                 var(--bg);
         }
 
@@ -174,7 +174,7 @@ $val_tel    = htmlspecialchars($_POST['telephone'] ?? '');
 
         .auth-ribbon {
             height: 5px;
-            background: linear-gradient(90deg, #003399 0%, #FF69B4 50%, #4CAF50 100%);
+            background: linear-gradient(90deg, #7B1535 0%, #C8375F 50%, #E8849F 100%);
         }
 
         .auth-body { padding: 38px 40px 30px; }
@@ -186,10 +186,10 @@ $val_tel    = htmlspecialchars($_POST['telephone'] ?? '');
         }
         .brand-icon {
             width: 50px; height: 50px; border-radius: 13px;
-            background: linear-gradient(135deg, #003399 0%, #4CAF50 100%);
+            background: linear-gradient(135deg, #C8375F 0%, #D94F7A 100%);
             display: flex; align-items: center; justify-content: center;
             font-size: 22px; color: #fff; flex-shrink: 0;
-            box-shadow: 0 4px 14px rgba(0,51,153,.3);
+            box-shadow: 0 4px 14px rgba(200,55,95,.3);
         }
         .brand-text strong { display: block; font-size: 1.05rem; font-weight: 700; color: var(--blue); }
         .brand-text span   { font-size: 10.5px; color: var(--text-3); }

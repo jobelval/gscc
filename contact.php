@@ -167,7 +167,7 @@ $csrf_token = generateCSRFToken();
         }
 
         .page-header {
-            background: linear-gradient(135deg, var(--rose), var(--teal));
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             color: white;
             padding: 60px 0;
             text-align: center;
@@ -183,7 +183,7 @@ $csrf_token = generateCSRFToken();
 
         .page-header p {
             font-size: 1.1rem;
-            color: #F0F4FF;
+            color: rgba(255,255,255,0.88);
             font-weight: 400;
         }
 

@@ -171,8 +171,8 @@ $csrf_token = generateCSRFToken();
             justify-content: center;
             padding: 52px 20px;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(0, 51, 153, .07) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(76, 175, 80, .06) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 50%, rgba(200,55,95,.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(217,79,122,.05) 0%, transparent 55%),
                 var(--bg);
         }
 
@@ -201,7 +201,7 @@ $csrf_token = generateCSRFToken();
 
         .auth-ribbon {
             height: 5px;
-            background: linear-gradient(90deg, #003399 0%, #FF69B4 50%, #4CAF50 100%);
+            background: linear-gradient(90deg, #7B1535 0%, #C8375F 50%, #E8849F 100%);
         }
 
         .auth-body {
@@ -221,7 +221,7 @@ $csrf_token = generateCSRFToken();
             width: 50px;
             height: 50px;
             border-radius: 13px;
-            background: linear-gradient(135deg, #003399 0%, #4CAF50 100%);
+            background: linear-gradient(135deg, #C8375F 0%, #D94F7A 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -509,7 +509,7 @@ $csrf_token = generateCSRFToken();
         .btn-submit {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #003399 0%, #4CAF50 100%);
+            background: linear-gradient(135deg, #C8375F 0%, #D94F7A 100%);
             color: #fff;
             border: none;
             border-radius: 11px;

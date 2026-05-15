@@ -86,7 +86,7 @@ $lien_formulaire = 'https://h23xktcc.forms.app/gsccadhesion'; // ← mets ton li
         /* ── HERO ──────────────────────────────────────────────── */
         .hero {
             position: relative;
-            background: linear-gradient(135deg, #003399 0%, #1a56cc 60%, #1a7abf 100%);
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             padding: 120px 0 100px;
             overflow: hidden;
             text-align: center;

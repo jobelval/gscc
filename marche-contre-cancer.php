@@ -61,21 +61,19 @@ require_once 'templates/header.php';
 
 /* ══ HERO ══════════════════════════════════════════════ */
 .mc-hero {
-    background: linear-gradient(135deg, #001a66 0%, #003399 50%, #0e4fa3 100%);
+    background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
     padding: 110px 0 90px;
     position: relative;
     overflow: hidden;
     text-align: center;
 }
-/* Étoiles en background */
+/* Motif de points en background */
 .mc-hero::before {
     content: '';
     position: absolute; inset: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="white" opacity=".07" d="M50 15 L61 35 L85 40 L67 55 L70 80 L50 70 L30 80 L33 55 L15 40 L39 35 Z"/></svg>') center / 90px repeat;
-    animation: starspin 60s linear infinite;
+    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='2.5' fill='white' fill-opacity='0.09'/%3E%3C/svg%3E") center / 40px repeat;
     pointer-events: none;
 }
-@keyframes starspin { to { transform: rotate(360deg) scale(1.12); } }
 .mc-hero::after {
     content: '';
     position: absolute; bottom: -1px; left: 0; right: 0;
@@ -94,7 +92,7 @@ require_once 'templates/header.php';
     backdrop-filter: blur(8px);
 }
 .mc-hero-tag { color: #fff; }
-.mc-hero-tag i { color: #93c5fd; }
+.mc-hero-tag i { color: #FFB3CC; }
 .mc-hero h1 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(2.6rem, 5.5vw, 4rem);
@@ -108,7 +106,7 @@ require_once 'templates/header.php';
     background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
     padding: 9px 22px; border-radius: 30px; margin-bottom: 18px; font-weight: 500;
 }
-.mc-hero-date i { color: #93c5fd; font-size: .85rem; }
+.mc-hero-date i { color: #FFB3CC; font-size: .85rem; }
 .mc-hero-sub {
     font-size: 1.05rem; color: rgba(255,255,255,.95);
     max-width: 520px; margin: 0 auto 40px; line-height: 1.8;

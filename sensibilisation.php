@@ -46,7 +46,7 @@ try {
 
         /* ── HERO ── */
         .page-hero {
-            background: linear-gradient(140deg, var(--blue-dark) 0%, var(--blue) 55%, #1565C0 100%);
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             padding: 90px 0 130px;
             position: relative;
             overflow: hidden;
@@ -87,7 +87,7 @@ try {
         }
         .page-hero p {
             font-size: 1.15rem;
-            color: #C7D9FF;
+            color: #FFD0DF;
             max-width: 560px;
             margin: 0 auto;
             line-height: 1.7;

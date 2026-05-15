@@ -199,7 +199,7 @@ $type_labels = [
 
         /* ── Page header ── */
         .compte-header {
-            background: linear-gradient(135deg, var(--blue) 0%, #1a56cc 60%, var(--teal) 100%);
+            background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
             padding: 50px 0 80px;
             position: relative;
             overflow: hidden;
