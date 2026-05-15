@@ -1232,31 +1232,31 @@ $lien_formulaire = 'https://h23xktcc.forms.app/gsccadhesion'; // ← mets ton li
             <div class="members-avatars" data-aos="fade-up">
 
                 <div class="member-avatar-card">
-                    <div class="member-avatar">MC</div>
-                    <div class="member-name">Myria CHARLES</div>
+                    <div class="member-avatar">IA</div>
+                    <div class="member-name">Iris Duhamel Augustin</div>
                     <div class="member-type">Membre bienfaiteur</div>
                     <div class="member-since">Depuis 2021</div>
                 </div>
 
                 <div class="member-avatar-card">
-                    <div class="member-avatar gold">PR</div>
-                    <div class="member-name">Pierre Richard</div>
+                    <div class="member-avatar gold">GB</div>
+                    <div class="member-name">Gerald Bourguignon</div>
                     <div class="member-type">Membre actif</div>
                     <div class="member-since">Depuis 2022</div>
                 </div>
 
                 <div class="member-avatar-card">
-                    <div class="member-avatar navy">RC</div>
-                    <div class="member-name">Rose-Merline Charles</div>
+                    <div class="member-avatar navy">CP</div>
+                    <div class="member-name">Carel Pedre</div>
                     <div class="member-type">Membre honoraire</div>
                     <div class="member-since">Depuis 2020</div>
                 </div>
 
                 <div class="member-avatar-card">
-                    <div class="member-avatar sage">LA</div>
-                    <div class="member-name">Loucerie Aime</div>
+                    <div class="member-avatar sage">KD</div>
+                    <div class="member-name">Kareen Dolcé</div>
                     <div class="member-type">Membre actif</div>
-                    <div class="member-since">Depuis 2023</div>
+                    <div class="member-since">Depuis 2025</div>
                 </div>
 
                 <div class="member-avatar-card">

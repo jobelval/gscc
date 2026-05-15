@@ -93,7 +93,7 @@ require_once 'templates/header.php';
     <div class="hours-content">
         <h4><i class="far fa-clock"></i> Heures d'ouverture</h4>
         <ul>
-            <li><span>Lun – Ven :</span> 9h00 – 14h00</li>
+            <li><span>Lun – Ven :</span> 9h00 – 15h00</li>
             <li><span>Sam - Dim :</span> Fermé</li>
 
         </ul>
@@ -464,11 +464,6 @@ require_once 'templates/header.php';
             'icon' => 'shield-alt'         // Compagnie d'assurance
         ],
         [
-            'name' => 'INASSA',
-            'type' => 'Assurance',
-            'icon' => 'file-contract'      // Institution d'assurance
-        ],
-        [
             'name' => 'CARIMPEX',
             'type' => 'Import & Distribution',
             'icon' => 'boxes'              // Commerce / importation
@@ -488,7 +483,7 @@ require_once 'templates/header.php';
             'type' => 'Industrie plastique',
             'icon' => 'recycle'            // Fabrication sacs et emballages plastiques
         ],
-         [
+        [
             'name' => 'Église de Jésus-Christ des Saints des Derniers Jours',
             'type' => 'Religieux & Humanitaire',
             'icon' => 'church'            // Fabrication sacs et emballages plastiques
