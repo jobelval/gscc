@@ -42,7 +42,7 @@ require_once 'templates/header.php';
                             soi une force inouïe. Vous n'êtes pas seul, vous avez en vous un guide
                             qui vous prendra par la main. L'amour fait des miracles."
                         </blockquote>
-                        <p class="quote-author">— Pascale Liautaud Drouin</p>
+                        <p class="quote-author">— Pascale L. Drouin, Vice Présidente</p>
                     </div>
 
                 </div>
@@ -374,7 +374,7 @@ require_once 'templates/header.php';
                             Se yon onè li ye pou mwen pou m fè pati yon enstitisyon tankou GSCC. Koz la nòb paske chak patisipasyon ou bay – ke se swa nan tan w oswa nan lajan w – li bay lavi ak yon konpatriyot.
                         </blockquote>
                         <div class="testimonial-author">
-                            <img src="images/temoignage/sister_M.jpg" alt="Myria CHARLES">
+                            <img src="images/temoignage/Sister_M.jpg" alt="Myria CHARLES">
                             <div>
                                 <strong>Myria</strong>
                                 <span>Membre</span>
@@ -393,7 +393,7 @@ require_once 'templates/header.php';
                             Chak moun ki ale GSCC jwenn yon sipò ki pa konparab, yon sipò ki pote lespwa nan moman kote lavi yo parèt difisil
                         </blockquote>
                         <div class="testimonial-author">
-                            <img src="images/temoignage/carel_pedre.jpg" alt="Carel Pedre">
+                            <img src="images/temoignage/Carel_Pedre.jpg" alt="Carel Pedre">
                             <div>
                                 <strong>Carel</strong>
                                 <span>Ambassadeur GSCC</span>

@@ -79,7 +79,7 @@ try {
         ============================================= */
         .page-header {
             background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
-            color: white;
+            color: white !important;
             padding: 72px 0 90px;
             text-align: center;
             position: relative;
@@ -128,7 +128,7 @@ try {
             gap: 8px;
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.25);
-            color: white;
+            color: white !important;
             font-size: 11px;
             font-weight: 600;
             letter-spacing: 2px;
@@ -144,12 +144,13 @@ try {
             font-weight: 700;
             margin-bottom: 14px;
             letter-spacing: -0.5px;
-            color: white;
+            color: white !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         }
 
         .page-header p {
             font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.82);
+            color: rgba(255, 255, 255, 0.95) !important;
             max-width: 460px;
             margin: 0 auto;
             line-height: 1.7;
