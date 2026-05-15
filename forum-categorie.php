@@ -105,7 +105,7 @@ try {
         ============================================= */
         .forum-header {
             background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
-            color: white;
+            color: white !important;
             padding: 52px 0 72px;
             position: relative;
             overflow: hidden;
@@ -163,7 +163,7 @@ try {
             gap: 8px;
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.25);
-            color: white;
+            color: white !important;
             font-size: 11px;
             font-weight: 600;
             letter-spacing: 2px;
@@ -179,10 +179,12 @@ try {
             font-weight: 700;
             margin-bottom: 8px;
             letter-spacing: -0.3px;
+            color: white !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         }
 
         .forum-header-desc {
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 255, 255, 0.95) !important;
             font-size: 1rem;
             line-height: 1.6;
             max-width: 520px;

@@ -96,17 +96,19 @@ try {
     <style>
         .article-header {
             background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
-            color: white;
+            color: white !important;
             padding: 60px 0;
             text-align: center;
         }
-        
+
         .article-header h1 {
             font-size: 2.5rem;
             max-width: 800px;
             margin: 0 auto 20px;
+            color: white !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         }
-        
+
         .article-meta {
             display: flex;
             justify-content: center;
@@ -114,6 +116,7 @@ try {
             flex-wrap: wrap;
             font-size: 14px;
             opacity: 0.9;
+            color: white !important;
         }
         
         .article-meta i {
