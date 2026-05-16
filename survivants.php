@@ -1160,8 +1160,8 @@ require_once 'templates/header.php';
             <a href="contact.php" class="surv-btn-white">
                 <i class="fas fa-pen-nib"></i> Partager mon témoignage
             </a>
-            <a href="demande-aide.php" class="surv-btn-outline-white">
-                <i class="fas fa-hands-holding-heart"></i> Demander de l'aide
+            <a href="contact.php" class="surv-btn-outline-white">
+                <i class="fas fa-envelope"></i> Demande d'information
             </a>
         </div>
     </div>

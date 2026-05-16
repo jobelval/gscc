@@ -491,9 +491,10 @@ $csrf_token = generateCSRFToken();
                         </div>
                         <div class="info-content">
                             <h4>Heures d'ouverture</h4>
-                            <p>Lundi - Vendredi: 9h00 - 18h00</p>
-                            <p>Samedi: 9h00 - 14h00</p>
-                            <p>Dimanche: Fermé</p>
+                            <p>Lundi - Vendredi: 9h00 - 15h00</p>
+                            <p>Samedi - Dimanche: Fermé</p>
+                            <p><strong style="color:#003399;">Visite patient</strong></p>
+                            <p>Lundi - Jeudi: 9h00 - 14h00</p>
                         </div>
                     </div>
 

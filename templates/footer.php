@@ -61,7 +61,7 @@
                     <li><a href="campagnes.php">Campagnes &amp; projets</a></li>
                     <li><a href="faire-un-don.php">Faire un don</a></li>
                     <li><a href="devenir-membre.php">Devenir membre</a></li>
-                    <li><a href="demande-aide.php">Demander de l'aide</a></li>
+                    <li><a href="contact.php">Demande d'information</a></li>
                     <li><a href="coordonnees-bancaires.php">Coordonnées bancaires</a></li>
                 </ul>
             </div>

@@ -56,8 +56,8 @@ require_once 'templates/header.php';
                         <span class="slide-tag">Accompagnement personnalisé</span>
                         <h1>Besoin de soutien&nbsp;?</h1>
                         <p>Plus de 25 ans de lutte pour des soins oncologiques accessibles et équitables</p>
-                        <a href="demande-aide.php" class="btn btn-secondary">
-                            <i class="fas fa-hand-holding-heart"></i> Demander de l'aide
+                        <a href="contact.php" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i> Demande d'information
                         </a>
                     </div>
                 </div>
@@ -94,8 +94,11 @@ require_once 'templates/header.php';
         <h4><i class="far fa-clock"></i> Heures d'ouverture</h4>
         <ul>
             <li><span>Lun – Ven :</span> 9h00 – 15h00</li>
-            <li><span>Sam - Dim :</span> Fermé</li>
-
+            <li><span>Sam – Dim :</span> Fermé</li>
+        </ul>
+        <ul>
+            <li><strong style="color:#003399;">Visite patient</strong></li>
+            <li><span>Lun – Jeu :</span> 9h00 – 14h00</li>
         </ul>
     </div>
 </div>

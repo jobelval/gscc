@@ -1116,8 +1116,15 @@
             if (burger && nav) {
 
                 var closeBtn = document.getElementById('mobCloseBtn');
+                // Mémoriser la position d'origine dans le DOM
+                var navOriginalParent = nav.parentNode;
+                var navOriginalNextSibling = nav.nextSibling;
 
                 function openMob() {
+                    // Sortir la nav du header pour qu'elle ne soit plus contrainte
+                    // par le contexte d'empilement du header (z-index:100)
+                    document.body.appendChild(nav);
+
                     nav.style.cssText = [
                         'display:block',
                         'position:fixed',
@@ -1174,6 +1181,14 @@
                     document.body.style.overflow = '';
                     burger.style.display = '';
                     if (closeBtn) closeBtn.classList.remove('visible');
+                    // Remettre la nav à sa position d'origine dans le header
+                    if (navOriginalParent) {
+                        if (navOriginalNextSibling && navOriginalNextSibling.parentNode === navOriginalParent) {
+                            navOriginalParent.insertBefore(nav, navOriginalNextSibling);
+                        } else {
+                            navOriginalParent.appendChild(nav);
+                        }
+                    }
                 }
 
                 burger.addEventListener('click', function(e) {
