@@ -342,18 +342,20 @@
         }
 
         .logo-slogan {
-            font-size: 14px;
-            /* ti ogmantasyon */
+            font-size: 13px;
             color: var(--grey);
             font-weight: 400;
-            margin-top: 6px;
-            white-space: nowrap;
+            margin-top: 4px;
+            white-space: normal;
+            max-width: 150px;
+            line-height: 1.3;
         }
 
         /* ── NAV ──────────────────────────────────────── */
         .main-nav {
             display: flex;
             justify-content: center;
+            min-width: 0;
         }
 
         .nav-menu {
@@ -507,46 +509,6 @@
             transition: all 0.3s;
         }
 
-        /* Bouton fermer menu mobile */
-        .mob-close-btn {
-            display: none;
-            position: fixed;
-            top: 130px;
-            right: 20px;
-            z-index: 9999999;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: var(--rose);
-            color: #fff;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-            transition: background 0.2s;
-        }
-
-        .mob-close-btn:hover {
-            background: #C0306A;
-        }
-
-        .mob-close-btn.visible {
-            display: flex;
-        }
-
-        @media (max-width: 768px) {
-            .mob-close-btn {
-                top: 120px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .mob-close-btn {
-                top: 110px;
-            }
-        }
 
         /* Flash */
         .flash-message {
@@ -605,46 +567,54 @@
 
         @media (max-width: 1280px) {
             .main-header .container {
-                padding: 0 24px;
+                padding: 0 20px;
             }
 
             .menu-item>a {
-                padding: 10px 12px;
-                font-size: 15px;
+                padding: 10px 10px;
+                font-size: 14.5px;
             }
 
             .btn-donate {
-                padding: 11px 20px;
+                padding: 11px 18px;
                 font-size: 15px;
+            }
+
+            .nav-menu {
+                gap: 2px;
+            }
+
+            .header-content {
+                column-gap: 20px;
             }
         }
 
-        @media (max-width: 1100px) {
+        @media (max-width: 1150px) {
             .logo-name {
                 font-size: 26px;
             }
 
             .logo-icon {
-                width: 60px;
-                height: 60px;
+                width: 62px;
+                height: 62px;
             }
 
             .menu-item>a {
-                padding: 9px 10px;
-                font-size: 14px;
+                padding: 8px 8px;
+                font-size: 13.5px;
             }
 
             .btn-donate {
-                padding: 10px 16px;
-                font-size: 14px;
+                padding: 9px 14px;
+                font-size: 13px;
             }
 
             .header-content {
-                column-gap: 18px;
+                column-gap: 16px;
             }
         }
 
-        @media (max-width: 960px) {
+        @media (max-width: 1024px) {
             body {
                 padding-top: 115px;
             }
@@ -1047,7 +1017,6 @@
         </div>
     </header>
     <div class="header-accent"></div>
-    <button class="mob-close-btn" id="mobCloseBtn" aria-label="Fermer le menu">&#x2715;</button>
 
     <!-- Flash Messages -->
     <?php $flash = getFlashMessage(); ?>
@@ -1115,14 +1084,10 @@
             var nav = document.querySelector('.main-nav');
             if (burger && nav) {
 
-                var closeBtn = document.getElementById('mobCloseBtn');
-                // Mémoriser la position d'origine dans le DOM
                 var navOriginalParent = nav.parentNode;
                 var navOriginalNextSibling = nav.nextSibling;
 
                 function openMob() {
-                    // Sortir la nav du header pour qu'elle ne soit plus contrainte
-                    // par le contexte d'empilement du header (z-index:100)
                     document.body.appendChild(nav);
 
                     nav.style.cssText = [
@@ -1157,12 +1122,38 @@
                         ].join(';');
                     });
 
+                    /* Bouton X dans le menu overlay */
+                    var closeX = document.createElement('button');
+                    closeX.id = 'mob-close-x';
+                    closeX.innerHTML = '&times;';
+                    closeX.style.cssText = [
+                        'position:fixed',
+                        'top:82px',
+                        'right:18px',
+                        'width:42px',
+                        'height:42px',
+                        'border-radius:50%',
+                        'background:#D94F7A',
+                        'color:#fff',
+                        'border:none',
+                        'font-size:24px',
+                        'line-height:1',
+                        'cursor:pointer',
+                        'display:flex',
+                        'align-items:center',
+                        'justify-content:center',
+                        'z-index:9999999',
+                        'box-shadow:0 3px 10px rgba(217,79,122,0.4)'
+                    ].join(';');
+                    closeX.addEventListener('click', closeMob);
+                    nav.appendChild(closeX);
+
                     document.body.style.overflow = 'hidden';
-                    burger.style.display = 'none';
-                    if (closeBtn) closeBtn.classList.add('visible');
                 }
 
                 function closeMob() {
+                    var closeX = document.getElementById('mob-close-x');
+                    if (closeX) closeX.remove();
                     nav.removeAttribute('style');
                     var menu = nav.querySelector('.nav-menu');
                     if (menu) menu.removeAttribute('style');
@@ -1179,9 +1170,6 @@
                         a.removeAttribute('style');
                     });
                     document.body.style.overflow = '';
-                    burger.style.display = '';
-                    if (closeBtn) closeBtn.classList.remove('visible');
-                    // Remettre la nav à sa position d'origine dans le header
                     if (navOriginalParent) {
                         if (navOriginalNextSibling && navOriginalNextSibling.parentNode === navOriginalParent) {
                             navOriginalParent.insertBefore(nav, navOriginalNextSibling);
@@ -1270,13 +1258,6 @@
                 nav.querySelectorAll('.dropdown-menu a').forEach(function(a) {
                     a.addEventListener('click', closeMob);
                 });
-
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        closeMob();
-                    });
-                }
 
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') closeMob();
