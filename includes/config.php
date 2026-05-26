@@ -75,7 +75,16 @@ define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
 
 // Site
 define('SITE_NAME', 'GSCC - Groupe de Support Contre le Cancer');
-define('SITE_URL', getenv('SITE_URL') ?: 'http://localhost/gscc');
+
+// SITE_URL : priorité .env → détection automatique → fallback localhost
+$_detected_url = $_ENV['SITE_URL'] ?? getenv('SITE_URL') ?? null;
+if (!$_detected_url && isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== 'localhost') {
+    $proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $_detected_url = $proto . '://' . $_SERVER['HTTP_HOST'];
+}
+define('SITE_URL', rtrim($_detected_url ?: 'http://localhost/gscc', '/'));
+unset($_detected_url);
+
 define('SITE_EMAIL', 'gscc@gscchaiti.com');
 
 // Chemins absolus
