@@ -77,13 +77,23 @@ define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
 define('SITE_NAME', 'GSCC - Groupe de Support Contre le Cancer');
 
 // SITE_URL : priorité .env → détection automatique → fallback localhost
-$_detected_url = $_ENV['SITE_URL'] ?? getenv('SITE_URL') ?? null;
-if (!$_detected_url && isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== 'localhost') {
-    $proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    $_detected_url = $proto . '://' . $_SERVER['HTTP_HOST'];
+$_site_url = null;
+if (!empty($_ENV['SITE_URL'])) {
+    $_site_url = $_ENV['SITE_URL'];
+} elseif (!empty(getenv('SITE_URL'))) {
+    $_site_url = getenv('SITE_URL');
+} elseif (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== 'localhost') {
+    if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+        $proto = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+    } elseif (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+        $proto = 'https';
+    } else {
+        $proto = 'https'; // Hostinger reverse proxy — assume HTTPS for non-localhost
+    }
+    $_site_url = $proto . '://' . $_SERVER['HTTP_HOST'];
 }
-define('SITE_URL', rtrim($_detected_url ?: 'http://localhost/gscc', '/'));
-unset($_detected_url);
+define('SITE_URL', rtrim($_site_url ?? 'http://localhost/gscc', '/'));
+unset($_site_url);
 
 define('SITE_EMAIL', 'gscc@gscchaiti.com');
 
