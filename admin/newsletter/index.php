@@ -16,25 +16,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
     $ids    = array_map('intval', $_POST['ids'] ?? []);
 
     if ($action === 'send_newsletter') {
-        // Envoi newsletter
-        $subject = trim($_POST['nl_subject'] ?? '');
-        $body    = $_POST['nl_body'] ?? '';
+        $subject    = trim($_POST['nl_subject'] ?? '');
+        $body       = $_POST['nl_body'] ?? '';
         $test_email = trim($_POST['test_email'] ?? '');
 
         if ($subject && $body) {
+            // Upload image optionnelle
+            $nl_image_url = '';
+            if (!empty($_FILES['nl_image']['name']) && $_FILES['nl_image']['error'] === UPLOAD_ERR_OK) {
+                $upload_dir = UPLOADS_PATH . 'newsletter/';
+                if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
+                $up = uploadFile($_FILES['nl_image'], $upload_dir, ['jpg','jpeg','png','gif','webp']);
+                if ($up['success']) {
+                    $nl_image_url = rtrim(SITE_URL,'/') . '/assets/uploads/newsletter/' . $up['filename'];
+                }
+            }
+
             try {
                 if ($test_email) {
-                    // Envoi test
-                    nlSendOne($pdo, $test_email, 'Test', $subject, $body);
+                    nlSendOne($pdo, $test_email, 'Test', $subject, $body, $nl_image_url);
                     adminFlash('success', "Email de test envoyé à $test_email");
                 } else {
-                    // Envoi à tous les abonnés actifs
                     $abonnes = $pdo->query("SELECT email,nom FROM newsletter_abonnes WHERE statut='actif'")->fetchAll();
                     $sent = 0;
                     foreach ($abonnes as $ab) {
-                        nlSendOne($pdo, $ab['email'], $ab['nom']??'', $subject, $body);
+                        nlSendOne($pdo, $ab['email'], $ab['nom']??'', $subject, $body, $nl_image_url);
                         $sent++;
-                        if ($sent % 10 === 0) usleep(100000); // anti-spam
+                        if ($sent % 10 === 0) usleep(100000);
                     }
                     $pdo->query("UPDATE newsletter_abonnes SET derniere_envoi=NOW() WHERE statut='actif'");
                     adminFlash('success', "Newsletter envoyée à $sent abonné(s) !");
@@ -59,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
 }
 
 /* ── Envoi individuel via PHPMailer SMTP ── */
-function nlSendOne(PDO $pdo, string $email, string $nom, string $subject, string $body): void {
+function nlSendOne(PDO $pdo, string $email, string $nom, string $subject, string $body, string $imageUrl = ''): void {
     require_once dirname(__DIR__, 2) . '/includes/mailer.php';
 
     $prenom = $nom ? htmlspecialchars(ucwords(strtolower($nom))) : 'cher(e) abonné(e)';
@@ -72,6 +80,12 @@ function nlSendOne(PDO $pdo, string $email, string $nom, string $subject, string
     $unsub = $url . '/newsletter-unsubscribe.php?token=' . urlencode($token);
     $year  = date('Y');
 
+    $img_block = '';
+    if ($imageUrl) {
+        $img_safe  = htmlspecialchars($imageUrl);
+        $img_block = "<tr><td style=\"padding:0;\"><img src=\"{$img_safe}\" alt=\"\" style=\"width:100%;max-width:600px;height:auto;display:block;\"></td></tr>";
+    }
+
     $html = <<<HTML
 <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"></head>
 <body style="margin:0;padding:0;background:#F4F6FB;font-family:Arial,sans-serif;">
@@ -83,6 +97,7 @@ function nlSendOne(PDO $pdo, string $email, string $nom, string $subject, string
     <div style="font-size:30px;">&#127385;</div>
     <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#fff;margin-top:8px;">{$site}</div>
   </td></tr>
+  {$img_block}
   <tr><td style="padding:36px 36px 28px;">
     <p style="color:#374151;font-size:15px;margin:0 0 8px;">Bonjour, <strong>{$prenom}</strong> &#128075;</p>
     <div style="color:#374151;font-size:14.5px;line-height:1.8;margin:16px 0;">
@@ -170,13 +185,28 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="card">
         <div class="card-header"><div class="card-title"><i class="fas fa-pen"></i> Rédiger la newsletter</div></div>
         <div class="card-body">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="_csrf" value="<?= adminCsrfToken() ?>">
                 <input type="hidden" name="action" value="send_newsletter">
                 <div class="form-group">
                     <label class="form-label">Sujet <span class="required">*</span></label>
                     <input type="text" name="nl_subject" class="form-control" required
                            placeholder="Ex. [GSCC] Nos actualités de mars 2026…">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Image (optionnelle)</label>
+                    <input type="file" name="nl_image" id="nlImageInput" class="form-control"
+                           accept="image/jpeg,image/png,image/gif,image/webp"
+                           onchange="nlPreviewImage(this)">
+                    <div class="form-hint">JPG, PNG, GIF ou WEBP — max 5 MB. S'affiche entre le logo et le texte dans l'email.</div>
+                    <div id="nlImagePreview" style="display:none;margin-top:10px;position:relative;width:fit-content;">
+                        <img id="nlImagePreviewImg" src="" alt="Aperçu"
+                             style="max-width:100%;max-height:200px;border-radius:8px;border:1px solid var(--border);display:block;">
+                        <button type="button" onclick="nlRemoveImage()"
+                                style="position:absolute;top:-8px;right:-8px;background:#ef4444;color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;line-height:1;padding:0;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Contenu <span class="required">*</span></label>
@@ -285,5 +315,23 @@ require_once dirname(__DIR__) . '/includes/header.php';
 <script>
 const sa = document.getElementById('selectAll');
 if(sa) sa.addEventListener('change',function(){ document.querySelectorAll('.row-check').forEach(cb=>cb.checked=this.checked); });
+
+function nlPreviewImage(input) {
+    var preview = document.getElementById('nlImagePreview');
+    var img     = document.getElementById('nlImagePreviewImg');
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function nlRemoveImage() {
+    document.getElementById('nlImageInput').value = '';
+    document.getElementById('nlImagePreview').style.display = 'none';
+    document.getElementById('nlImagePreviewImg').src = '';
+}
 </script>
 <?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>
