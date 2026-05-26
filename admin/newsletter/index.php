@@ -22,20 +22,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
 
         if ($subject && $body) {
             // Upload image optionnelle
-            $nl_image_url = '';
+            $nl_image_url  = '';
+            $nl_image_warn = '';
             if (!empty($_FILES['nl_image']['name']) && $_FILES['nl_image']['error'] === UPLOAD_ERR_OK) {
                 $upload_dir = UPLOADS_PATH . 'newsletter/';
-                if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
-                $up = uploadFile($_FILES['nl_image'], $upload_dir, ['jpg','jpeg','png','gif','webp']);
-                if ($up['success']) {
-                    $nl_image_url = rtrim(SITE_URL,'/') . '/assets/uploads/newsletter/' . $up['filename'];
+                if (!is_dir($upload_dir)) {
+                    if (!mkdir($upload_dir, 0755, true)) {
+                        $nl_image_warn = 'Impossible de créer le dossier newsletter/. Image non incluse.';
+                    }
+                }
+                if (!$nl_image_warn) {
+                    $up = uploadFile($_FILES['nl_image'], $upload_dir, ['jpg','jpeg','png','gif','webp']);
+                    if ($up['success']) {
+                        $nl_image_url = rtrim(SITE_URL,'/') . '/assets/uploads/newsletter/' . $up['filename'];
+                    } else {
+                        $nl_image_warn = 'Upload image échoué : ' . ($up['error'] ?? 'erreur inconnue') . '. Email envoyé sans image.';
+                    }
                 }
             }
 
+            if ($nl_image_warn) adminFlash('error', $nl_image_warn);
             try {
                 if ($test_email) {
                     nlSendOne($pdo, $test_email, 'Test', $subject, $body, $nl_image_url);
-                    adminFlash('success', "Email de test envoyé à $test_email");
+                    adminFlash('success', "Email de test envoyé à $test_email" . ($nl_image_url ? ' (avec image)' : ' (sans image)'));
                 } else {
                     $abonnes = $pdo->query("SELECT email,nom FROM newsletter_abonnes WHERE statut='actif'")->fetchAll();
                     $sent = 0;
@@ -45,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
                         if ($sent % 10 === 0) usleep(100000);
                     }
                     $pdo->query("UPDATE newsletter_abonnes SET derniere_envoi=NOW() WHERE statut='actif'");
-                    adminFlash('success', "Newsletter envoyée à $sent abonné(s) !");
+                    adminFlash('success', "Newsletter envoyée à $sent abonné(s)" . ($nl_image_url ? ' avec image !' : ' !'));
                 }
             } catch (Exception $e) { adminFlash('error', $e->getMessage()); }
         } else {
