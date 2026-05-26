@@ -28,6 +28,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
                     adminFlash('success', count($ids) . ' article(s) passé(s) en brouillon.');
                     break;
                 case 'delete':
+                    // Nettoyer les fichiers images (couverture + galerie) avant suppression
+                    $root = defined('ROOT_PATH') ? rtrim(ROOT_PATH,'/\\') : rtrim(dirname(__DIR__,2),'/\\');
+                    $rows = $pdo->query("SELECT image_couverture FROM articles WHERE id IN (" . implode(',', $ids) . ")")->fetchAll();
+                    foreach ($rows as $r) {
+                        if ($r['image_couverture']) {
+                            $f = $root . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $r['image_couverture']);
+                            if (file_exists($f)) @unlink($f);
+                        }
+                    }
+                    $gimgs = $pdo->query("SELECT fichier FROM article_images WHERE article_id IN (" . implode(',', $ids) . ")")->fetchAll();
+                    foreach ($gimgs as $g) {
+                        $f = $root . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $g['fichier']);
+                        if (file_exists($f)) @unlink($f);
+                    }
+                    $pdo->prepare("DELETE FROM article_images WHERE article_id IN (" . implode(',', $ids) . ")")->execute();
                     $pdo->prepare("DELETE FROM articles WHERE id IN (" . implode(',', $ids) . ")")->execute();
                     adminFlash('success', count($ids) . ' article(s) supprimé(s).');
                     break;
@@ -74,7 +89,8 @@ try {
 
     $stmt = $pdo->prepare(
         "SELECT a.*, c.nom as cat_nom,
-                CONCAT(u.prenom,' ',u.nom) as auteur_nom
+                CONCAT(u.prenom,' ',u.nom) as auteur_nom,
+                (SELECT COUNT(*) FROM article_images ai WHERE ai.article_id = a.id) as nb_galerie
          FROM articles a
          LEFT JOIN categories c ON a.categorie_id = c.id
          LEFT JOIN utilisateurs u ON a.auteur_id = u.id
@@ -181,6 +197,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                         <th>Catégorie</th>
                         <th>Auteur</th>
                         <th>Statut</th>
+                        <th>Photos</th>
                         <th>Vues</th>
                         <th>Date</th>
                         <th class="col-actions">Actions</th>
@@ -210,6 +227,17 @@ require_once dirname(__DIR__) . '/includes/header.php';
                         <td><span class="badge badge-primary"><?= htmlspecialchars($a['cat_nom'] ?? '—') ?></span></td>
                         <td style="font-size:.82rem;color:var(--text-muted);"><?= htmlspecialchars($a['auteur_nom'] ?? '—') ?></td>
                         <td><?= statusBadge($a['statut']) ?></td>
+                        <td style="text-align:center;">
+                            <?php if ($a['nb_galerie'] > 0): ?>
+                                <a href="create.php?id=<?= $a['id'] ?>#galerie"
+                                   style="display:inline-flex;align-items:center;gap:4px;background:#EFF6FF;color:#2563EB;border-radius:20px;padding:3px 10px;font-size:.75rem;font-weight:700;text-decoration:none;"
+                                   title="<?= $a['nb_galerie'] ?> image(s) de galerie">
+                                    <i class="fas fa-images"></i> <?= $a['nb_galerie'] ?>
+                                </a>
+                            <?php else: ?>
+                                <span style="color:var(--text-muted);font-size:.8rem;">—</span>
+                            <?php endif; ?>
+                        </td>
                         <td style="font-size:.85rem;"><?= number_format($a['vue_compteur']) ?></td>
                         <td style="font-size:.82rem;color:var(--text-muted);white-space:nowrap;">
                             <?= $a['date_publication'] ? dateFr($a['date_publication']) : dateFr($a['date_creation']) ?>
@@ -270,7 +298,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body">
-            <p>Voulez-vous vraiment supprimer cet article ? Cette action est irréversible.</p>
+            <p>Voulez-vous vraiment supprimer cet article ? Les images associées (couverture et galerie) seront aussi supprimées. Cette action est irréversible.</p>
         </div>
         <div class="modal-footer">
             <button onclick="closeModal()" class="btn btn-secondary">Annuler</button>

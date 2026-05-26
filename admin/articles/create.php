@@ -108,6 +108,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!adminCheckCsrf()) {
         $errors[] = 'Token CSRF invalide.';
     } else {
+        // Suppression d'une image de galerie
+        if (($_POST['action'] ?? '') === 'delete_image' && $is_edit) {
+            $img_id = (int)($_POST['image_id'] ?? 0);
+            if ($img_id > 0) {
+                $stmt = $pdo->prepare("SELECT fichier FROM article_images WHERE id=? AND article_id=?");
+                $stmt->execute([$img_id, $id]);
+                $row = $stmt->fetch();
+                if ($row) {
+                    $root  = defined('ROOT_PATH') ? rtrim(ROOT_PATH,'/\\') : rtrim(dirname(__DIR__,2),'/\\');
+                    $fpath = $root . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $row['fichier']);
+                    if (file_exists($fpath)) @unlink($fpath);
+                    $pdo->prepare("DELETE FROM article_images WHERE id=?")->execute([$img_id]);
+                    adminFlash('success', 'Image de galerie supprimée.');
+                }
+            }
+            header('Location: create.php?id='.$id); exit;
+        }
+
         $titre       = trim($_POST['titre'] ?? '');
         $contenu     = $_POST['contenu'] ?? '';
         $resume      = trim($_POST['resume'] ?? '');
@@ -141,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          temps_lecture=?,date_publication=?,auteur_id=? WHERE id=?")
                         ->execute([$titre,$slug,$contenu,$resume,$image,$cat_id?:null,$statut,
                                    $est_vedette,$tags,$meta_desc,$temps_lec?:null,$date_pub,$_SESSION['admin_id'],$id]);
-                    adminFlash('success','Article mis à jour !');
+                    $saved_id = $id;
                 } else {
                     $base_slug = $slug; $i = 0;
                     while (true) {
@@ -155,8 +173,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())")
                         ->execute([$titre,$slug,$contenu,$resume,$image,$cat_id?:null,$_SESSION['admin_id'],
                                    $statut,$est_vedette,$tags,$meta_desc,$temps_lec?:null,$date_pub]);
-                    adminFlash('success','Article créé !');
+                    $saved_id = (int)$pdo->lastInsertId();
                 }
+                // Upload images de galerie (non-bloquant)
+                $gallery_added = 0;
+                $gallery_err   = [];
+                if (!empty($_FILES['galerie']['name'][0])) {
+                    try {
+                        $gf      = $_FILES['galerie'];
+                        $mo_stmt = $pdo->prepare("SELECT COALESCE(MAX(ordre),0) FROM article_images WHERE article_id=?");
+                        $mo_stmt->execute([$saved_id]);
+                        $mo   = (int)$mo_stmt->fetchColumn();
+                        $legs = $_POST['galerie_legende'] ?? [];
+                        for ($fi = 0, $gn = count($gf['name']); $fi < $gn; $fi++) {
+                            if ($gf['error'][$fi] !== UPLOAD_ERR_OK || empty($gf['name'][$fi])) continue;
+                            $up = uploadArticleImage([
+                                'name'     => $gf['name'][$fi],
+                                'tmp_name' => $gf['tmp_name'][$fi],
+                                'error'    => $gf['error'][$fi],
+                                'size'     => $gf['size'][$fi],
+                                'type'     => $gf['type'][$fi] ?? '',
+                            ]);
+                            if ($up['success']) {
+                                $mo++;
+                                $pdo->prepare("INSERT INTO article_images (article_id,fichier,legende,ordre) VALUES (?,?,?,?)")
+                                    ->execute([$saved_id, $up['path'], trim($legs[$fi] ?? '') ?: null, $mo]);
+                                $gallery_added++;
+                            } else {
+                                $gallery_err[] = basename($gf['name'][$fi]) . ' : ' . $up['error'];
+                            }
+                        }
+                    } catch (PDOException $ge) {
+                        $gallery_err[] = 'Erreur BDD galerie — vérifiez que la table article_images existe.';
+                    }
+                }
+                $msg = $is_edit ? 'Article mis à jour !' : 'Article créé !';
+                if ($gallery_added > 0) $msg .= " ($gallery_added image(s) de galerie ajoutée(s).)" ;
+                if ($gallery_err)       $msg .= ' ⚠ ' . implode(' | ', $gallery_err);
+                adminFlash('success', $msg);
                 header('Location: index.php'); exit;
             } catch (PDOException $e) {
                 $errors[] = 'Erreur BDD : ' . $e->getMessage();
@@ -166,6 +220,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $v = fn($f,$d='') => ($_SERVER['REQUEST_METHOD']==='POST' ? ($_POST[$f]??$d) : ($article[$f]??$d));
+
+// Images de galerie existantes (mode édition)
+$gallery_images = [];
+if ($is_edit) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM article_images WHERE article_id=? ORDER BY ordre ASC");
+        $stmt->execute([$id]);
+        $gallery_images = $stmt->fetchAll();
+    } catch (PDOException $e) { $gallery_images = []; }
+}
 
 require_once dirname(__DIR__) . '/includes/header.php';
 ?>
@@ -254,6 +318,54 @@ require_once dirname(__DIR__) . '/includes/header.php';
                                value="<?= htmlspecialchars($v('tags')) ?>"
                                placeholder="cancer, dépistage, prévention…">
                     </div>
+                </div>
+            </div>
+
+            <!-- ── Galerie d'images ── -->
+            <div class="card" id="galerie">
+                <div class="card-header"><div class="card-title"><i class="fas fa-images"></i> Galerie d'images</div></div>
+                <div class="card-body">
+                    <?php if ($is_edit && !empty($gallery_images)): ?>
+                    <p style="font-size:.82rem;font-weight:600;color:var(--text-muted);margin-bottom:10px;">
+                        Images existantes — cliquez <i class="fas fa-times" style="color:#DC2626;"></i> pour supprimer
+                    </p>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:18px;">
+                        <?php foreach ($gallery_images as $gi): ?>
+                        <div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--border);">
+                            <img src="<?= htmlspecialchars(rtrim(SITE_URL,'/').'/'.ltrim($gi['fichier'],'/')) ?>"
+                                 style="width:100%;height:80px;object-fit:cover;display:block;">
+                            <?php if ($gi['legende']): ?>
+                            <div style="padding:4px 6px;font-size:10px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?= htmlspecialchars($gi['legende']) ?></div>
+                            <?php endif; ?>
+                            <button type="button"
+                                    onclick="confirmDelGallery(<?= $gi['id'] ?>)"
+                                    style="position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(220,38,38,.9);border:none;color:white;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <hr style="border:none;border-top:1px solid var(--border);margin-bottom:16px;">
+                    <?php endif; ?>
+
+                    <!-- Zone glisser-déposer -->
+                    <div id="galleryDropZone"
+                         style="border:2px dashed var(--border);border-radius:8px;padding:22px;text-align:center;cursor:pointer;transition:all .2s;background:var(--body-bg);"
+                         onclick="document.getElementById('galerieInput').click()"
+                         ondragover="this.style.borderColor='var(--primary)';this.style.background='var(--primary-light)';event.preventDefault();"
+                         ondragleave="this.style.borderColor='var(--border)';this.style.background='var(--body-bg)';"
+                         ondrop="handleGalleryDrop(event)">
+                        <i class="fas fa-images" style="font-size:26px;color:#CBD5E1;display:block;margin-bottom:8px;"></i>
+                        <div style="font-size:.84rem;font-weight:600;">Cliquez ou glissez plusieurs images</div>
+                        <div style="font-size:.76rem;color:var(--text-muted);margin-top:3px;">JPG, PNG, WEBP — max 5 Mo par image</div>
+                    </div>
+
+                    <input type="file" name="galerie[]" id="galerieInput"
+                           accept="image/jpeg,image/png,image/webp,image/gif"
+                           multiple style="display:none;" onchange="previewGallery(this)">
+
+                    <!-- Prévisualisations nouvelles images -->
+                    <div id="galleryNewPreview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:12px;"></div>
                 </div>
             </div>
         </div>
@@ -347,6 +459,14 @@ require_once dirname(__DIR__) . '/includes/header.php';
     </div>
 </form>
 
+<?php if ($is_edit): ?>
+<form id="delGalleryForm" method="POST" action="create.php?id=<?= $id ?>">
+    <input type="hidden" name="_csrf"     value="<?= adminCsrfToken() ?>">
+    <input type="hidden" name="action"   value="delete_image">
+    <input type="hidden" name="image_id" id="delGalleryId">
+</form>
+<?php endif; ?>
+
 <script>
 function updateSlug(t) {
     const s = t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -381,6 +501,47 @@ function handleDrop(e) {
             const dt = new DataTransfer(); dt.items.add(e.dataTransfer.files[0]);
             const inp = document.getElementById('imgInput'); inp.files = dt.files; previewImg(inp);
         } catch(err) { document.getElementById('imgInput').click(); }
+    }
+}
+function confirmDelGallery(id) {
+    if (!confirm('Supprimer cette image de la galerie ?')) return;
+    document.getElementById('delGalleryId').value = id;
+    document.getElementById('delGalleryForm').submit();
+}
+function previewGallery(input) {
+    const container = document.getElementById('galleryNewPreview');
+    container.innerHTML = '';
+    if (!input.files || !input.files.length) return;
+    Array.from(input.files).forEach((file, i) => {
+        const r = new FileReader();
+        r.onload = e => {
+            const div = document.createElement('div');
+            div.style.cssText = 'position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--border);';
+            const tooBig = file.size > 5*1024*1024;
+            div.innerHTML = `
+                <img src="${e.target.result}" style="width:100%;height:80px;object-fit:cover;display:block;${tooBig?'filter:grayscale(1) opacity(.5)':''}">
+                ${tooBig ? '<div style="position:absolute;inset:0;background:rgba(220,38,38,.15);display:flex;align-items:center;justify-content:center;font-size:10px;color:#DC2626;font-weight:700;">Trop grand</div>' : ''}
+                <div style="padding:4px 6px;">
+                    <input type="text" name="galerie_legende[]" placeholder="Légende…"
+                           style="width:100%;font-size:11px;border:1px solid var(--border);border-radius:4px;padding:3px 5px;box-sizing:border-box;font-family:inherit;">
+                </div>`;
+            container.appendChild(div);
+        };
+        r.readAsDataURL(file);
+    });
+}
+function handleGalleryDrop(e) {
+    e.preventDefault();
+    const dz = document.getElementById('galleryDropZone');
+    dz.style.borderColor = 'var(--border)'; dz.style.background = 'var(--body-bg)';
+    if (e.dataTransfer.files.length) {
+        try {
+            const dt = new DataTransfer();
+            Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+            const inp = document.getElementById('galerieInput');
+            inp.files = dt.files;
+            previewGallery(inp);
+        } catch(err) { document.getElementById('galerieInput').click(); }
     }
 }
 function execCmd(cmd) {

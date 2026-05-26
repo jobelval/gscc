@@ -58,7 +58,15 @@ try {
     
     $page_title = $article['titre'];
     $page_description = $article['meta_description'] ?? truncate(strip_tags($article['resume'] ?? $article['contenu']), 160);
-    
+
+    // Images de galerie
+    $gallery_images = [];
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM article_images WHERE article_id=? ORDER BY ordre ASC");
+        $stmt->execute([$article['id']]);
+        $gallery_images = $stmt->fetchAll();
+    } catch (PDOException $e) { $gallery_images = []; }
+
 } catch (PDOException $e) {
     logError("Erreur article.php: " . $e->getMessage());
     header('Location: blog.php');
@@ -92,7 +100,8 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
     <style>
         .article-header {
             background: linear-gradient(135deg, #7B1535 0%, #C8375F 55%, #D94F7A 100%);
@@ -239,10 +248,13 @@ try {
             transition: all 0.3s ease;
         }
         
-        .share-btn.facebook { background: #3b5998; }
-        .share-btn.twitter { background: #1da1f2; }
-        .share-btn.linkedin { background: #0077b5; }
-        .share-btn.whatsapp { background: #25d366; }
+        .share-btn.facebook  { background: #1877F2; }
+        .share-btn.twitter   { background: #000000; }
+        .share-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .share-btn.linkedin  { background: #0077b5; }
+        .share-btn.youtube   { background: #FF0000; }
+        .share-btn.tiktok    { background: #000000; }
+        .share-btn.whatsapp  { background: #25d366; }
         
         .share-btn:hover {
             transform: translateY(-3px);
@@ -357,6 +369,79 @@ try {
             color: #003399;
         }
         
+        /* ── Galerie photos ── */
+        .article-gallery-section {
+            margin: 36px 0 30px;
+            padding-top: 28px;
+            border-top: 1px solid #f0f0f0;
+        }
+        .article-gallery-section h3 {
+            color: #003399;
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .article-gallery-section h3 i { color: #D94F7A; }
+        .article-swiper { border-radius: 12px; overflow: hidden; }
+        .article-swiper .swiper-slide { position: relative; }
+        .article-swiper .swiper-slide img {
+            width: 100%;
+            max-height: 520px;
+            height: auto;
+            object-fit: contain;
+            cursor: zoom-in;
+            display: block;
+        }
+        .gallery-slide-caption {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,.65));
+            color: white;
+            padding: 24px 18px 14px;
+            font-size: 13.5px;
+            font-style: italic;
+        }
+        .article-swiper .swiper-button-next,
+        .article-swiper .swiper-button-prev { color: white; }
+        .article-swiper .swiper-button-next::after,
+        .article-swiper .swiper-button-prev::after { font-size: 20px; }
+        .article-swiper .swiper-pagination-bullet-active { background: white; }
+        /* Lightbox */
+        #artLightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.93);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        }
+        #artLightbox.open { display: flex; }
+        #artLightboxImg {
+            max-width: 92vw;
+            max-height: 88vh;
+            border-radius: 8px;
+            object-fit: contain;
+            box-shadow: 0 8px 40px rgba(0,0,0,.6);
+        }
+        #artLightboxClose {
+            position: absolute;
+            top: 18px; right: 22px;
+            background: rgba(255,255,255,.15);
+            border: none; color: white;
+            font-size: 22px; width: 42px; height: 42px;
+            border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        #artLightboxClose:hover { background: rgba(255,255,255,.28); }
+
+        @media (max-width: 768px) {
+            .article-swiper .swiper-slide img { max-height: 300px; }
+        }
+
         @media (max-width: 768px) {
             .article-header h1 {
                 font-size: 2rem;
@@ -423,7 +508,34 @@ try {
                 <div class="article-content">
                     <?= $article['contenu'] ?>
                 </div>
-                
+
+                <?php if (!empty($gallery_images)): ?>
+                <div class="article-gallery-section">
+                    <h3><i class="fas fa-images"></i> Galerie photos</h3>
+                    <div class="swiper article-swiper">
+                        <div class="swiper-wrapper">
+                            <?php foreach ($gallery_images as $gi):
+                                $gi_url = rtrim(SITE_URL,'/') . '/' . ltrim($gi['fichier'],'/');
+                            ?>
+                            <div class="swiper-slide">
+                                <img src="<?= htmlspecialchars($gi_url) ?>"
+                                     alt="<?= htmlspecialchars($gi['legende'] ?? '') ?>"
+                                     onclick="artLightboxOpen(this.src)">
+                                <?php if (!empty($gi['legende'])): ?>
+                                <div class="gallery-slide-caption"><?= htmlspecialchars($gi['legende']) ?></div>
+                                <?php endif; ?>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php if (count($gallery_images) > 1): ?>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <?php if (!empty($article['tags'])): ?>
                     <div class="article-tags">
                         <strong><i class="fas fa-tags"></i> Tags :</strong>
@@ -441,24 +553,39 @@ try {
                     </div>
                 <?php endif; ?>
                 
-                <!-- Boutons de partage -->
-                <div class="share-buttons">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(SITE_URL . '/article.php?id=' . $article['id']) ?>" 
-                       target="_blank" class="share-btn facebook" title="Partager sur Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://twitter.com/intent/tweet?url=<?= urlencode(SITE_URL . '/article.php?id=' . $article['id']) ?>&text=<?= urlencode($article['titre']) ?>" 
-                       target="_blank" class="share-btn twitter" title="Partager sur Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= urlencode(SITE_URL . '/article.php?id=' . $article['id']) ?>&title=<?= urlencode($article['titre']) ?>" 
-                       target="_blank" class="share-btn linkedin" title="Partager sur LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://api.whatsapp.com/send?text=<?= urlencode($article['titre'] . ' - ' . SITE_URL . '/article.php?id=' . $article['id']) ?>" 
-                       target="_blank" class="share-btn whatsapp" title="Partager sur WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
+                <!-- Réseaux sociaux GSCC -->
+                <div style="text-align:center;margin:30px 0;">
+                    <p style="font-size:13px;color:#888;margin-bottom:14px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;">Suivez-nous</p>
+                    <div class="share-buttons">
+                        <a href="https://web.facebook.com/GSCCHAITI" target="_blank" rel="noopener noreferrer"
+                           class="share-btn facebook" title="Facebook GSCC">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/gscchaiti_" target="_blank" rel="noopener noreferrer"
+                           class="share-btn twitter" title="X (Twitter) GSCC">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/gscchaiti" target="_blank" rel="noopener noreferrer"
+                           class="share-btn instagram" title="Instagram GSCC">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/98641192/" target="_blank" rel="noopener noreferrer"
+                           class="share-btn linkedin" title="LinkedIn GSCC">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@gscchaiti" target="_blank" rel="noopener noreferrer"
+                           class="share-btn youtube" title="YouTube GSCC">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@gscchaiti" target="_blank" rel="noopener noreferrer"
+                           class="share-btn tiktok" title="TikTok GSCC">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://wa.me/50929474722" target="_blank" rel="noopener noreferrer"
+                           class="share-btn whatsapp" title="WhatsApp GSCC">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
                 </div>
                 
                 <!-- Boîte auteur -->
@@ -511,5 +638,35 @@ try {
     </section>
 
     <?php include 'templates/footer.php'; ?>
+
+    <!-- Lightbox -->
+    <div id="artLightbox" onclick="artLightboxClose()">
+        <button id="artLightboxClose" onclick="artLightboxClose()" aria-label="Fermer">×</button>
+        <img id="artLightboxImg" src="" alt="">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+    <?php if (!empty($gallery_images)): ?>
+    new Swiper('.article-swiper', {
+        loop: <?= count($gallery_images) > 1 ? 'true' : 'false' ?>,
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        slidesPerView: 1,
+        spaceBetween: 0,
+        autoHeight: true,
+    });
+    <?php endif; ?>
+    function artLightboxOpen(src) {
+        document.getElementById('artLightboxImg').src = src;
+        document.getElementById('artLightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function artLightboxClose() {
+        document.getElementById('artLightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') artLightboxClose(); });
+    </script>
 </body>
 </html>

@@ -17,10 +17,8 @@
     <meta property="og:url" content="<?= htmlspecialchars(SITE_URL . $_SERVER['REQUEST_URI'], ENT_QUOTES, 'UTF-8') ?>">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="<?= SITE_URL ?>/images/site/image2.png">
+    <link rel="apple-touch-icon" href="<?= SITE_URL ?>/images/site/image2.png">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -976,6 +974,7 @@
                             <a href="#">Soins et soutien <i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="survivants.php">Nos survivants</a></li>
+                                <li><a href="combattants.php">Nos combattants</a></li>
                                 <li><a href="ressources.php">S'informer et comprendre</a></li>
                             </ul>
                         </li>
