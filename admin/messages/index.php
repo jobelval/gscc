@@ -180,8 +180,12 @@ require_once dirname(__DIR__) . '/includes/header.php';
                     </td>
                     <td style="font-size:.78rem;color:var(--text-muted);white-space:nowrap;"><?= dateFr($m['date_envoi'],'d/m/Y H:i') ?></td>
                     <td class="col-actions">
-                        <button type="button" class="btn btn-xs btn-primary"
-                                onclick="openReply(<?= $m['id'] ?>,'<?= htmlspecialchars(addslashes($m['nom'])) ?>','<?= htmlspecialchars(addslashes($m['email'])) ?>','<?= htmlspecialchars(addslashes($m['sujet']??'')) ?>','<?= htmlspecialchars(addslashes($m['message'])) ?>')">
+                        <button type="button" class="btn btn-xs btn-primary open-reply-btn"
+                                data-mid="<?= $m['id'] ?>"
+                                data-name="<?= htmlspecialchars($m['nom']) ?>"
+                                data-email="<?= htmlspecialchars($m['email']) ?>"
+                                data-subject="<?= htmlspecialchars($m['sujet'] ?? '') ?>"
+                                data-message="<?= htmlspecialchars($m['message']) ?>">
                             <i class="fas fa-reply"></i>
                         </button>
                         <form method="POST" style="display:inline;" onsubmit="return confirm('Supprimer ce message ?')">
@@ -224,8 +228,8 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <div class="modal-body">
                 <div style="background:var(--body-bg);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:.84rem;border:1px solid var(--border);">
                     <div style="font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Message original</div>
-                    <div id="replySubject" style="font-weight:600;margin-bottom:4px;"></div>
-                    <div id="replyOriginal" style="color:var(--text-muted);"></div>
+                    <div id="replySubject" style="font-weight:600;margin-bottom:6px;"></div>
+                    <div id="replyOriginal" style="color:var(--text-muted);white-space:pre-wrap;max-height:180px;overflow-y:auto;line-height:1.6;"></div>
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                     <label class="form-label">Votre réponse <span class="required">*</span></label>
@@ -243,15 +247,18 @@ require_once dirname(__DIR__) . '/includes/header.php';
 </div>
 
 <script>
-function openReply(id,name,email,subject,message){
-    document.getElementById('replyMid').value=id;
-    document.getElementById('replyName').textContent=name+' <'+email+'>';
-    document.getElementById('replySubject').textContent='Sujet : '+(subject||'Sans sujet');
-    document.getElementById('replyOriginal').textContent=message.substring(0,200)+(message.length>200?'…':'');
-    document.getElementById('replyModal').classList.add('show');
-}
-document.getElementById('selectAll').addEventListener('change',function(){
-    document.querySelectorAll('.row-check').forEach(cb=>cb.checked=this.checked);
+document.querySelectorAll('.open-reply-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        var d = this.dataset;
+        document.getElementById('replyMid').value        = d.mid;
+        document.getElementById('replyName').textContent = d.name + ' <' + d.email + '>';
+        document.getElementById('replySubject').textContent = 'Sujet : ' + (d.subject || 'Sans sujet');
+        document.getElementById('replyOriginal').textContent = d.message;
+        document.getElementById('replyModal').classList.add('show');
+    });
+});
+document.getElementById('selectAll').addEventListener('change', function(){
+    document.querySelectorAll('.row-check').forEach(function(cb){ cb.checked = this.checked; }, this);
 });
 </script>
 <?php require_once dirname(__DIR__) . '/includes/footer.php'; ?>

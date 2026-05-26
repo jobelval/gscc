@@ -19,10 +19,9 @@ $flash    = adminGetFlash();
 try {
     $nb_messages  = $pdo->query("SELECT COUNT(*) FROM messages_contact WHERE lu = 0")->fetchColumn();
     $nb_benevoles = $pdo->query("SELECT COUNT(*) FROM candidatures_benevoles WHERE statut = 'en_attente'")->fetchColumn();
-    $nb_demandes  = $pdo->query("SELECT COUNT(*) FROM demandes_aide WHERE statut = 'soumis'")->fetchColumn();
     $nb_temos     = $pdo->query("SELECT COUNT(*) FROM temoignages WHERE statut = 'en_attente'")->fetchColumn();
 } catch (Exception $e) {
-    $nb_messages = $nb_benevoles = $nb_demandes = $nb_temos = 0;
+    $nb_messages = $nb_benevoles = $nb_temos = 0;
 }
 
 $section = $page_section ?? '';
@@ -96,11 +95,10 @@ function navItem(string $href, string $icon, string $label, string $active_key, 
         </div>
 
         <?php if ($admin['role'] === 'admin'): ?>
-        <!-- Dons & Aide (admin seulement) -->
+        <!-- Dons (admin seulement) -->
         <div class="nav-group">
-            <div class="nav-group-label">Dons & Aide</div>
-            <?= navItem(SITE_URL.'/admin/dons/index.php',      'hand-holding-heart','Dons',          'dons',      $section) ?>
-            <?= navItem(SITE_URL.'/admin/demandes/index.php',  'file-medical',      'Demandes d\'aide','demandes', $section, (int)$nb_demandes) ?>
+            <div class="nav-group-label">Dons</div>
+            <?= navItem(SITE_URL.'/admin/dons/index.php', 'hand-holding-heart', 'Dons', 'dons', $section) ?>
         </div>
         <?php endif; ?>
 
