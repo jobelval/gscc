@@ -2115,3 +2115,5 @@
 [2026-05-26 00:59:54] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
 [2026-05-26 01:00:07] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
 [2026-05-26 01:00:07] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
+[2026-05-26 01:49:47] Erreur getSliderImages: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.slider_accueil' doesn't exist
+[2026-05-26 01:49:47] Erreur getPartenairesActifs: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'gscc.partenaires' doesn't exist
