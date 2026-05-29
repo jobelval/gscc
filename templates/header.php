@@ -953,10 +953,11 @@
                             <a href="#"> Présentation<i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="presentation.php#propos">À propos du GSCC</a></li>
-                                <li><a href="presentation.php#mission">Mission & Impact</a></li>
+                                <li><a href="presentation.php#actions">Nos actions</a></li>
+                                <li><a href="presentation.php#mission">Mission &amp; Impact</a></li>
                                 <li><a href="presentation.php#historique">Historique</a></li>
+                                <li><a href="presentation.php#valeurs">Valeurs &amp; engagements</a></li>
                                 <li><a href="presentation.php#equipe">Équipe</a></li>
-                                <li><a href="presentation.php#valeurs">Valeurs & engagements</a></li>
                             </ul>
                         </li>
 

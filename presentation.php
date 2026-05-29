@@ -57,8 +57,307 @@ require_once 'templates/header.php';
     }
 
     /* ── Offset ancres ── */
-    #propos, #mission, #vision, #historique, #valeurs, #equipe {
+    #propos, #actions, #dates, #mission, #vision, #historique, #valeurs, #equipe {
         scroll-margin-top: 100px;
+    }
+
+    /* ── CE QUE NOUS FAISONS ── */
+    .nos-actions {
+        padding: 88px 0;
+        background: var(--bg);
+        position: relative;
+        overflow: hidden;
+    }
+    .na-blob { position: absolute; border-radius: 50%; pointer-events: none; }
+    .na-blob-tr {
+        top: -180px; right: -180px; width: 500px; height: 500px;
+        background: radial-gradient(circle, rgba(200,55,90,.07), transparent 60%);
+    }
+    .na-blob-bl {
+        bottom: -140px; left: -140px; width: 440px; height: 440px;
+        background: radial-gradient(circle, rgba(0,51,153,.06), transparent 60%);
+    }
+
+    /* Strips */
+    .action-strip {
+        position: relative;
+        padding: 66px 0;
+        overflow: hidden;
+    }
+    .action-strip + .action-strip {
+        border-top: 1px solid var(--border);
+    }
+    .strip-01 { background: linear-gradient(115deg, rgba(217,79,122,.04) 0%, transparent 55%); }
+    .strip-02 { background: linear-gradient(245deg, rgba(0,51,153,.04) 0%, transparent 55%); }
+
+    /* Content block — left accent bar via ::before */
+    .action-sc {
+        max-width: 720px;
+        position: relative; z-index: 1;
+        padding-left: 24px;
+    }
+    .strip-01 .action-sc { margin-left: 0; }
+    .strip-02 .action-sc { margin-left: auto; }
+    .action-sc::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 3px; border-radius: 3px;
+    }
+    .strip-01 .action-sc::before {
+        background: linear-gradient(180deg, var(--rose) 0%, rgba(200,55,90,.08) 100%);
+    }
+    .strip-02 .action-sc::before {
+        background: linear-gradient(180deg, var(--blue) 0%, rgba(0,51,153,.08) 100%);
+    }
+
+    /* Number */
+    .action-top { margin-bottom: 8px; }
+    .action-big-num {
+        display: inline-block;
+        font-size: 2.4rem;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -2px;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .strip-01 .action-big-num { background-image: linear-gradient(135deg, #E8607E, #6B001E); }
+    .strip-02 .action-big-num { background-image: linear-gradient(135deg, #4E9FE5, #001450); }
+
+    /* Dash rule */
+    .action-rule {
+        width: 30px; height: 2px; border-radius: 2px;
+        margin: 10px 0 16px;
+    }
+    .strip-01 .action-rule { background: var(--rose); }
+    .strip-02 .action-rule { background: var(--blue); }
+
+    /* Title */
+    .action-sc h3 {
+        font-size: 1.38rem;
+        font-weight: 800;
+        color: var(--text);
+        text-transform: uppercase;
+        letter-spacing: .3px;
+        line-height: 1.3;
+        margin-bottom: 14px;
+    }
+
+    /* Desc */
+    .action-sc > p {
+        color: var(--text-2);
+        line-height: 1.88;
+        font-size: .97rem;
+        margin-bottom: 28px;
+        max-width: 580px;
+    }
+
+    /* Bullet list */
+    .action-blist { list-style: none; padding: 0; margin: 0 0 28px; }
+    .action-blist li {
+        display: flex;
+        align-items: flex-start;
+        gap: 13px;
+        color: var(--text-2);
+        font-size: .96rem;
+        line-height: 1.75;
+        margin-bottom: 11px;
+    }
+    .bdot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0; margin-top: 7px;
+    }
+    .strip-01 .bdot { background: var(--rose); }
+    .strip-02 .bdot { background: var(--blue); }
+
+    /* Stat cards — 3 en ligne */
+    .action-metrics {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .action-metric {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-left: 3px solid transparent;
+        border-radius: 10px;
+        padding: 12px 16px;
+        box-shadow: 0 2px 12px rgba(0,0,0,.05);
+        transition: transform .22s, box-shadow .22s;
+        flex: 1;
+        min-width: 0;
+    }
+    .strip-01 .action-metric { border-left-color: var(--rose); }
+    .strip-02 .action-metric { border-left-color: var(--blue); }
+    .action-metric:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0,0,0,.09);
+    }
+    .metric-val {
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1;
+        white-space: nowrap;
+        padding-right: 14px;
+    }
+    .strip-01 .metric-val { color: var(--rose); }
+    .strip-02 .metric-val { color: var(--blue); }
+    .metric-lab {
+        font-size: .77rem;
+        color: var(--text-2);
+        line-height: 1.38;
+        padding-left: 14px;
+        border-left: 1px solid var(--border);
+    }
+
+    @media (max-width: 860px) {
+        .strip-02 .action-sc  { margin-left: 0; }
+        .action-sc h3         { font-size: 1.2rem; }
+        .action-metrics       { max-width: none; }
+    }
+    @media (max-width: 520px) {
+        .action-strip         { padding: 46px 0; }
+        .action-sc            { padding-left: 16px; }
+        .action-big-num       { font-size: 2rem; }
+        .action-metrics       { flex-direction: column; gap: 8px; }
+        .action-metric        { display: flex; flex-direction: row; align-items: center; gap: 12px; flex: none; }
+        .metric-val           { font-size: 1.05rem; min-width: 72px; padding-right: 0; }
+        .metric-lab           { font-size: .78rem; padding-left: 12px; border-left: 1px solid var(--border); }
+        .action-metric:hover  { transform: none; box-shadow: 0 2px 12px rgba(0,0,0,.05); }
+    }
+
+    /* ── DATES CLÉS ── */
+    .dates-section {
+        padding: 80px 0 90px;
+        background: var(--white);
+        border-top: 1px solid var(--border);
+    }
+    .htl-outer {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin: 40px 0 44px;
+    }
+    .htl-btn {
+        width: 48px; height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: linear-gradient(135deg, var(--rose), #8B0030);
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 4px 18px rgba(200,55,90,.30);
+        transition: opacity .2s, transform .2s;
+    }
+    .htl-btn:hover  { opacity: .85; transform: scale(1.08); }
+    .htl-btn:disabled {
+        background: var(--border);
+        box-shadow: none;
+        cursor: default;
+        transform: none;
+        opacity: 1;
+    }
+    .htl-viewport { flex: 1; overflow: hidden; }
+    .htl-track { position: relative; padding: 10px 0 30px; }
+
+    .htl-line-bg {
+        position: absolute;
+        top: 15px; left: 0; right: 0;
+        height: 2px;
+        background: var(--border);
+        border-radius: 2px;
+    }
+    .htl-line-progress {
+        position: absolute; top: 0; left: 0;
+        height: 100%; width: 0;
+        background: linear-gradient(90deg, var(--blue), var(--blue-mid));
+        border-radius: 2px;
+        transition: width .4s cubic-bezier(.4,0,.2,1);
+    }
+    .htl-dots-row {
+        display: flex;
+        justify-content: space-between;
+        position: relative; z-index: 1;
+    }
+    .htl-dot-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+    .htl-dot {
+        width: 13px; height: 13px;
+        border-radius: 50%;
+        background: var(--white);
+        border: 2px solid #D1D5DB;
+        transition: all .25s;
+    }
+    .htl-dot-wrap.is-past .htl-dot {
+        background: var(--blue);
+        border-color: var(--blue);
+    }
+    .htl-dot-wrap.is-active .htl-dot {
+        width: 22px; height: 22px;
+        margin-top: -4px;
+        background: var(--rose);
+        border-color: var(--rose);
+        box-shadow: 0 0 0 5px rgba(200,55,90,.18);
+    }
+    .htl-year-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        transition: color .25s;
+        white-space: nowrap;
+    }
+    .htl-dot-wrap.is-past   .htl-year-label { color: var(--blue); }
+    .htl-dot-wrap.is-active .htl-year-label { color: var(--rose); font-size: 12px; }
+
+    .htl-display {
+        text-align: center;
+        min-height: 110px;
+        padding: 0 80px;
+        transition: opacity .18s;
+    }
+    .htl-display.fading { opacity: 0; }
+    .htl-display-year {
+        font-size: 2.6rem;
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, var(--rose), #8B0030);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .htl-display-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 8px;
+    }
+    .htl-display-text {
+        font-size: .89rem;
+        color: var(--muted);
+        max-width: 520px;
+        margin: 0 auto;
+        line-height: 1.72;
+    }
+    @media (max-width: 640px) {
+        .htl-display { padding: 0; }
+        .htl-display-year { font-size: 2rem; }
+        .htl-btn { width: 38px; height: 38px; font-size: 12px; }
+        .htl-year-label { font-size: 9.5px; }
     }
 
     /* ── HERO ── */
@@ -618,11 +917,12 @@ require_once 'templates/header.php';
                 Le Groupe de Support Contre le Cancer (GSCC) est une organisation à but non lucratif fondée en 1999 par un groupe de dames, qui, ayant vécu le cancer personnellement ou à travers un proche, ont décidé de donner gracieusement de leur temps et de partager leurs expériences. Reconnu par le Ministère des Affaires Sociales et du Travail, le GSCC travaille depuis sa fondation à l'amélioration du sort des personnes atteintes de cancer, à la sensibilisation de la population, à sa prévention et à son dépistage.
             </p>
             <nav class="anchor-nav" aria-label="Navigation rapide">
+                <a href="#actions"><i class="fas fa-star"></i> Nos actions</a>
                 <a href="#mission"><i class="fas fa-bullseye"></i> Mission</a>
                 <a href="#vision"><i class="fas fa-chart-line"></i> Impact</a>
                 <a href="#historique"><i class="fas fa-clock-rotate-left"></i> Historique</a>
-                <a href="#equipe"><i class="fas fa-users"></i> Équipe</a>
                 <a href="#valeurs"><i class="fas fa-heart"></i> Valeurs</a>
+                <a href="#equipe"><i class="fas fa-users"></i> Équipe</a>
             </nav>
         </div>
     </div>
@@ -630,6 +930,114 @@ require_once 'templates/header.php';
         <svg viewBox="0 0 1440 64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <path d="M0,32 C360,64 1080,0 1440,32 L1440,64 L0,64 Z" fill="#FFFFFF"/>
         </svg>
+    </div>
+</section>
+
+<!-- ── CE QUE NOUS FAISONS ── -->
+<section id="actions" class="nos-actions">
+    <div class="na-blob na-blob-tr"></div>
+    <div class="na-blob na-blob-bl"></div>
+    <div class="container">
+
+        <div class="sec-header" data-aos="fade-up">
+            <div class="sec-tag"><i class="fas fa-star"></i> Nos programmes</div>
+            <h2>Ce que nous faisons</h2>
+            <div class="sec-divider"></div>
+            <p class="sec-sub">25 ans d'actions concrètes pour réduire la mortalité par cancer en Haïti</p>
+        </div>
+
+        <!-- ── Strip 01 ── -->
+        <div class="action-strip strip-01" data-aos="fade-up">
+            <div class="action-sc">
+                <div class="action-top">
+                    <span class="action-big-num">01</span>
+                </div>
+                <div class="action-rule"></div>
+                <h3>Campagnes de sensibilisation et dépistage</h3>
+                <p>Organisation de campagnes dans la zone métropolitaine et les provinces et dans les médias (radio, télé, réseaux sociaux) pour informer et dépister la population.</p>
+                <div class="action-metrics">
+                    <div class="action-metric">
+                        <span class="metric-val">+250 000</span>
+                        <span class="metric-lab">personnes sensibilisées en 25 ans</span>
+                    </div>
+                    <div class="action-metric">
+                        <span class="metric-val">8 697</span>
+                        <span class="metric-lab">personnes touchées (2021–2023)</span>
+                    </div>
+                    <div class="action-metric">
+                        <span class="metric-val">4 166</span>
+                        <span class="metric-lab">personnes dépistées</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Strip 02 ── -->
+        <div class="action-strip strip-02" data-aos="fade-up">
+            <div class="action-sc">
+                <div class="action-top">
+                    <span class="action-big-num">02</span>
+                </div>
+                <div class="action-rule"></div>
+                <h3>Accompagnement des patients</h3>
+                <ul class="action-blist">
+                    <li><span class="bdot"></span>Soutien médical, psychologique, nutritionnel et social</li>
+                    <li><span class="bdot"></span>Suivis médicaux, subventions, dons de médicaments</li>
+                    <li><span class="bdot"></span>Suivi auprès des ambassades pour faciliter les traitements à l'étranger</li>
+                </ul>
+                <div class="action-metrics">
+                    <div class="action-metric">
+                        <span class="metric-val">+2 593</span>
+                        <span class="metric-lab">patients accompagnés en 25 ans</span>
+                    </div>
+                    <div class="action-metric">
+                        <span class="metric-val">+2 625</span>
+                        <span class="metric-lab">subventions accordées</span>
+                    </div>
+                    <div class="action-metric">
+                        <span class="metric-val">170</span>
+                        <span class="metric-lab">patients suivis en 2024, dont 36 avec subvention directe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ── DATES CLÉS ── -->
+<section id="dates" class="dates-section">
+    <div class="container">
+
+        <div class="sec-header" data-aos="fade-up">
+           <!-- <div class="sec-tag"><i class="fas fa-clock-rotate-left"></i> Jalons historiques</div> -->
+            <h2>Nos dates clés</h2>
+            <div class="sec-divider"></div>
+        </div>
+
+        <div class="htl-outer" data-aos="fade-up" data-aos-delay="80">
+            <button class="htl-btn" id="htlPrev" aria-label="Précédent">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="htl-viewport">
+                <div class="htl-track">
+                    <div class="htl-line-bg">
+                        <div class="htl-line-progress" id="htlProgress"></div>
+                    </div>
+                    <div class="htl-dots-row" id="htlDotsRow"></div>
+                </div>
+            </div>
+            <button class="htl-btn" id="htlNext" aria-label="Suivant">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="htl-display" id="htlDisplay" data-aos="fade-up" data-aos-delay="120">
+            <div class="htl-display-year"  id="htlYear"></div>
+            <div class="htl-display-title" id="htlTitle"></div>
+            <div class="htl-display-text"  id="htlText"></div>
+        </div>
+
     </div>
 </section>
 
@@ -928,5 +1336,100 @@ function closeBioModal() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBioModal(); });
 </script>
 <?php endif; ?>
+
+<script>
+(function () {
+    const events = [
+        { year: '1999', title: 'Fondation du GSCC',
+          text: 'Création du Groupe de Support Contre le Cancer par un groupe de dames bénévoles, animées par la volonté d\'apporter du soutien aux personnes atteintes de cancer en Haïti.' },
+        { year: '2003', title: 'Reconnaissance officielle',
+          text: 'Reconnaissance par le Ministère des Affaires Sociales et du Travail, marquant une étape clé dans la légitimité et la crédibilité de l\'organisation.' },
+        { year: '2006', title: 'Premiers partenariats internationaux',
+          text: 'Développement des premiers partenariats avec des organisations internationales de lutte contre le cancer pour renforcer les capacités du GSCC.' },
+        { year: '2010', title: 'Programme d\'aide financière',
+          text: 'Lancement du premier programme d\'aide financière pour permettre aux patients à faibles revenus d\'accéder aux traitements nécessaires.' },
+        { year: '2013', title: 'Extension aux provinces',
+          text: 'Extension des activités de sensibilisation et d\'accompagnement au-delà de la zone métropolitaine, vers les provinces haïtiennes.' },
+        { year: '2015', title: 'Centre d\'écoute',
+          text: 'Inauguration du premier centre d\'écoute et de soutien psychologique pour les patients et leurs familles à travers Haïti.' },
+        { year: '2018', title: '1 000 patients accompagnés',
+          text: 'Franchissement du cap symbolique de 1 000 patients accompagnés dans leur combat contre le cancer depuis la fondation du GSCC.' },
+        { year: '2020', title: 'Campagnes nationales',
+          text: 'Lancement de grandes campagnes de sensibilisation à travers tout le pays sur la prévention et le dépistage précoce du cancer.' },
+        { year: '2022', title: 'Football Rose',
+          text: 'Lancement de l\'initiative Football Rose, alliant sport et sensibilisation pour toucher un public plus large et promouvoir le dépistage.' },
+        { year: '2024', title: '25ème anniversaire — 2 500+ patients',
+          text: 'Célébration de 25 ans d\'engagement avec plus de 2 500 personnes accompagnées, 250 000 sensibilisées et 2 625 subventions accordées.' },
+    ];
+
+    let cur = 0;
+    const dotsRow = document.getElementById('htlDotsRow');
+    const progress = document.getElementById('htlProgress');
+    const display  = document.getElementById('htlDisplay');
+    const elYear   = document.getElementById('htlYear');
+    const elTitle  = document.getElementById('htlTitle');
+    const elText   = document.getElementById('htlText');
+    const btnPrev  = document.getElementById('htlPrev');
+    const btnNext  = document.getElementById('htlNext');
+
+    if (!dotsRow) return;
+
+    /* Build dots */
+    events.forEach(function (ev, i) {
+        var wrap = document.createElement('div');
+        wrap.className = 'htl-dot-wrap';
+        wrap.innerHTML = '<div class="htl-dot"></div><span class="htl-year-label">' + ev.year + '</span>';
+        wrap.addEventListener('click', function () { goTo(i); });
+        dotsRow.appendChild(wrap);
+    });
+
+    function refresh(idx, animate) {
+        var ev  = events[idx];
+        var pct = idx / (events.length - 1) * 100;
+
+        if (animate) {
+            display.classList.add('fading');
+            setTimeout(function () {
+                elYear.textContent  = ev.year;
+                elTitle.textContent = ev.title;
+                elText.textContent  = ev.text;
+                display.classList.remove('fading');
+            }, 180);
+        } else {
+            elYear.textContent  = ev.year;
+            elTitle.textContent = ev.title;
+            elText.textContent  = ev.text;
+        }
+
+        progress.style.width = pct + '%';
+
+        dotsRow.querySelectorAll('.htl-dot-wrap').forEach(function (d, i) {
+            d.classList.remove('is-active', 'is-past');
+            if (i < idx) d.classList.add('is-past');
+            if (i === idx) d.classList.add('is-active');
+        });
+
+        btnPrev.disabled = idx === 0;
+        btnNext.disabled = idx === events.length - 1;
+    }
+
+    function goTo(idx) { cur = idx; refresh(idx, true); }
+
+    btnPrev.addEventListener('click', function () { if (cur > 0) goTo(cur - 1); });
+    btnNext.addEventListener('click', function () { if (cur < events.length - 1) goTo(cur + 1); });
+
+    /* Keyboard navigation */
+    document.addEventListener('keydown', function (e) {
+        var section = document.getElementById('dates');
+        if (!section) return;
+        var r = section.getBoundingClientRect();
+        if (r.top > window.innerHeight || r.bottom < 0) return;
+        if (e.key === 'ArrowLeft'  && cur > 0) goTo(cur - 1);
+        if (e.key === 'ArrowRight' && cur < events.length - 1) goTo(cur + 1);
+    });
+
+    refresh(0, false);
+})();
+</script>
 
 <?php require_once 'templates/footer.php'; ?>
