@@ -4,6 +4,8 @@
 # Uploads utilisateurs (fichiers ignorés, mais structure de dossiers conservée)
 assets/uploads/
 !assets/uploads/**/.gitkeep
+uploads/articles/*
+!uploads/articles/.gitkeep
 
 # Logs
 *.log
