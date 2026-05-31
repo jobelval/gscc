@@ -87,8 +87,8 @@ require_once 'templates/header.php';
     .action-strip + .action-strip {
         border-top: 1px solid var(--border);
     }
-    .strip-01 { background: linear-gradient(115deg, rgba(217,79,122,.04) 0%, transparent 55%); }
-    .strip-02 { background: linear-gradient(245deg, rgba(0,51,153,.04) 0%, transparent 55%); }
+    .strip-01 { background: linear-gradient(115deg, rgba(217,79,122,.13) 0%, rgba(217,79,122,.04) 55%, transparent 100%); }
+    .strip-02 { background: linear-gradient(245deg, rgba(0,51,153,.13) 0%, rgba(0,51,153,.04) 55%, transparent 100%); }
 
     /* Content block — left accent bar via ::before */
     .action-sc {
