@@ -1000,6 +1000,8 @@ require_once 'templates/header.php';
                     </div>
                 </div>
             </div>
+        </div>
+
         <!-- ── Strip 03 ── -->
         <div class="action-strip strip-01" data-aos="fade-up">
             <div class="action-sc">
