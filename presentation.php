@@ -965,7 +965,7 @@ require_once 'templates/header.php';
                         <span class="metric-lab">personnes touchées (2021–2023)</span>
                     </div>
                     <div class="action-metric">
-                        <span class="metric-val">4 166</span>
+                        <span class="metric-val">+10 000</span>
                         <span class="metric-lab">personnes dépistées</span>
                     </div>
                 </div>
@@ -999,6 +999,20 @@ require_once 'templates/header.php';
                         <span class="metric-lab">patients suivis en 2024, dont 36 avec subvention directe</span>
                     </div>
                 </div>
+            </div>
+        <!-- ── Strip 03 ── -->
+        <div class="action-strip strip-01" data-aos="fade-up">
+            <div class="action-sc">
+                <div class="action-top">
+                    <span class="action-big-num">03</span>
+                </div>
+                <div class="action-rule"></div>
+                <h3>Formation de bénévoles engagées</h3>
+                <p>Le GSCC organise régulièrement des séminaires de formation pour outiller un nombre croissant de bénévoles engagées dans la lutte contre le cancer.</p>
+                <ul class="action-blist">
+                    <li><span class="bdot"></span>Plus de 300 bénévoles formées en 25 ans</li>
+                    <li><span class="bdot"></span>Des séminaires organisés chaque année à travers le pays</li>
+                </ul>
             </div>
         </div>
 
