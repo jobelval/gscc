@@ -1001,7 +1001,7 @@ require_once 'templates/header.php';
                 </div>
             </div>
         <!-- ── Strip 03 ── -->
-        <div class="action-strip strip-01" data-aos="fade-up">
+        <div class="action-strip strip-02" data-aos="fade-up">
             <div class="action-sc">
                 <div class="action-top">
                     <span class="action-big-num">03</span>
