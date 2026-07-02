@@ -432,33 +432,6 @@ try {
         </div>
     </section>
 
-    <!-- Statistiques -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="section-label" data-aos="fade-up">
-                <span>Notre impact</span>
-                <h2>En chiffres</h2>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card" data-aos="fade-up">
-                    <div class="stat-number">300 000+</div>
-                    <div class="stat-label">Personnes sensibilisées</div>
-                </div>
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="80">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Écoles visitées</div>
-                </div>
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="160">
-                    <div class="stat-number">30+</div>
-                    <div class="stat-label">Communautés touchées</div>
-                </div>
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="240">
-                    <div class="stat-number">10 000+</div>
-                    <div class="stat-label">Personnes dépistées</div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Ressources pédagogiques -->
     <section class="resources-section">

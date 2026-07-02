@@ -43,20 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && adminCheckCsrf()) {
             }
         }
 
-        if ($section === 'dons') {
-            $fields = ['paypal_email','stripe_public_key','stripe_secret_key','moncash_client_id','moncash_client_secret'];
-            foreach ($fields as $f) {
-                if (isset($_POST[$f])) {
-                    $v = trim($_POST[$f]);
-                    $pdo->prepare(
-                        "INSERT INTO parametres (cle,valeur,date_modification) VALUES (?,?,NOW())
-                         ON DUPLICATE KEY UPDATE valeur=?,date_modification=NOW()"
-                    )->execute([$f, $v, $v]);
-                    $updated++;
-                }
-            }
-        }
-
         if ($section === 'smtp') {
             $fields = ['smtp_host','smtp_port','smtp_user','smtp_from_name'];
             foreach ($fields as $f) {
@@ -176,7 +162,6 @@ require_once dirname(__DIR__) . '/includes/header.php';
     $tabs = [
         'general'     => ['<i class="fas fa-cog"></i> Général',       ''],
         'reseaux'     => ['<i class="fas fa-share-alt"></i> Réseaux',  ''],
-        'dons'        => ['<i class="fas fa-hand-holding-heart"></i> Dons', ''],
         'smtp'        => ['<i class="fas fa-envelope"></i> Email',     ''],
         'maintenance'  => ['<i class="fas fa-tools"></i> Maintenance',       ''],
         'presentation' => ['<i class="fas fa-image"></i> Présentation',    ''],
@@ -262,50 +247,6 @@ require_once dirname(__DIR__) . '/includes/header.php';
     </div>
     <div style="margin-top:16px;">
         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
-    </div>
-</form>
-
-<?php elseif ($tab === 'dons'): ?>
-<!-- PAIEMENTS -->
-<form method="POST">
-    <input type="hidden" name="_csrf" value="<?= adminCsrfToken() ?>">
-    <input type="hidden" name="section" value="dons">
-    <input type="hidden" name="tab_after" value="dons">
-    <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="card">
-            <div class="card-header"><div class="card-title"><i class="fab fa-paypal" style="color:#003087;"></i> PayPal</div></div>
-            <div class="card-body">
-                <div class="form-group"><label class="form-label">Email PayPal de réception</label>
-                    <input type="email" name="paypal_email" class="form-control" value="<?= $p('paypal_email') ?>" placeholder="paiements@gscchaiti.com"></div>
-                <div style="background:#F0F9FF;border:1px solid #7DD3FC;border-radius:8px;padding:12px;font-size:.82rem;color:#075985;">
-                    <i class="fas fa-info-circle"></i> Les dons PayPal sont envoyés à cet email. Configurez votre compte PayPal Business pour la réception automatique.
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header"><div class="card-title"><i class="fas fa-credit-card" style="color:#635bff;"></i> Stripe</div></div>
-            <div class="card-body">
-                <div class="form-group"><label class="form-label">Clé publique (pk_live_ ou pk_test_)</label>
-                    <input type="text" name="stripe_public_key" class="form-control" value="<?= $p('stripe_public_key') ?>" placeholder="pk_live_…"></div>
-                <div class="form-group" style="margin-bottom:0;"><label class="form-label">Clé secrète (sk_live_ ou sk_test_)</label>
-                    <input type="password" name="stripe_secret_key" class="form-control" value="<?= $p('stripe_secret_key') ?>" placeholder="sk_live_…">
-                    <div class="form-hint">⚠️ Ne partagez jamais cette clé</div></div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header"><div class="card-title"><i class="fas fa-mobile-alt" style="color:#FF6B35;"></i> MonCash (Digicel)</div></div>
-            <div class="card-body">
-                <div class="form-row">
-                    <div class="form-group"><label class="form-label">Client ID</label>
-                        <input type="text" name="moncash_client_id" class="form-control" value="<?= $p('moncash_client_id') ?>" placeholder="Client ID MonCash"></div>
-                    <div class="form-group"><label class="form-label">Client Secret</label>
-                        <input type="password" name="moncash_client_secret" class="form-control" value="<?= $p('moncash_client_secret') ?>" placeholder="Secret MonCash"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top:16px;">
-        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer la configuration des paiements</button>
     </div>
 </form>
 

@@ -1016,35 +1016,6 @@ $page_description = "Tout ce que vous devez savoir sur le cancer : types, sympt�
                 </div>
             </div>
 
-            <div class="effects-box">
-                <h3>Effets secondaires courants et comment les gérer</h3>
-                <div class="effect-list">
-                    <div class="effect-item yellow">
-                        <h5>Fatigue intense</h5>
-                        <p>Très courante. Repos adapté, activité physique légère et soutien nutritionnel aident à la réduire.</p>
-                    </div>
-                    <div class="effect-item red">
-                        <h5>Nausées / vomissements</h5>
-                        <p>Liés à la chimio. Des médicaments antiémétiques modernes permettent de les contrôler efficacement.</p>
-                    </div>
-                    <div class="effect-item blue">
-                        <h5>Perte de cheveux</h5>
-                        <p>Temporaire dans la plupart des cas. Les cheveux repoussent après la fin du traitement.</p>
-                    </div>
-                    <div class="effect-item yellow">
-                        <h5>Immunodépression</h5>
-                        <p>Risque accru d'infections. Hygiène renforcée, suivi médical régulier et vaccinations indiqués.</p>
-                    </div>
-                    <div class="effect-item red">
-                        <h5>Douleurs</h5>
-                        <p>La prise en charge de la douleur est une priorité. Plusieurs options médicamenteuses et non médicamenteuses existent.</p>
-                    </div>
-                    <div class="effect-item blue">
-                        <h5>Impact psychologique</h5>
-                        <p>Anxiété, dépression fréquentes. Un soutien psychologique est recommandé dès le diagnostic.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 

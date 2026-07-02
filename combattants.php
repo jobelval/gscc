@@ -905,10 +905,9 @@ require_once 'templates/header.php';
                 <i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
             <blockquote>
-                « Chaque matin que j'ouvre les yeux est une victoire que le cancer
-                ne m'a pas prise. Je me lève. Je me bats. Je vis. »
+                « M ap Mouri men se pa kansè k ap touye m. »
             </blockquote>
-            <p class="cb-spotlight-attr">— Un combattant GSCC, Haïti</p>
+            <p class="cb-spotlight-attr"> Morleena , Combattante </p>
         </div>
     </div>
 </section>

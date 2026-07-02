@@ -715,8 +715,8 @@ require_once 'templates/header.php';
     <div class="container">
         <div class="fr-stats-grid">
             <div class="fr-stat-item" data-aos="zoom-in" data-aos-delay="0">
-                <div class="fr-stat-number">2<span style="font-size:1.8rem;">+</span></div>
-                <div class="fr-stat-label">Éditions organisées</div>
+                <div class="fr-stat-number">1<span style="font-size:1.8rem;">+</span></div>
+                <div class="fr-stat-label">Édition organisée</div>
             </div>
             <div class="fr-stat-item" data-aos="zoom-in" data-aos-delay="80">
                 <div class="fr-stat-number">100<span style="font-size:1.8rem;">%</span></div>

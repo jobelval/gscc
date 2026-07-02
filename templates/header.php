@@ -1005,7 +1005,20 @@
 
                 <!-- BOUTON DON + BURGER -->
                 <div class="header-right">
-                    <a href="faire-un-don.php" class="btn-donate">
+                    <?php
+                    if (!isset($_gscc_stripe_link)) {
+                        try {
+                            $_gscc_stripe_link = $pdo->query("SELECT valeur FROM parametres WHERE cle='stripe_payment_link'")->fetchColumn()
+                                ?: 'https://donate.stripe.com/dRm8wIaG307H2byfrR1Nu00';
+                        } catch (Exception $_e) {
+                            $_gscc_stripe_link = 'https://donate.stripe.com/dRm8wIaG307H2byfrR1Nu00';
+                        }
+                    }
+                    ?>
+                    <a href="<?= htmlspecialchars($_gscc_stripe_link) ?>"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="btn-donate">
                         <i class="fas fa-heart"></i> Faire un don
                     </a>
                     <button class="mobile-menu-toggle" aria-label="Ouvrir le menu">

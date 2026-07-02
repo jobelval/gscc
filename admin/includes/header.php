@@ -94,13 +94,6 @@ function navItem(string $href, string $icon, string $label, string $active_key, 
             <?= navItem(SITE_URL.'/admin/temoignages/index.php',  'quote-right', 'Témoignages',         'temoignages', $section, (int)$nb_temos) ?>
         </div>
 
-        <?php if ($admin['role'] === 'admin'): ?>
-        <!-- Dons (admin seulement) -->
-        <div class="nav-group">
-            <div class="nav-group-label">Dons</div>
-            <?= navItem(SITE_URL.'/admin/dons/index.php', 'hand-holding-heart', 'Dons', 'dons', $section) ?>
-        </div>
-        <?php endif; ?>
 
         <!-- Communication -->
         <div class="nav-group">
