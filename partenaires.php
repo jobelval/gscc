@@ -572,8 +572,8 @@ function initials(string $n): string {
                             <a href="https://h23xktcc.forms.app/gsccadhesion?objet=partenariat" target="_blank" class="btn-cta-primary">
                                 <i class="fas fa-envelope"></i> Nous contacter
                             </a>
-                            <a href="presentation.php#mission" class="btn-cta-secondary">
-                                <i class="fas fa-arrow-right"></i> Notre mission
+                            <a href="https://drive.google.com/file/d/1ilvcWUTnH7_CfECGTSDdyEBk1wCRUA7t/view" target="_blank" rel="noopener noreferrer" class="btn-cta-secondary">
+                                <i class="fas fa-file-alt"></i> Devenir partenaire
                             </a>
                         </div>
                     </div>
