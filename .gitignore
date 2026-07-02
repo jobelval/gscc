@@ -1,11 +1,7 @@
 # Secrets — ne jamais committer
 .env
 
-# Uploads utilisateurs (fichiers ignorés, mais structure de dossiers conservée)
-assets/uploads/
-!assets/uploads/**/.gitkeep
-uploads/articles/*
-!uploads/articles/.gitkeep
+# Uploads — inclus dans git pour que les images soient déployées
 
 # Logs
 *.log
