@@ -984,7 +984,6 @@
                             <a href="#">Activité <i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="sensibilisation.php">Sensibilisation</a></li>
-                                <li><a href="foire-annuelle.php">Grande Foire Annuelle</a></li>
                                 <li><a href="marche-contre-cancer.php">Marche Contre le Cancer</a></li>
                                 <li><a href="football-rose.php">Football Rose</a></li>
                             </ul>

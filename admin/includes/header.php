@@ -76,10 +76,17 @@ function navItem(string $href, string $icon, string $label, string $active_key, 
             <div class="nav-group-label">Contenu</div>
             <?= navItem(SITE_URL.'/admin/articles/index.php',    'newspaper',     'Articles',          'articles',    $section) ?>
             <?= navItem(SITE_URL.'/admin/campagnes/index.php',   'bullhorn',      'Campagnes & Projets','campagnes',  $section) ?>
-<?= navItem(SITE_URL.'/admin/galerie/index.php',     'images',        'Galerie',           'galerie',     $section) ?>
-            <?= navItem(SITE_URL.'/admin/survivants/index.php',   'heart-pulse',   'Survivants',        'survivants',   $section) ?>
-            <?= navItem(SITE_URL.'/admin/combattants/index.php', 'shield-heart',  'Combattants',       'combattants',  $section) ?>
+            <?= navItem(SITE_URL.'/admin/galerie/index.php',     'images',        'Galerie',           'galerie',     $section) ?>
+            <?= navItem(SITE_URL.'/admin/survivants/index.php',  'heart-pulse',   'Survivants',        'survivants',  $section) ?>
+            <?= navItem(SITE_URL.'/admin/combattants/index.php', 'shield-heart',  'Combattants',       'combattants', $section) ?>
             <?= navItem(SITE_URL.'/admin/equipe/index.php',      'users',         'Équipe',            'equipe',      $section) ?>
+        </div>
+
+        <!-- Activités (admin seulement) -->
+        <div class="nav-group">
+            <div class="nav-group-label">Activités</div>
+            <?= navItem(SITE_URL.'/admin/sensibilisation/index.php', 'bullhorn',        'Sensibilisation',          'sensibilisation', $section) ?>
+            <?= navItem(SITE_URL.'/admin/marche/index.php',          'person-walking',  'Marche Contre le Cancer',  'marche',          $section) ?>
         </div>
         <?php endif; ?>
 

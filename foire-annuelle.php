@@ -3,6 +3,10 @@ require_once 'includes/config.php';
 require_once 'includes/functions.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
+// Page temporairement masquée — redirige vers l'accueil
+header('Location: index.php');
+exit;
+
 $page_title       = 'Grande Foire Annuelle';
 $page_description = 'La plus grande foire de collecte de fonds et de sensibilisation organisée par le GSCC.';
 

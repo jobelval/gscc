@@ -5,6 +5,15 @@ require_once 'includes/config.php';
 $page_title = 'Sensibilisation';
 $page_description = 'Découvrez nos actions de sensibilisation pour informer et prévenir contre le cancer.';
 
+// Activités de sensibilisation depuis la base de données (gérées via admin CMS)
+try {
+    $stmt = $pdo->query("SELECT * FROM sensibilisation_activites WHERE est_actif=1 ORDER BY ordre ASC, id ASC");
+    $activites = $stmt->fetchAll();
+} catch (PDOException $e) {
+    $activites = [];
+}
+
+// Campagnes liées à la sensibilisation
 try {
     $stmt = $pdo->prepare("SELECT * FROM campagnes_projets
                            WHERE type = 'campagne' AND statut IN ('en_cours', 'termine')
@@ -13,7 +22,6 @@ try {
     $stmt->execute();
     $campagnes_sensibilisation = $stmt->fetchAll();
 } catch (PDOException $e) {
-    logError("Erreur sensibilisation: " . $e->getMessage());
     $campagnes_sensibilisation = [];
 }
 ?>
@@ -341,7 +349,7 @@ try {
         </div>
     </div>
 
-    <!-- Thèmes -->
+    <!-- Thèmes (chargés depuis la base de données) -->
     <section class="themes-section">
         <div class="container">
             <div class="section-label" data-aos="fade-up">
@@ -350,84 +358,23 @@ try {
             </div>
 
             <div class="themes-grid">
-
-                <div class="theme-card" data-aos="fade-up">
-                    <div class="theme-card-stripe" style="background:#E91E8C;"></div>
+                <?php foreach ($activites as $i => $act): ?>
+                <div class="theme-card" data-aos="fade-up" data-aos-delay="<?= $i * 60 ?>">
+                    <div class="theme-card-stripe" style="background:<?= htmlspecialchars($act['couleur']) ?>;"></div>
                     <div class="theme-card-body">
-                        <div class="theme-icon" style="background:#E91E8C;">
-                            <i class="fas fa-ribbon"></i>
+                        <div class="theme-icon" style="background:<?= htmlspecialchars($act['couleur']) ?>;">
+                            <i class="fas fa-bullhorn"></i>
                         </div>
-                        <h3>Octobre Rose</h3>
-                        <p>Octobre Rose est la campagne annuelle de sensibilisation du GSCC dédiée à la lutte contre le cancer du sein. À travers l'information, le dépistage précoce, les témoignages et la mobilisation communautaire, cette initiative rappelle depuis 25 ans l'importance de la prévention et de la solidarité pour sauver des vies.</p>
+                        <h3><?= htmlspecialchars($act['titre']) ?></h3>
+                        <p><?= htmlspecialchars($act['description']) ?></p>
                     </div>
                 </div>
-
-                <div class="theme-card" data-aos="fade-up" data-aos-delay="60">
-                    <div class="theme-card-stripe" style="background:#2E7D32;"></div>
-                    <div class="theme-card-body">
-                        <div class="theme-icon" style="background:#2E7D32;">
-                            <i class="fas fa-dumbbell"></i>
-                        </div>
-                        <h3>Bouger et Transpirer pour Vivre</h3>
-                        <p>Bouger et Transpirer pour Vivre est une campagne de prévention visant à promouvoir l'activité physique comme moyen efficace de réduire les risques de cancer. En encourageant des habitudes de vie actives et saines, le GSCC sensibilise le public à l'importance du mouvement pour protéger durablement sa santé.</p>
-                    </div>
-                </div>
-
-                <div class="theme-card" data-aos="fade-up" data-aos-delay="120">
-                    <div class="theme-card-stripe" style="background:#00897B;"></div>
-                    <div class="theme-card-body">
-                        <div class="theme-icon" style="background:#00897B;">
-                            <i class="fas fa-microscope"></i>
-                        </div>
-                        <h3>Un col sain</h3>
-                        <p>Un Col Sain est une campagne de sensibilisation consacrée à la prévention du cancer du col de l'utérus. Par l'éducation, l'information médicale simplifiée et l'encouragement au dépistage, cette initiative aide les femmes à mieux comprendre l'importance d'un suivi gynécologique régulier pour préserver leur santé.</p>
-                    </div>
-                </div>
-
-                <div class="theme-card" data-aos="fade-up" data-aos-delay="180">
-                    <div class="theme-card-stripe" style="background:#F57C00;"></div>
-                    <div class="theme-card-body">
-                        <div class="theme-icon" style="background:#F57C00;">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-                        <h3>Ann Simen Lavi</h3>
-                        <p>Ann Simen Lavi est une campagne de solidarité nationale visant à mobiliser des ressources humaines et financières pour soutenir directement les patients atteints de cancer en Haïti. À travers des témoignages et des appels à contribution, cette initiative rappelle qu'un simple geste de soutien peut devenir une semence de vie pour une famille en détresse.</p>
-                    </div>
-                </div>
-
-                <div class="theme-card" data-aos="fade-up" data-aos-delay="240">
-                    <div class="theme-card-stripe" style="background:#6A1B9A;"></div>
-                    <div class="theme-card-body">
-                        <div class="theme-icon" style="background:#6A1B9A;">
-                            <i class="fas fa-fist-raised"></i>
-                        </div>
-                        <h3>KWAZAD KONT KANSÈ</h3>
-                        <p>Kwazad Kont Kansè est une vaste campagne de mobilisation communautaire menée à Port-au-Prince et dans plusieurs villes de province. Axée sur le cancer du sein, du col de l'utérus et de la prostate, elle combine sensibilisation de masse, éducation sanitaire et orientation au dépistage pour encourager une détection précoce.</p>
-                    </div>
-                </div>
-
-                <div class="theme-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="theme-card-stripe" style="background:#003399;"></div>
-                    <div class="theme-card-body">
-                        <div class="theme-icon" style="background:#003399;">
-                            <i class="fas fa-mars"></i>
-                        </div>
-                        <h3>Novembre Bleu</h3>
-                        <p>Novembre Bleu est la campagne annuelle du GSCC consacrée aux cancers masculins : prostate, testicules et pénis. À travers l'information, la lutte contre les tabous et la promotion du dépistage, cette initiative encourage les hommes à adopter une attitude plus responsable face à leur santé et à consulter sans attendre.</p>
-                    </div>
-                </div>
-
-                <div class="theme-card" data-aos="fade-up" data-aos-delay="360">
-                    <div class="theme-card-stripe" style="background:#C62828;"></div>
-                    <div class="theme-card-body">
-                        <div class="theme-icon" style="background:#C62828;">
-                            <i class="fas fa-key"></i>
-                        </div>
-                        <h3>KONNEN LI EGZISTE PA SIFI : PREVANSYON SE KLE</h3>
-                        <p>Konnen li Egziste pa Sifi : Prevansyon se Kle est une campagne axée sur la prévention active du cancer à travers l'adoption de meilleures habitudes de vie : activité physique, alimentation saine, arrêt du tabac, limitation de l'alcool, dépistage régulier et santé mentale.</p>
-                    </div>
-                </div>
-
+                <?php endforeach; ?>
+                <?php if (empty($activites)): ?>
+                <p style="color:var(--muted);text-align:center;padding:40px 0;">
+                    Aucune activité de sensibilisation pour le moment.
+                </p>
+                <?php endif; ?>
             </div>
         </div>
     </section>
