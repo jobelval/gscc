@@ -526,7 +526,7 @@ require_once 'templates/header.php';
             <div class="mc-hero-date" data-aos="fade-up" data-aos-delay="110">
                 <i class="fas fa-calendar-alt"></i> 20 octobre <?= $annee ?>
                 <span style="color:rgba(255,255,255,.3)">·</span>
-                <i class="fas fa-map-marker-alt"></i> Parc Martissant → Champs de Mars
+                <i class="fas fa-map-marker-alt"></i> Nord — Cap-Haïtien
                 <span style="color:rgba(255,255,255,.3)">·</span>
                 5 km · Gratuit
             </div>
@@ -593,9 +593,8 @@ require_once 'templates/header.php';
             </div>
             <div class="mc-info-card" data-aos="fade-up" data-aos-delay="90">
                 <h3>Lieu de départ</h3>
-                <p><strong>Parc de Martissant</strong><br>
-                Port-au-Prince, Haïti<br>
-                Arrivée : <strong>Champs de Mars</strong></p>
+                <p><strong>Nord — Cap-Haïtien</strong><br>
+                Cap-Haïtien, Haïti</p>
             </div>
             <div class="mc-info-card" data-aos="fade-up" data-aos-delay="180">
                 <h3>Kit du marcheur</h3>
@@ -627,7 +626,7 @@ require_once 'templates/header.php';
                 <div class="mc-prog-time">9h00</div>
                 <div class="mc-prog-icon"><i class="fas fa-flag"></i></div>
                 <div class="mc-prog-title">Départ officiel</div>
-                <div class="mc-prog-desc">Coup d'envoi depuis le Parc de Martissant</div>
+                <div class="mc-prog-desc">Coup d'envoi depuis Cap-Haïtien</div>
                 <div class="mc-prog-bar"></div>
             </div>
             <div class="mc-prog-card" data-aos="fade-up" data-aos-delay="140">
@@ -692,7 +691,7 @@ require_once 'templates/header.php';
                 <div class="mc-ed-up-body">
                     <div class="mc-ed-up-info">
                         <div class="mc-ed-up-info-item"><i class="fas fa-calendar-alt"></i><span><?= htmlspecialchars(mcFmtDate($ed['date_evenement'] ?? null)) ?></span></div>
-                        <div class="mc-ed-up-info-item"><i class="fas fa-map-marker-alt"></i><span>Parc Martissant → Champs de Mars</span></div>
+                        <div class="mc-ed-up-info-item"><i class="fas fa-map-marker-alt"></i><span>Nord — Cap-Haïtien</span></div>
                         <div class="mc-ed-up-info-item"><i class="fas fa-route"></i><span><?= htmlspecialchars($ed['km'] ?? '') ?></span></div>
                         <div class="mc-ed-up-info-item"><i class="fas fa-heart"></i><span>Participation gratuite</span></div>
                     </div>
