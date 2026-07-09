@@ -490,23 +490,6 @@ function roleColor(string $role): string {
         </div>
     </section>
 
-    <!-- Stats -->
-    <div class="stats-band">
-        <div class="inner">
-            <div class="stat-cell" data-aos="fade-up">
-                <div class="stat-n">300+</div>
-                <div class="stat-l">Patients accompagnés</div>
-            </div>
-            <div class="stat-cell" data-aos="fade-up" data-aos-delay="80">
-                <div class="stat-n"><?= count($temoignages) ?></div>
-                <div class="stat-l">Témoignages publiés</div>
-            </div>
-            <div class="stat-cell" data-aos="fade-up" data-aos-delay="160">
-                <div class="stat-n">5 / 5</div>
-                <div class="stat-l">Satisfaction moyenne</div>
-            </div>
-        </div>
-    </div>
 
     <!-- Main -->
     <section class="main-section">
