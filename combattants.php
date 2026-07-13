@@ -720,20 +720,6 @@ require_once 'templates/header.php';
                 en silence, mais avec une force qui inspire toute la communauté GSCC.
                 Leurs histoires méritent d'être entendues.
             </p>
-            <div class="cb-hero-stats">
-                <div class="cb-hstat">
-                    <span class="cb-hstat-num"><?= $total ?></span>
-                    <span class="cb-hstat-label">Combattants</span>
-                </div>
-                <div class="cb-hstat">
-                    <span class="cb-hstat-num"><?= $max_annees ?>+</span>
-                    <span class="cb-hstat-label">Ans de combat</span>
-                </div>
-                <div class="cb-hstat">
-                    <span class="cb-hstat-num"><?= $avg_annees ?></span>
-                    <span class="cb-hstat-label">Ans en moy.</span>
-                </div>
-            </div>
         </div>
     </div>
     <div class="cb-hero-ribbon" aria-hidden="true"></div>
@@ -762,31 +748,6 @@ require_once 'templates/header.php';
             <span class="cb-pill"><i class="fas fa-hands-holding-heart"></i> Solidarité</span>
             <span class="cb-pill"><i class="fas fa-sun"></i> Espoir</span>
             <span class="cb-pill"><i class="fas fa-ribbon"></i> Sensibilisation</span>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════════════════════════════════════════════
-     BANDE STATS
-     ════════════════════════════════════════════════════ -->
-<section class="cb-stats-strip">
-    <div class="container">
-        <div class="cb-stats-row">
-            <div class="cb-stat-block" data-aos="zoom-in" data-aos-delay="0">
-                <i class="fas fa-users cb-stat-block-icon"></i>
-                <span class="cb-stat-block-num"><?= $total ?></span>
-                <span class="cb-stat-block-label">Combattants soutenus</span>
-            </div>
-            <div class="cb-stat-block" data-aos="zoom-in" data-aos-delay="100">
-                <i class="fas fa-trophy cb-stat-block-icon"></i>
-                <span class="cb-stat-block-num"><?= $max_annees ?>+</span>
-                <span class="cb-stat-block-label">Années — record absolu</span>
-            </div>
-            <div class="cb-stat-block" data-aos="zoom-in" data-aos-delay="200">
-                <i class="fas fa-chart-line cb-stat-block-icon"></i>
-                <span class="cb-stat-block-num"><?= $avg_annees ?></span>
-                <span class="cb-stat-block-label">Ans de combat en moyenne</span>
-            </div>
         </div>
     </div>
 </section>

@@ -6,15 +6,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 $page_title       = 'Marche Contre le Cancer';
 $page_description = 'Rejoignez la grande marche solidaire organisée chaque année par le GSCC pour lutter contre le cancer en Haïti.';
 
-$annee       = (int)date('Y');
-$date_marche = mktime(9, 0, 0, 10, 20, $annee);
-if ($date_marche < time()) {
-    $annee++;
-    $date_marche = mktime(9, 0, 0, 10, 20, $annee);
-}
-$ts_marche     = $date_marche * 1000;
-$jours_restants = max(0, (int)ceil(($date_marche - time()) / 86400));
-
 /* ── Données des éditions (base de données) ── */
 try {
     $stmt = $pdo->query("SELECT * FROM marche_editions ORDER BY ordre ASC, annee DESC");
@@ -24,6 +15,21 @@ try {
 }
 $a_venir   = array_values(array_filter($editions, fn($e) => $e['statut'] === 'a_venir'));
 $terminees = array_values(array_filter($editions, fn($e) => $e['statut'] === 'termine'));
+
+/* ── Date de la prochaine marche (édition "à venir" en DB, sinon calcul auto) ── */
+if (!empty($a_venir[0]['date_evenement'])) {
+    $date_marche = strtotime($a_venir[0]['date_evenement'] . ' 09:00:00');
+    $annee       = (int)date('Y', $date_marche);
+} else {
+    $annee       = (int)date('Y');
+    $date_marche = mktime(9, 0, 0, 10, 20, $annee);
+    if ($date_marche < time()) {
+        $annee++;
+        $date_marche = mktime(9, 0, 0, 10, 20, $annee);
+    }
+}
+$ts_marche      = $date_marche * 1000;
+$jours_restants = max(0, (int)ceil(($date_marche - time()) / 86400));
 
 /* Formater DATE MySQL → texte français */
 function mcFmtDate(?string $d): string {

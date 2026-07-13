@@ -234,7 +234,7 @@ $lien_formulaire = 'https://h23xktcc.forms.app/gsccadhesion'; // ← mets ton li
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.4rem;
             font-weight: 700;
-            color: var(--gold);
+            color: var(--gold-lite);
             line-height: 1;
         }
 
@@ -1002,7 +1002,7 @@ $lien_formulaire = 'https://h23xktcc.forms.app/gsccadhesion'; // ← mets ton li
                     <div class="hstat-lbl">Membres actifs</div>
                 </div>
                 <div class="hstat">
-                    <div class="hstat-num">5</div>
+                    <div class="hstat-num">25</div>
                     <div class="hstat-lbl">Années d'impact</div>
                 </div>
                 <div class="hstat">

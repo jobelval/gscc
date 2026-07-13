@@ -563,10 +563,6 @@ require_once 'templates/header.php';
                     <div class="lbl">Années d'action</div>
                 </div>
                 <div class="cp-hero-stat">
-                    <div class="num">2<sup style="font-size:1rem;">+</sup></div>
-                    <div class="lbl">Grandes campagnes</div>
-                </div>
-                <div class="cp-hero-stat">
                     <div class="num">100<sup style="font-size:1rem;">%</sup></div>
                     <div class="lbl">Fonds reversés</div>
                 </div>
