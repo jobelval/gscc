@@ -2,6 +2,13 @@
 .env
 
 # Uploads — inclus dans git pour que les images soient déployées
+# Exceptions : combattants et marche sont alimentés en direct depuis le CMS
+# en production, donc jamais commités depuis le poste local. Un commit/push
+# ne doit jamais toucher ces fichiers (sinon ils sont écrasés/perdus au déploiement).
+uploads/combattants/*
+uploads/marche/*
+!uploads/combattants/.gitkeep
+!uploads/marche/.gitkeep
 
 # Logs
 *.log
