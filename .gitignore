@@ -1,14 +1,12 @@
 # Secrets — ne jamais committer
 .env
 
-# Uploads — inclus dans git pour que les images soient déployées
-# Exceptions : combattants et marche sont alimentés en direct depuis le CMS
-# en production, donc jamais commités depuis le poste local. Un commit/push
-# ne doit jamais toucher ces fichiers (sinon ils sont écrasés/perdus au déploiement).
-uploads/combattants/*
-uploads/marche/*
-!uploads/combattants/.gitkeep
-!uploads/marche/.gitkeep
+# Uploads — les photos sont ajoutees depuis le CMS (en local ou en direct sur
+# le site en ligne). Les NOUVEAUX fichiers ne sont jamais suivis par git afin
+# qu'un commit/push ou un deploiement cPanel ne puisse plus jamais les supprimer.
+# Les images deja suivies avant cette regle restent trackees normalement.
+uploads/*/*
+!uploads/*/.gitkeep
 
 # Logs
 *.log
