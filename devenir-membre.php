@@ -216,6 +216,25 @@ $lien_formulaire = 'https://h23xktcc.forms.app/gsccadhesion'; // ← mets ton li
             font-size: 18px;
         }
 
+        .hero-btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .btn-hero-secondary {
+            background: transparent;
+            border: 2px solid var(--gold);
+            box-shadow: none;
+        }
+
+        .btn-hero-secondary:hover {
+            background: var(--gold);
+            color: var(--navy);
+            box-shadow: 0 16px 48px rgba(217, 79, 122, .35);
+        }
+
         /* Stats rapides sous le CTA */
         .hero-stats {
             display: flex;
@@ -872,6 +891,29 @@ $lien_formulaire = 'https://h23xktcc.forms.app/gsccadhesion'; // ← mets ton li
             color: #FFFFFF !important;
         }
 
+        .cta-btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            border: 2px solid #FFFFFF;
+            box-shadow: none;
+        }
+
+        .btn-cta-secondary:hover {
+            background: #FFFFFF;
+            color: var(--rose) !important;
+            box-shadow: 0 18px 52px rgba(0, 0, 0, .25);
+        }
+
+        .btn-cta-secondary:hover i {
+            color: var(--rose) !important;
+        }
+
         /* Note de confidentialité — blanc bien visible avec icône or */
         .cta-note {
             margin-top: 24px;
@@ -989,10 +1031,14 @@ $lien_formulaire = 'https://h23xktcc.forms.app/gsccadhesion'; // ← mets ton li
                 par ses dons réguliers ou son implication, pour qu’aucun Haïtien touché par le cancer ne soit laissé seul face à la maladie.
             </p>
 
-            <div data-aos="fade-up" data-aos-delay="240">
+            <div class="hero-btn-group" data-aos="fade-up" data-aos-delay="240">
                 <a href="<?= htmlspecialchars($lien_formulaire) ?>" target="_blank" rel="noopener" class="btn-hero">
                     <i class="fas fa-file-signature"></i>
                     Remplir le formulaire d'adhésion
+                </a>
+                <a href="https://donate.stripe.com/dRm14g15t7A9cQc5Rh1Nu01" target="_blank" rel="noopener" class="btn-hero btn-hero-secondary">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    Rejoindre la Cause
                 </a>
             </div>
 
@@ -1309,10 +1355,16 @@ $lien_formulaire = 'https://h23xktcc.forms.app/gsccadhesion'; // ← mets ton li
                     pour finaliser votre inscription.
                 </p>
 
-                <a href="<?= htmlspecialchars($lien_formulaire) ?>" target="_blank" rel="noopener" class="btn-cta-main">
-                    <i class="fas fa-file-signature"></i>
-                    Remplir le formulaire d'adhésion
-                </a>
+                <div class="cta-btn-group">
+                    <a href="<?= htmlspecialchars($lien_formulaire) ?>" target="_blank" rel="noopener" class="btn-cta-main">
+                        <i class="fas fa-file-signature"></i>
+                        Remplir le formulaire d'adhésion
+                    </a>
+                    <a href="https://donate.stripe.com/dRm14g15t7A9cQc5Rh1Nu01" target="_blank" rel="noopener" class="btn-cta-main btn-cta-secondary">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        Rejoindre la Cause
+                    </a>
+                </div>
             </div>
 
         </div>

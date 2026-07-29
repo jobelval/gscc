@@ -1103,7 +1103,7 @@ endif; ?>>
                 <div class="stat-label">Années d'engagement</div>
             </div>
             <div class="stat-item" data-aos="fade-up" data-aos-delay="80">
-                <div class="stat-number">500+</div>
+                <div class="stat-number">120+</div>
                 <div class="stat-label">Membres actifs</div>
             </div>
             <div class="stat-item" data-aos="fade-up" data-aos-delay="160">
